@@ -119,8 +119,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnIngresar"/>
 
-    <ImageView
-        android:id="@+id/imageView"
+    <ImageButton
+        android:id="@+id/imbFace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/iconoface"
@@ -130,8 +130,8 @@
         app:layout_constraintStart_toStartOf="parent"
         />
 
-    <ImageView
-        android:id="@+id/imageView2"
+    <ImageButton
+        android:id="@+id/imbGmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/iconogmail"
@@ -150,6 +150,6 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"/>
+        app:layout_constraintBottom_toBottomOf="@+id/imbGmail"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
