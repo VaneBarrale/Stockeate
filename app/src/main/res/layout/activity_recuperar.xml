@@ -7,7 +7,6 @@
     android:background="@drawable/fondo">
 
     <LinearLayout
-        android:id="@+id/llLogo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="16dp"
@@ -17,12 +16,13 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="500dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/logoredondeado" />
@@ -51,7 +51,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/llRegistrarme"
+        android:id="@+id/llrecuperar"
         android:layout_width="238dp"
         android:layout_height="353dp"
         android:orientation="vertical"
@@ -62,54 +62,25 @@
         tools:ignore="MissingConstraints">
 
         <TextView
-            android:id="@+id/txtRegistarme"
+            android:id="@+id/txtRecuperarContraseña"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="REGISTRARME"
-            android:layout_marginLeft="70dp"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="Olvidaste tu contraseña? No te preocupes, la recuperaremos!"
             android:textColor="#000000"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:textSize="20sp" />
 
         <EditText
-            android:id="@+id/etxtNombre"
+            android:id="@+id/etxtMail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Nombre"
-            />
-
-        <EditText
-            android:id="@+id/etxtApellido"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Apellido"/>
-
-        <EditText
-            android:id="@+id/editTextTextEmailAddress"
-            android:layout_width="match_parent"
-            android:layout_height="37dp"
+            android:layout_height="37dp"            android:ems="10"
+            android:hint="Email"
             android:layout_marginTop="20dp"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            android:hint="Mail"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <EditText
-            android:id="@+id/etxtDireccion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:ems="10"
-            android:inputType="text"
-            android:text="Direccion"/>
+            android:inputType="textEmailAddress"/>
 
         <EditText
             android:id="@+id/etxtpassword"
@@ -120,47 +91,26 @@
             android:inputType="textPassword"
             android:text="Contraseña"/>
 
-        <EditText
-            android:id="@+id/etxtconfirmpassword"
+        <Button
+            android:id="@+id/btnRecuperar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:text="Contraseña"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginTop="600dp"
-        tools:layout_editor_absoluteX="207dp"
-        tools:layout_editor_absoluteY="680dp">
-
-        <Button
-            android:id="@+id/btnVolver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:text="Volver"
+            android:text="Recuperar contraseña"
             app:backgroundTint="#2196F3" />
 
-        <Button
-            android:id="@+id/btnRegistrar"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/txtVolver"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:text="Registrar"
-            app:backgroundTint="#2196F3"
-            app:layout_constraintStart_toStartOf="@+id/btnVolver"/>
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="Olvidalo, ya la recuerdo!"
+            android:textColor="#000000"
+            tools:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
