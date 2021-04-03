@@ -16,6 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".Activity_Home"/>
+        <activity android:name=".Activity_Registrar"/>
+        <activity android:name=".Activity_Recuperar"/>
+
     </application>
 
 </manifest>

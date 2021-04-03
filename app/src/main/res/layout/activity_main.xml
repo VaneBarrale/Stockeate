@@ -25,8 +25,9 @@
         android:contentDescription="@string/app_name"
         android:src="@drawable/rectanguloredondeado"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Logo"/>
+        app:layout_constraintTop_toBottomOf="@+id/Logo" />
 
     <EditText
         android:id="@+id/login_email_editText"

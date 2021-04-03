@@ -1,9 +1,11 @@
 package com.stockeate.stockeate;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,10 +18,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 
+import java.nio.file.Files;
+
 public class Activity_Recuperar extends AppCompatActivity{
 
     private EditText et_email, et_password;
     private Button btn_recuperar;
+    private TextView txt_volver;
 
     AwesomeValidation awesomeValidation;
     FirebaseAuth firebaseAuth;
@@ -36,6 +41,8 @@ public class Activity_Recuperar extends AppCompatActivity{
 
         et_email = findViewById(R.id.etxtMail);
         et_password = findViewById(R.id.etxtpassword);
+        btn_recuperar = findViewById(R.id.btnRecuperar);
+        txt_volver = findViewById(R.id.txtVolver);
 
         btn_recuperar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +57,8 @@ public class Activity_Recuperar extends AppCompatActivity{
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(Activity_Recuperar.this, "Listo! tu contraseña se actualizo. Ya podes volver a ingresar!", Toast.LENGTH_SHORT).show();
+                                Intent regresar = new Intent(Activity_Recuperar.this, MainActivity.class);
+                                startActivity(regresar);
                                 finish();
                             } else {
                                 String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
@@ -60,6 +69,15 @@ public class Activity_Recuperar extends AppCompatActivity{
                 }else{
                     Toast.makeText(Activity_Recuperar.this, "Ingresa una contraseña!", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        txt_volver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent volver = new Intent(Activity_Recuperar.this, MainActivity.class);
+                startActivity(volver);
+                finish();
             }
         });
     }
@@ -115,4 +133,5 @@ public class Activity_Recuperar extends AppCompatActivity{
                 break;
         }
     }
+
 }
