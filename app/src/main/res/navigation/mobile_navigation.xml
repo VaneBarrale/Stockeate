@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.stockeate.stockeate.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_lista_compras"
+        android:name="com.stockeate.stockeate.ui.lista_compras.Fragment_lista_compras"
+        android:label="Lista de compras"
+        tools:layout="@layout/fragment_lista_compras" />
+
+    <fragment
+        android:id="@+id/nav_escanear_codigos_barra"
+        android:name="com.stockeate.stockeate.ui.escanear_codigos_barra.Fragment_escanear_codigos_barra"
+        android:label="@string/menu_escanear_codigos_barra"
+        tools:layout="@layout/fragment_escanear_codigos_barra" />
+
+    <fragment
+        android:id="@+id/nav_ubicacion"
+        android:name="com.stockeate.stockeate.ui.ubicacion.ubicacion"
+        android:label="@string/menu_ubicacion"
+        tools:layout="@layout/fragment_ubicacion" />
+
+    <fragment
+        android:id="@+id/nav_promocion"
+        android:name="com.stockeate.stockeate.ui.promocion.promocion"
+        android:label="@string/menu_promocion"
+        tools:layout="@layout/fragment_promocion" />
+
+    <fragment
+        android:id="@+id/nav_actualizacion_precios"
+        android:name="com.stockeate.stockeate.ui.precios.precios"
+        android:label="@string/menu_actualizar_precios"
+        tools:layout="@layout/fragment_precios" />
+
+    <fragment
+        android:id="@+id/nav_nuevo_local"
+        android:name="com.stockeate.stockeate.ui.nuevo_comercio.nuevo_comercio"
+        android:label="@string/menu_nuevo_local"
+        tools:layout="@layout/fragment_nuevo_comercio" />
+
+</navigation>
