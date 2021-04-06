@@ -23,11 +23,9 @@ public class Fragment_lista_compras extends Fragment {
         viewModelListacompras =
                 new ViewModelProvider(this).get(ViewModel_lista_compras.class);
         View root = inflater.inflate(R.layout.fragment_lista_compras, container, false);
-        final TextView textView = root.findViewById(R.id.text_escanear);
         viewModelListacompras.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
             }
         });
         return root;

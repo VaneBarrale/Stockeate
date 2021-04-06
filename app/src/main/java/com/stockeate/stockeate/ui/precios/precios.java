@@ -21,7 +21,6 @@ public class precios extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @NonNull Bundle savedInstanceState) {
         viewModelPrecios = new ViewModelProvider(this).get(PreciosViewModel.class);
         View root = inflater.inflate(fragment_precios, container, false);
-        final TextView textprecios = root.findViewById(R.id.text_nuevo_comercio);
         return root;
     }
 }

@@ -1,4 +1,4 @@
-package com.stockeate.stockeate;
+package com.stockeate.stockeate.Item;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.stockeate.stockeate.MyItemRecyclerViewAdapter;
+import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.dummy.DummyContent;
 
 /**

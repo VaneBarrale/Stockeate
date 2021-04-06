@@ -21,7 +21,6 @@ public class ubicacion extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @NonNull Bundle savedInstanceState) {
         viewModelUbicacion = new ViewModelProvider(this).get(UbicacionViewModel.class);
         View root = inflater.inflate(fragment_ubicacion, container, false);
-        final TextView textubicacion = root.findViewById(R.id.text_nuevo_comercio);
         return root;
     }
 }

@@ -1,4 +1,4 @@
-package com.stockeate.stockeate;
+package com.stockeate.stockeate.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,12 +8,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.stockeate.stockeate.R;
+public class MainActivity extends AppCompatActivity{
 
     private Button btn_login;
     private TextView tv_registraraqui, tv_recuperar;
     private EditText et_email, et_password;
+
+    FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +53,24 @@ public class MainActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                firebaseAuth = FirebaseAuth.getInstance();
+                firebaseUser = firebaseAuth.getCurrentUser();
+
+                verificacionInicioSesion();
+                //cambiar esto y ponerlo dentro del if de verificacionInicioSesion()
                 Intent login = new Intent(MainActivity.this, Activity_Menu.class);
                 startActivity(login);
             }
         });
+    }
+
+    private void verificacionInicioSesion(){
+        if(firebaseUser != null)
+        {
+            Toast.makeText(this, "Se ha iniciado sesión", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(this, "El usuario no se encuentra logueado", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -23,7 +23,6 @@ public class Fragment_escanear_codigos_barra extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @NonNull Bundle savedInstanceState) {
         viewModelEscanear = new ViewModelProvider(this).get(ViewModel_escanear_codigos_barra.class);
         View root = inflater.inflate(fragment_escanear_codigos_barra, container, false);
-        final TextView text_escanear = root.findViewById(R.id.text_escanear);
         return root;
     }
 }

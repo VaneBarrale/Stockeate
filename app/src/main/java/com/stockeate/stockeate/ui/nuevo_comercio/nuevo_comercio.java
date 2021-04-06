@@ -22,7 +22,6 @@ public class nuevo_comercio extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @NonNull Bundle savedInstanceState) {
         viewModelNuevoComercio = new ViewModelProvider(this).get(NuevoComercioViewModel.class);
         View root = inflater.inflate(fragment_nuevo_comercio, container, false);
-        final TextView textuevocomercio = root.findViewById(R.id.text_nuevo_comercio);
         return root;
     }
 }

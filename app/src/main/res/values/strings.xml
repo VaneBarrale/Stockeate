@@ -17,4 +17,5 @@
     <string name="menu_promocion">Promociones</string>
     <string name="menu_actualizar_precios">Actualizar precios</string>
     <string name="menu_nuevo_local">Nuevo Comercio</string>
+    <string name="title_activity_como_llegar">Map</string>
 </resources>

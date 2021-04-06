@@ -1,6 +1,5 @@
-package com.stockeate.stockeate;
+package com.stockeate.stockeate.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -18,6 +17,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.stockeate.stockeate.R;
 
 public class Activity_Registrar extends AppCompatActivity {
 

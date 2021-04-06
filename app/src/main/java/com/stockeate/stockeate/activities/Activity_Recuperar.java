@@ -1,4 +1,4 @@
-package com.stockeate.stockeate;
+package com.stockeate.stockeate.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -17,8 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
-
-import java.nio.file.Files;
+import com.stockeate.stockeate.R;
 
 public class Activity_Recuperar extends AppCompatActivity{
 

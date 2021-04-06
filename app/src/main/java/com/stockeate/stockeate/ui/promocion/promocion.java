@@ -21,7 +21,6 @@ public class promocion extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @NonNull Bundle savedInstanceState) {
         viewModelPromocion = new ViewModelProvider(this).get(PromocionViewModel.class);
         View root = inflater.inflate(fragment_promocion, container, false);
-        final TextView textpromocion = root.findViewById(R.id.text_nuevo_comercio);
         return root;
     }
 }
