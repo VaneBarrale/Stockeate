@@ -1,9 +1,11 @@
 package com.stockeate.stockeate.ui.lista_compras;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,10 +15,13 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.stockeate.stockeate.R;
+import com.stockeate.stockeate.activities.Activity_Comparar_Precios;
+import com.stockeate.stockeate.activities.Activity_Detalle_Lista_Precios;
 
 public class Fragment_lista_compras extends Fragment {
 
     private ViewModel_lista_compras viewModelListacompras;
+    private Button btn_comparar;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -28,6 +33,16 @@ public class Fragment_lista_compras extends Fragment {
             public void onChanged(@Nullable String s) {
             }
         });
+
+        /*this.btn_comparar = root.findViewById(R.id.btn_Comparar);
+
+        btn_comparar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Fragment_lista_compras.this, Activity_Detalle_Lista_Precios.class);
+                startActivity(i);
+            }
+        });*/
         return root;
     }
 }

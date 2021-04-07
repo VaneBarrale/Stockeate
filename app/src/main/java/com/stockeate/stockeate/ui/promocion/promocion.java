@@ -22,5 +22,7 @@ public class promocion extends Fragment {
         viewModelPromocion = new ViewModelProvider(this).get(PromocionViewModel.class);
         View root = inflater.inflate(fragment_promocion, container, false);
         return root;
+
+
     }
 }

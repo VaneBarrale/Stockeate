@@ -2,88 +2,20 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ubicacion"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo_framework"
-    tools:context=".ui.ubicacion.ubicacion">
+    tools:context=".activities.Activity_Detalle_Lista_Precios">
 
     <LinearLayout
-        android:id="@+id/llverticallc"
+        android:id="@+id/llverticaldl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints"
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/llhorizontallc"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            tools:ignore="MissingConstraints">
-
-            <TextView
-                android:id="@+id/txtPromociones"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_marginLeft="20dp"
-                android:text="Mira estas super promos!"
-                android:textColor="@android:color/black"
-                android:textSize="17dp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="425dp"
-            tools:ignore="MissingConstraints">
-
-            <LinearLayout
-                android:id="@+id/llverticallc1"
-                android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:orientation="vertical"
-                app:layout_editor_absoluteY="50dp"
-                tools:ignore="MissingConstraints">
-
-                <ListView
-                    android:layout_width="match_parent"
-                    android:layout_height="477dp"
-                    tools:layout_editor_absoluteX="68dp"
-                    tools:layout_editor_absoluteY="269dp" />
-
-            </LinearLayout>
-
-        </ScrollView>
-
-        <LinearLayout
-            android:id="@+id/llverticalpr1"
-            android:layout_width="match_parent"
-            android:layout_height="47dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:orientation="vertical"
-            app:layout_editor_absoluteY="50dp"
-            tools:ignore="MissingConstraints">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="AGREGAR"
-                app:backgroundTint="#2196F3" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llhorizontallc2"
+            android:id="@+id/llhorizontaldl"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
@@ -91,23 +23,76 @@
             android:orientation="horizontal"
             tools:ignore="MissingConstraints">
 
+            <TextView
+                android:id="@+id/txtDetalleLista"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="El detalle de tus productos acá!"
+                android:textColor="@android:color/black"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="568dp"
+            tools:ignore="MissingConstraints">
+
+            <LinearLayout
+                android:id="@+id/llhorizontallc2"
+                android:layout_width="match_parent"
+                android:layout_height="469dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
+
+                <ListView
+                    android:id="@+id/ListaProductos"
+                    android:layout_width="match_parent"
+                    android:layout_height="544dp"
+                    tools:ignore="MissingConstraints" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/llhorizontalld"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            tools:ignore="MissingConstraints">
+
             <Button
                 android:id="@+id/btn_Volver"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                app:backgroundTint="#2196F3"
-                android:text="Volver"/>
+                android:layout_width="110dp"
+                android:layout_height="60dp"
+                android:text="Volver"
+                app:backgroundTint="#2196F3" />
 
             <Button
                 android:id="@+id/btn_como_llegar"
-                android:layout_width="150dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 app:backgroundTint="#2196F3"
                 android:text="Como llegar"/>
 
+            <Button
+                android:id="@+id/btn_Guardar"
+                android:layout_width="110dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="20dp"
+                android:text="Guardar"
+                app:backgroundTint="#2196F3" />
+
         </LinearLayout>
 
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

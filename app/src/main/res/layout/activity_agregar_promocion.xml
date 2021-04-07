@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ubicacion"
+    android:id="@+id/AgregarPromocion"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo_framework"
-    tools:context=".ui.ubicacion.ubicacion">
+    tools:context=".activities.Activity_Agregar_Promocion">
 
     <LinearLayout
         android:id="@+id/llverticallc"
@@ -30,55 +30,78 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_marginLeft="20dp"
-                android:text="Mira estas super promos!"
+                android:text="Agrega las promos que conoces!"
                 android:textColor="@android:color/black"
                 android:textSize="17dp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
-        <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="425dp"
-            tools:ignore="MissingConstraints">
-
-            <LinearLayout
-                android:id="@+id/llverticallc1"
-                android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:orientation="vertical"
-                app:layout_editor_absoluteY="50dp"
-                tools:ignore="MissingConstraints">
-
-                <ListView
-                    android:layout_width="match_parent"
-                    android:layout_height="477dp"
-                    tools:layout_editor_absoluteX="68dp"
-                    tools:layout_editor_absoluteY="269dp" />
-
-            </LinearLayout>
-
-        </ScrollView>
-
         <LinearLayout
-            android:id="@+id/llverticalpr1"
+            android:id="@+id/llverticallc1"
             android:layout_width="match_parent"
-            android:layout_height="47dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
             android:orientation="vertical"
             app:layout_editor_absoluteY="50dp"
             tools:ignore="MissingConstraints">
 
-            <Button
+
+            <EditText
+                android:id="@+id/etxtCodigoProducto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="AGREGAR"
-                app:backgroundTint="#2196F3" />
+                android:layout_marginTop="25dp"
+                android:text="Codigo producto"
+                android:background="#053F51B5" />
+
+            <EditText
+                android:id="@+id/etxtMarca"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="Marca"
+                android:background="#053F51B5" />
+
+            <EditText
+                android:id="@+id/etxtPresentacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="Presentacion"
+                android:background="#053F51B5" />
+
+            <EditText
+                android:id="@+id/etxtCantidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="Cantidad"
+                android:background="#053F51B5" />
+
+            <EditText
+                android:id="@+id/etxtComercio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="Comercio"
+                android:background="#053F51B5" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:background="#053F51B5"/>
+
+            <Button
+                android:id="@+id/btn_agregar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                app:backgroundTint="#2196F3"
+                android:text="AGREGAR"/>
 
         </LinearLayout>
 
@@ -87,7 +110,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:orientation="horizontal"
             tools:ignore="MissingConstraints">
 

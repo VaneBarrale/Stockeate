@@ -22,7 +22,7 @@ public class Activity_Salir extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
     }
 
-    private static void salir(Activity activity){
+    /*private static void salir(Activity activity){
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("Salir");
         builder.setMessage("¿Estás seguro que querés salir?");
@@ -42,6 +42,6 @@ public class Activity_Salir extends AppCompatActivity {
         });
 
         builder.show();
-    }
+    }*/
 
 }
