@@ -1,14 +1,18 @@
 package com.stockeate.stockeate.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.stockeate.stockeate.R;
+import com.stockeate.stockeate.ui.home.HomeFragment;
+import com.stockeate.stockeate.ui.lista_compras.Fragment_lista_compras;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -22,9 +26,10 @@ public class Activity_Menu extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
+    private ImageButton btn_compras;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
@@ -41,6 +46,8 @@ public class Activity_Menu extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
 
     }
 

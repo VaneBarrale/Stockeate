@@ -22,5 +22,7 @@ public class precios extends Fragment {
         viewModelPrecios = new ViewModelProvider(this).get(PreciosViewModel.class);
         View root = inflater.inflate(fragment_precios, container, false);
         return root;
+
+
     }
 }

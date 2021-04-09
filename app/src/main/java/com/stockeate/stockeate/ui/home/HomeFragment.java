@@ -20,7 +20,7 @@ import com.stockeate.stockeate.ui.lista_compras.Fragment_lista_compras;
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
-    private ImageButton btn_compras;
+    //private ImageButton btn_compras;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
@@ -53,6 +53,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Fragment_lista_compras fragment_lista_compras = new Fragment_lista_compras();
+
                 FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_lista_compras, fragment_lista_compras);
                 transaction.addToBackStack(null);
@@ -62,4 +63,5 @@ public class HomeFragment extends Fragment {
 
         return root;
     }
+
 }

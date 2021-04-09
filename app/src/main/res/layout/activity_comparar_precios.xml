@@ -7,113 +7,121 @@
     android:background="@drawable/fondo_framework"
     tools:context=".activities.Activity_Comparar_Precios">
 
-    <LinearLayout
-        android:id="@+id/llverticallc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        android:orientation="vertical">
-
-    <LinearLayout
-        android:id="@+id/llhorizontallc"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
+    <ScrollView
+        android:layout_width="408dp"
+        android:layout_height="731dp"
+        tools:layout_editor_absoluteY="-4dp"
         tools:ignore="MissingConstraints">
 
-        <TextView
-            android:id="@+id/txtSumaProductos"
+        <LinearLayout
+            android:id="@+id/llverticallc"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_marginLeft="20dp"
-            android:text="Suma productos a tus comparaciones!"
-            android:textColor="@android:color/black"
-            android:textSize="17dp"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
 
-    </LinearLayout>
-
-    <TableLayout
-        android:id="@+id/tblComparar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
-        tools:layout_editor_absoluteX="149dp"
-        tools:layout_editor_absoluteY="140dp">
-
-        <TableRow
-            android:id="@+id/local"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_gravity="center_horizontal">
-
-            <TextView
-                android:id="@+id/Local"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+            <LinearLayout
+                android:id="@+id/llhorizontallc"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center_horizontal"
-                android:text="Local" />
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
 
-            <TextView
-                android:id="@+id/Precio"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
+                <TextView
+                    android:id="@+id/txtSumaProductos"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:text="Suma productos a tus comparaciones!"
+                    android:textColor="@android:color/black"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TableLayout
+                android:id="@+id/tblComparar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="100dp"
+                tools:layout_editor_absoluteX="149dp"
+                tools:layout_editor_absoluteY="140dp">
+
+                <TableRow
+                    android:id="@+id/local"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/Local"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="Local" />
+
+                    <TextView
+                        android:id="@+id/Precio"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="Precio total" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </TableLayout>
+
+            <LinearLayout
+                android:id="@+id/llhorizontallc2"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="400dp"
                 android:gravity="center_horizontal"
-                android:text="Precio total" />
-        </TableRow>
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+                <Button
+                    android:id="@+id/btn_Volver"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:text="Volver"
+                    app:backgroundTint="#2196F3" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+                <Button
+                    android:id="@+id/btn_como_llegar"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:text="Como llegar"
+                    app:backgroundTint="#2196F3" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </TableLayout>
+                <Button
+                    android:id="@+id/btn_Detalle"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:text="Detalle"
+                    app:backgroundTint="#2196F3" />
 
-    <LinearLayout
-        android:id="@+id/llhorizontallc2"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="400dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        tools:ignore="MissingConstraints">
+            </LinearLayout>
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_Volver"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            app:backgroundTint="#2196F3"
-            android:text="Volver"/>
-
-        <Button
-            android:id="@+id/btn_como_llegar"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:text="Como llegar"
-            app:backgroundTint="#2196F3" />
-
-        <Button
-            android:id="@+id/btn_Detalle"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            app:backgroundTint="#2196F3"
-            android:text="Detalle"/>
-
-    </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

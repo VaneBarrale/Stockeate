@@ -8,129 +8,134 @@
     android:background="@drawable/fondo_framework"
     tools:context=".activities.Activity_Agregar_Promocion">
 
-    <LinearLayout
-        android:id="@+id/llverticallc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        android:orientation="vertical">
+    <ScrollView
+        android:layout_width="415dp"
+        android:layout_height="728dp">
 
         <LinearLayout
-            android:id="@+id/llhorizontallc"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            tools:ignore="MissingConstraints">
-
-            <TextView
-                android:id="@+id/txtPromociones"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_marginLeft="20dp"
-                android:text="Agrega las promos que conoces!"
-                android:textColor="@android:color/black"
-                android:textSize="17dp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llverticallc1"
+            android:id="@+id/llverticallc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
             android:orientation="vertical"
-            app:layout_editor_absoluteY="50dp"
             tools:ignore="MissingConstraints">
 
-
-            <EditText
-                android:id="@+id/etxtCodigoProducto"
+            <LinearLayout
+                android:id="@+id/llhorizontallc"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="Codigo producto"
-                android:background="#053F51B5" />
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
 
-            <EditText
-                android:id="@+id/etxtMarca"
+                <TextView
+                    android:id="@+id/txtPromociones"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:text="Agrega las promos que conoces!"
+                    android:textColor="@android:color/black"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llverticallc1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="Marca"
-                android:background="#053F51B5" />
-
-            <EditText
-                android:id="@+id/etxtPresentacion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="Presentacion"
-                android:background="#053F51B5" />
-
-            <EditText
-                android:id="@+id/etxtCantidad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="Cantidad"
-                android:background="#053F51B5" />
-
-            <EditText
-                android:id="@+id/etxtComercio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="Comercio"
-                android:background="#053F51B5" />
-
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:background="#053F51B5"/>
-
-            <Button
-                android:id="@+id/btn_agregar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                app:backgroundTint="#2196F3"
-                android:text="AGREGAR"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llhorizontallc2"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            tools:ignore="MissingConstraints">
-
-            <Button
-                android:id="@+id/btn_Volver"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                app:backgroundTint="#2196F3"
-                android:text="Volver"/>
-
-            <Button
-                android:id="@+id/btn_como_llegar"
-                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                app:backgroundTint="#2196F3"
-                android:text="Como llegar"/>
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical"
+                app:layout_editor_absoluteY="50dp"
+                tools:ignore="MissingConstraints">
+
+                <EditText
+                    android:id="@+id/etxtCodigoProducto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:background="#053F51B5"
+                    android:hint="Codigo producto" />
+
+                <EditText
+                    android:id="@+id/etxtMarca"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:background="#053F51B5"
+                    android:hint="Marca" />
+
+                <EditText
+                    android:id="@+id/etxtPresentacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:background="#053F51B5"
+                    android:hint="Presentacion" />
+
+                <EditText
+                    android:id="@+id/etxtCantidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:background="#053F51B5"
+                    android:hint="Cantidad" />
+
+                <EditText
+                    android:id="@+id/etxtComercio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:background="#053F51B5"
+                    android:hint="Comercio" />
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:background="#053F51B5"
+                    android:hint="Tipo promocion" />
+
+                <Button
+                    android:id="@+id/btn_agregar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="100dp"
+                    android:text="AGREGAR"
+                    app:backgroundTint="#2196F3" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llhorizontallc2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
+
+                <Button
+                    android:id="@+id/btn_Volver"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="Volver"
+                    app:backgroundTint="#2196F3" />
+
+                <Button
+                    android:id="@+id/btn_como_llegar"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="Como llegar"
+                    app:backgroundTint="#2196F3" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
-
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
