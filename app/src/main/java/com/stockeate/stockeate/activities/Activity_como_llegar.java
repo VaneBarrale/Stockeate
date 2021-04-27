@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,6 +23,7 @@ public class Activity_como_llegar extends FragmentActivity implements OnMapReady
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("Aca", "Por aca paso - oncreate");
         setContentView(R.layout.activity_como_llegar);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -41,24 +43,27 @@ public class Activity_como_llegar extends FragmentActivity implements OnMapReady
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        Log.d("Aca", "Por aca paso");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
-        }
+            }
+
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled (true);
 
-        // Add a marker in San Francisco and move the camera
+        MarkerOptions markerOptions = new MarkerOptions();
         LatLng san_francisco = new LatLng(-31.4249815, -62.0840299);
+        markerOptions.position(san_francisco);
+        markerOptions.title(san_francisco.latitude + " : " + san_francisco.longitude);
+        mMap.clear();
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(san_francisco));
+        mMap.addMarker(markerOptions);
+
+        // Add a marker in San Francisco and move the camera
+        /*LatLng san_francisco = new LatLng(-31.4249815, -62.0840299);
         mMap.addMarker(new MarkerOptions().position(san_francisco).title("San Francisco"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(san_francisco));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(san_francisco, 30));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(san_francisco, 30));*/
 
         LatLng hiper = new LatLng(-31.42773493119209, -62.11414910012128);
         mMap.addMarker(new MarkerOptions().position(hiper).title("Hipermercado Anselmi"));

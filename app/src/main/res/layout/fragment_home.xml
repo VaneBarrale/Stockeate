@@ -34,7 +34,7 @@
                 android:background="#053F51B5"
                 android:src="@drawable/ic_baseline_add_shopping_cart_24"
                 tools:layout_editor_absoluteX="39dp"
-                tools:layout_editor_absoluteY="175dp" />
+                tools:layout_editor_absoluteY="175dp"/>
 
             <ImageButton
                 android:id="@+id/btn_escanear"

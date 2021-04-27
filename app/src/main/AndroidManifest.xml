@@ -7,6 +7,9 @@
          location permissions for the "MyLocation" functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:allowBackup="true"
@@ -15,7 +18,7 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Stockeate">
-        <activity android:name=".activities.Activity_Agregar_Promocion"></activity>
+        <activity android:name=".activities.Activity_Agregar_Promocion" />
         <activity android:name=".activities.Activity_Detalle_Lista_Precios" />
         <activity android:name=".activities.Activity_Comparar_Precios" />
         <!--

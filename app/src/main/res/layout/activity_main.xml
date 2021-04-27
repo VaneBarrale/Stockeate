@@ -29,10 +29,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginTop="200dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginBottom="100dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,21 +40,22 @@
                 android:id="@+id/imvRectanguloRegistrar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/rectanguloredondeado" />
+                app:srcCompat="@drawable/background"/>
 
         </LinearLayout>
 
         <ScrollView
-            android:layout_width="408dp"
+            android:layout_width="match_parent"
             android:layout_height="731dp"
             tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:id="@+id/llRegistrarme"
-            android:layout_width="319dp"
+            android:layout_width="match_parent"
             android:layout_height="418dp"
             android:layout_marginTop="200dp"
-            android:layout_marginLeft="45dp"
+            android:layout_marginStart="45dp"
+            android:layout_marginEnd="45dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +66,8 @@
                 android:id="@+id/llhorizontalusuario"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
                 android:layout_marginTop="50dp"
                 android:orientation="horizontal">
 
@@ -93,7 +93,8 @@
                 android:id="@+id/llhorizontalcontraseña"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
                 android:orientation="horizontal">
 
 
