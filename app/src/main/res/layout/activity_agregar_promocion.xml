@@ -9,7 +9,7 @@
     tools:context=".activities.Activity_Agregar_Promocion">
 
     <ScrollView
-        android:layout_width="415dp"
+        android:layout_width="match_parent"
         android:layout_height="728dp">
 
         <LinearLayout
@@ -32,7 +32,8 @@
                     android:id="@+id/txtPromociones"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
                     android:gravity="center"
                     android:text="Agrega las promos que conoces!"
                     android:textColor="@android:color/black"
@@ -45,9 +46,9 @@
                 android:id="@+id/llverticallc1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
                 android:orientation="vertical"
                 app:layout_editor_absoluteY="50dp"
                 tools:ignore="MissingConstraints">

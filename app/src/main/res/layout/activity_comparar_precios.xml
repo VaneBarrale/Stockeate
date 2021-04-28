@@ -8,7 +8,7 @@
     tools:context=".activities.Activity_Comparar_Precios">
 
     <ScrollView
-        android:layout_width="408dp"
+        android:layout_width="match_parent"
         android:layout_height="731dp"
         tools:layout_editor_absoluteY="-4dp"
         tools:ignore="MissingConstraints">

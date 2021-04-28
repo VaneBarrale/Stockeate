@@ -13,7 +13,7 @@
         android:background="@drawable/fondo_framework"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
-        
+
         <LinearLayout
             android:id="@+id/llhorizontal2"
             android:layout_width="match_parent"
