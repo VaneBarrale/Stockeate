@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/nav_promocion"
-        android:name="com.stockeate.stockeate.ui.promocion.promocion"
+        android:name="com.stockeate.stockeate.ui.promocion.Fragment_Promocion"
         android:label="@string/menu_promocion"
         tools:layout="@layout/fragment_promocion" />
 

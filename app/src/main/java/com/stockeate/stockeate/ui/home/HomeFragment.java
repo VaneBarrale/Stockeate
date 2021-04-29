@@ -18,7 +18,7 @@ import com.stockeate.stockeate.ui.escanear_codigos_barra.Fragment_escanear_codig
 import com.stockeate.stockeate.ui.lista_compras.Fragment_lista_compras;
 import com.stockeate.stockeate.ui.nuevo_comercio.nuevo_comercio;
 import com.stockeate.stockeate.ui.precios.precios;
-import com.stockeate.stockeate.ui.promocion.promocion;
+import com.stockeate.stockeate.ui.promocion.Fragment_Promocion;
 import com.stockeate.stockeate.ui.ubicacion.ubicacion;
 
 public class HomeFragment extends Fragment {
@@ -90,7 +90,7 @@ public class HomeFragment extends Fragment {
         btn_promocion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                promocion promocion = new promocion();
+                Fragment_Promocion promocion = new Fragment_Promocion();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_home, promocion);
                 transaction.addToBackStack(null);

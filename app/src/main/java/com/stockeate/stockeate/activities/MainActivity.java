@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity{
     private TextView tv_registraraqui, tv_recuperar;
     private EditText et_email, et_password;
 
-    FirebaseAuth firebaseAuth;
+    private FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
 
     @Override
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity{
                 firebaseUser = firebaseAuth.getCurrentUser();
 
                 verificacionInicioSesion();
+
                 //cambiar esto y ponerlo dentro del if de verificacionInicioSesion()
                 Intent login = new Intent(MainActivity.this, Activity_Menu.class);
                 startActivity(login);

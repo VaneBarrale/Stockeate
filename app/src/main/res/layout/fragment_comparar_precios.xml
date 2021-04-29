@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_comparar_precios"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo_framework"
-    tools:context=".activities.Activity_Comparar_Precios">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.comparar_precios.Fragment_Comparar_Precios">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="731dp"
+        android:layout_height="wrap_content"
         tools:layout_editor_absoluteY="-4dp"
         tools:ignore="MissingConstraints">
 
@@ -46,7 +47,7 @@
                 android:id="@+id/tblComparar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="20dp"
                 tools:layout_editor_absoluteX="149dp"
                 tools:layout_editor_absoluteY="140dp">
 
@@ -120,8 +121,9 @@
                     app:backgroundTint="#2196F3" />
 
             </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

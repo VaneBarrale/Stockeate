@@ -18,9 +18,6 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Stockeate">
-        <activity android:name=".activities.Activity_Agregar_Promocion" />
-        <activity android:name=".activities.Activity_Detalle_Lista_Precios" />
-        <activity android:name=".activities.Activity_Comparar_Precios" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

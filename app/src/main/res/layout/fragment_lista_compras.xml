@@ -34,7 +34,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
-                android:text="Suma productos a tus comparaciones!"
+                android:text="Tu lista de compras!"
                 android:textColor="@android:color/black"
                 android:textSize="17dp"
                 android:textStyle="bold" />
