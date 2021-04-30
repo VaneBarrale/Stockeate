@@ -33,19 +33,23 @@
         <activity
             android:name=".activities.Activity_como_llegar"
             android:label="@string/title_activity_como_llegar" />
+
         <activity
             android:name=".activities.Activity_Menu"
             android:label="@string/title_activity_menu2"
             android:theme="@style/Theme.Stockeate.NoActionBar" />
+
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".activities.Activity_Registrar" />
+
         <activity android:name=".activities.Activity_Recuperar" />
+
     </application>
 
 </manifest>

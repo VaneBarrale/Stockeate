@@ -9,6 +9,8 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="facebook_aplication_id" translatable="false">203316054729521</string>
+    <string name="facebook_login_protocol_schema" translatable="false">fb203316054729521</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_lista_compras">Lista de compras</string>

@@ -1,30 +1,35 @@
 package com.stockeate.stockeate.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.common.io.LittleEndianDataInputStream;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.stockeate.stockeate.R;
 
 public class Activity_Registrar extends AppCompatActivity {
 
     private EditText et_email, et_password;
-    private Button btn_registrar;
+    private Button btn_registrar, btn_volver;
+    private ImageButton btn_facebook, btn_gmail;
     AwesomeValidation awesomeValidation;
     FirebaseAuth firebaseAuth;
+    FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +41,20 @@ public class Activity_Registrar extends AppCompatActivity {
         awesomeValidation.addValidation(this, R.id.editTextTextEmailAddress, Patterns.EMAIL_ADDRESS, R.string.invalid_mail);
         awesomeValidation.addValidation(this, R.id.login_password_editText, ".{6,}", R.string.invalid_password);
 
-        et_email = findViewById(R.id.editTextTextEmailAddress);
-        et_password = findViewById(R.id.etxtpassword);
-        btn_registrar = findViewById(R.id.btnRegistrar);
+        this.btn_volver = findViewById(R.id.btnVolver);
+        this.et_email = findViewById(R.id.editTextTextEmailAddress);
+        this.et_password = findViewById(R.id.etxtpassword);
+        this.btn_registrar = findViewById(R.id.btnRegistrar);
+        this.btn_facebook = findViewById(R.id.imbFace);
+        this.btn_gmail = findViewById(R.id.imbGmail);
+
+        btn_volver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Activity_Registrar.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
 
         btn_registrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +81,14 @@ public class Activity_Registrar extends AppCompatActivity {
                 }
             }
         });
+
+        btn_facebook. setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 
     private void dameToastdeerror(String error) {

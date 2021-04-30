@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/fondo">
 
-
     <LinearLayout
         android:id="@+id/llLogo"
         android:layout_width="match_parent"

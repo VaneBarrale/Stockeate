@@ -95,6 +95,7 @@
                 android:layout_height="70dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
 
@@ -102,14 +103,13 @@
                     android:id="@+id/imageView3"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginTop="30dp"
                     app:srcCompat="@drawable/candado" />
 
                 <EditText
                     android:id="@+id/login_password_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+
                     android:ems="10"
                     android:inputType="textPassword"
                     android:text="Contraseña" />
@@ -119,36 +119,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/imbFace"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="60dp"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/chkRecordarme"
-                    app:srcCompat="@drawable/iconoface" />
-
-                <ImageButton
-                    android:id="@+id/imbGmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/chkRecordarme"
-                    app:srcCompat="@drawable/iconogmail" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="1dp"
                 android:orientation="horizontal">
 
                 <CheckBox
