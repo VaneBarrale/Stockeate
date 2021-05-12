@@ -2,6 +2,7 @@ package com.stockeate.stockeate.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -11,25 +12,42 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.common.io.LittleEndianDataInputStream;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.stockeate.stockeate.R;
+import com.stockeate.stockeate.clases.class_usuarios;
+
+import org.jetbrains.annotations.NotNull;
 
 public class Activity_Registrar extends AppCompatActivity {
 
+    private class_usuarios userRegistered;
     private EditText et_email, et_password;
     private Button btn_registrar, btn_volver;
-    private ImageButton btn_facebook, btn_gmail;
+    private ImageButton btn_gmail;
     AwesomeValidation awesomeValidation;
     FirebaseAuth firebaseAuth;
-    FirebaseAuth.AuthStateListener authStateListener;
+    private GoogleSignInClient googleSignInClient;
+    private static int RC_SIGN_IN = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +63,22 @@ public class Activity_Registrar extends AppCompatActivity {
         this.et_email = findViewById(R.id.editTextTextEmailAddress);
         this.et_password = findViewById(R.id.etxtpassword);
         this.btn_registrar = findViewById(R.id.btnRegistrar);
-        this.btn_facebook = findViewById(R.id.imbFace);
         this.btn_gmail = findViewById(R.id.imbGmail);
+
+        setUpGoogleLogin();
 
         btn_volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Activity_Registrar.this, MainActivity.class);
                 startActivity(i);
+            }
+        });
+
+        btn_gmail.setOnClickListener(new View.OnClickListener() {
+           @Override
+            public void onClick(View v) {
+                loginGoogle();
             }
         });
 
@@ -82,16 +108,120 @@ public class Activity_Registrar extends AppCompatActivity {
             }
         });
 
-        btn_facebook. setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
     }
 
-    private void dameToastdeerror(String error) {
+    @Override
+    protected void onStart(){
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+    }
+
+    private void setUpGoogleLogin() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("1009564426156-bi6nm88hg48noio7g04mpeudl4lsj9us.apps.googleusercontent.com")
+                .requestEmail()
+                .build();
+        this.googleSignInClient = GoogleSignIn.getClient(this, gso);
+    }
+
+    private void loginGoogle() {
+        Intent signInIntent = this.googleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+            Log.d("Aca", "Por aca paso - onActivity " + task);
+        }
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        Log.d("Aca", "handleSignInResult:" + completedTask.isSuccessful());
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            firebaseAuthWithGoogle(account);
+            //por aca no pasa 12/05
+            Log.d("Aca", "Por aca paso - Handle");
+        } catch (ApiException e) {
+            Log.d("Aca", "Por aca paso - catch");
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Toast.makeText(Activity_Registrar.this, "Login Failed "+e.getStatusCode(),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
+        Log.d("Aca FirebaseAuthGoogle", "firebaseAuthWithGoogle:" + acct.getId());
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), "null");
+        this.firebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    String logedEmail = firebaseAuth.getCurrentUser().getEmail();
+                    userRegistered(acct);
+                }
+                else {
+                // If sign in fails, display a message to the user.
+                Toast.makeText(Activity_Registrar.this, "Login Failed "+task.getException().getMessage(),
+                        Toast.LENGTH_SHORT).show();
+                Log.e("Signup Error", "onCancelled", task.getException());
+                }}
+            });
+    }
+
+    private void signUp(String userEmail){
+        userRegistered = new class_usuarios(userEmail);
+        userRegistered.setMail(userEmail);
+
+        DatabaseReference firebaseReference = FirebaseDatabase.getInstance().getReference("stockeate/User");
+        String key = firebaseReference.push().getKey();
+        userRegistered.setId(key);
+        firebaseReference.child(key).setValue(userRegistered);
+            Intent login = new Intent(Activity_Registrar.this, Activity_Menu.class);
+            startActivity(login);
+    }
+
+    private void userRegistered(final GoogleSignInAccount acct) {
+
+        DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference("stockeate/Usuarios");
+        mDatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    if (data.child("mail").getValue().toString().equals(firebaseAuth.getCurrentUser().getEmail())) {
+                        userRegistered = new class_usuarios(acct.getEmail());
+                        userRegistered.setId(data.getKey());
+                        userRegistered.setMail(data.child("mail").getValue().toString());
+                    }
+                }
+
+                if (userRegistered != null) {
+                    Intent mainMenu = new Intent(Activity_Registrar.this, Activity_Menu.class);
+                    startActivity(mainMenu);
+
+                } else {
+                    signUp(firebaseAuth.getCurrentUser().getEmail());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(Activity_Registrar.this, "User Error",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void dameToastdeerror(@NotNull String error) {
 
         switch (error) {
             case "ERROR_INVALID_CUSTOM_TOKEN":

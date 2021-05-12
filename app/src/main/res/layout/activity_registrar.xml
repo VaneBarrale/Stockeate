@@ -50,31 +50,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:textSize="20dp"
                     android:text="REGISTRARME"
                     android:textColor="#000000"
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/etxtNombre"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:inputType="textPersonName"
-                    android:hint="Nombre" />
-
-                <EditText
-                    android:id="@+id/etxtApellido"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:inputType="textPersonName"
-                    android:hint="Apellido" />
-
-                <EditText
                     android:id="@+id/editTextTextEmailAddress"
                     android:layout_width="match_parent"
-                    android:layout_height="37dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
                     android:ems="10"
                     android:hint="Mail"
                     android:inputType="textEmailAddress"
@@ -82,18 +68,10 @@
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <EditText
-                    android:id="@+id/etxtDireccion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:inputType="text"
-                    android:hint="Direccion" />
-
-                <EditText
                     android:id="@+id/etxtpassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:inputType="textPassword"
                     android:hint="Contraseña" />
 
@@ -101,48 +79,30 @@
                     android:id="@+id/etxtconfirmpassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:inputType="textPassword"
                     android:hint="Confirmar Contraseña" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal"
-                    tools:ignore="MissingConstraints">
-
-                    <ImageButton
-                        android:id="@+id/imbFace"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="10dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/chkRecordarme"
-                        app:srcCompat="@drawable/iconoface" />
-
-                    <ImageButton
-                        android:id="@+id/imbGmail"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="10dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/chkRecordarme"
-                        app:srcCompat="@drawable/iconogmail" />
-
-                </LinearLayout>
+                <ImageButton
+                    android:id="@+id/imbGmail"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    app:srcCompat="@drawable/iconogmail" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_gravity="center_horizontal"
                     android:orientation="horizontal">
 
                     <Button
                         android:id="@+id/btnVolver"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Volver"
@@ -150,13 +110,12 @@
 
                     <Button
                         android:id="@+id/btnRegistrar"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_weight="1"
                         android:text="Registrar"
-                        app:backgroundTint="#2196F3"
-                        app:layout_constraintStart_toStartOf="@+id/btnVolver" />
+                        app:backgroundTint="#2196F3"/>
 
                 </LinearLayout>
 
