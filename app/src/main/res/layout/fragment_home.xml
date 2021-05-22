@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/fondo_framework"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+        
+        <LinearLayout
+            android:id="@+id/llhorizontal2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="400dp">
+
+            <ImageButton
+                android:id="@+id/btn_compras"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="30dp"
+                android:adjustViewBounds="false"
+                android:background="#053F51B5"
+                android:src="@drawable/ic_baseline_add_shopping_cart_24"
+                tools:layout_editor_absoluteX="39dp"
+                tools:layout_editor_absoluteY="175dp"/>
+
+            <ImageButton
+                android:id="@+id/btn_escanear"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="30dp"
+                android:background="#053F51B5"
+                android:src="@drawable/ic_outline_qr_code_scanner_24"
+                tools:layout_editor_absoluteX="157dp"
+                tools:layout_editor_absoluteY="178dp" />
+
+            <ImageButton
+                android:id="@+id/btn_ubicacion"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="30dp"
+                android:background="#053F51B5"
+                android:src="@drawable/ic_outline_location_on_24"
+                tools:layout_editor_absoluteX="278dp"
+                tools:layout_editor_absoluteY="178dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llhorizontal4"
+            android:layout_width="match_parent"
+            android:layout_height="81dp"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp">
+
+            <TextView
+                android:id="@+id/txt_ListaCompras"
+                android:layout_width="92dp"
+                android:layout_height="56dp"
+                android:layout_marginLeft="40dp"
+                android:gravity="center"
+                android:text="Lista de compras"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="32dp"
+                tools:layout_editor_absoluteY="100dp" />
+
+            <TextView
+                android:id="@+id/text_escanear"
+                android:layout_width="98dp"
+                android:layout_height="51dp"
+                android:layout_marginLeft="30dp"
+                android:gravity="center"
+                android:text="Escanear codigo de barra"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="156dp"
+                tools:layout_editor_absoluteY="314dp" />
+
+            <TextView
+                android:id="@+id/text_ubicacion"
+                android:layout_width="98dp"
+                android:layout_height="51dp"
+                android:layout_marginLeft="30dp"
+                android:gravity="center"
+                android:text="Llegar a destino"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="288dp"
+                tools:layout_editor_absoluteY="314dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llhorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="200dp">
+
+
+            <ImageButton
+                android:id="@+id/btn_precio"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="30dp"
+                android:background="#053F51B5"
+                android:src="@drawable/ic_outline_autorenew_24"
+                tools:layout_editor_absoluteX="35dp"
+                tools:layout_editor_absoluteY="370dp" />
+
+            <ImageButton
+                android:id="@+id/btn_promocion"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="30dp"
+                android:background="#053F51B5"
+                android:src="@drawable/ic_outline_campaign_24"
+                tools:layout_editor_absoluteX="155dp"
+                tools:layout_editor_absoluteY="370dp" />
+
+            <ImageButton
+                android:id="@+id/btn_nuevo_comercio"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="30dp"
+                android:background="#053F51B5"
+                android:src="@drawable/ic_outline_add_business_24"
+                tools:layout_editor_absoluteX="278dp"
+                tools:layout_editor_absoluteY="370dp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/llhorizontal3"
+            android:layout_width="match_parent"
+            android:layout_height="112dp"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="100dp">
+
+            <TextView
+                android:id="@+id/text_precio"
+                android:layout_width="98dp"
+                android:layout_height="51dp"
+                android:layout_marginLeft="30dp"
+                android:gravity="center"
+                android:text="Actualizar precios"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="32dp"
+                tools:layout_editor_absoluteY="512dp" />
+
+            <TextView
+                android:id="@+id/text_promocion"
+                android:layout_width="98dp"
+                android:layout_height="51dp"
+                android:layout_marginLeft="30dp"
+                android:gravity="center"
+                android:text="Promociones"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="156dp"
+                tools:layout_editor_absoluteY="512dp" />
+
+            <TextView
+                android:id="@+id/text_comercio"
+                android:layout_width="98dp"
+                android:layout_height="51dp"
+                android:layout_marginLeft="30dp"
+                android:gravity="center"
+                android:text="Agregar nuevos comercios"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="288dp"
+                tools:layout_editor_absoluteY="512dp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

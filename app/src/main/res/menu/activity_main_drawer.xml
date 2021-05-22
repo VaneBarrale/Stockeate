@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/home"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_lista_compras"
+            android:icon="@drawable/lista_compras"
+            android:title="Lista de compras" />
+        <item
+            android:id="@+id/nav_escanear_codigos_barra"
+            android:icon="@drawable/escaner"
+            android:title="Escanear codigos de barra" />
+
+        <item
+            android:id="@+id/nav_ubicacion"
+            android:icon="@drawable/ubicacion"
+            android:title="Llegar a destino" />
+
+        <item
+            android:id="@+id/nav_promocion"
+            android:icon="@drawable/promocion"
+            android:title="Promociones" />
+
+        <item
+            android:id="@+id/nav_actualizacion_precios"
+            android:icon="@drawable/actualizar"
+            android:title="Actualizar precios" />
+
+        <item
+            android:id="@+id/nav_nuevo_local"
+            android:icon="@drawable/nuevo_local"
+            android:title="Agregar local" />
+
+        <item
+            android:id="@+id/nav_salir"
+            android:icon="@drawable/salir"
+            android:title="Salir"/>
+
+    </group>
+</menu>

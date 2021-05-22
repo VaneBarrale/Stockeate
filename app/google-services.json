@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1009564426156",
+    "project_id": "stockeate-3d9e6",
+    "storage_bucket": "stockeate-3d9e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1009564426156:android:075bc98ee80fe4f6cb6409",
+        "android_client_info": {
+          "package_name": "com.stockeate.stockeate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1009564426156-bi6nm88hg48noio7g04mpeudl4lsj9us.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBCqtIt8KaSzoQT_RrNN6p_N3Dv48ePWs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1009564426156-bi6nm88hg48noio7g04mpeudl4lsj9us.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
