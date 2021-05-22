@@ -8,7 +8,7 @@ public class class_producto {
     private String id, id_categoria, codigo_barra, marca, presentacion, unidad;
     private float precio_unitario;
 
-    public class_producto(EditText marca){}
+    public class_producto(){}
 
     public class_producto(String id, String categoria, String codigo_barra, String marca, String presentacion, String unidad, float precio_unitario) {
         this.id = id;

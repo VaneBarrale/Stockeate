@@ -1,11 +1,18 @@
 package com.stockeate.stockeate.ui.lista_compras;
 
+import android.icu.text.SymbolTable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.adapter.Adapter_productos;
+import com.stockeate.stockeate.clases.class_lista_compras;
 import com.stockeate.stockeate.clases.class_producto;
 import com.stockeate.stockeate.ui.comparar_precios.Fragment_Comparar_Precios;
 import com.stockeate.stockeate.ui.home.HomeFragment;
@@ -31,16 +40,19 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Fragment_lista_compras extends Fragment {
 
     private ViewModel_lista_compras viewModelListacompras;
     private Button btn_comparar, btn_volver, btn_agregar, btn_buscar;
     private EditText codigo_producto, marca, presentacion, cantidad;
-    private DatabaseReference bbdd;
-    private Adapter_productos mAdapter;
-    private ArrayList<class_producto> mProductosList;
-    RecyclerView recyclerviewresultado; //me permite administrar las vistas
+    private ListView productos_agregados;
+    //private Adapter_productos mAdapter;
+    //private ArrayList<class_producto> mProductosList;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+    //RecyclerView recyclerviewresultado; //me permite administrar las vistas
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -53,8 +65,6 @@ public class Fragment_lista_compras extends Fragment {
             }
         });
 
-        bbdd = FirebaseDatabase.getInstance().getReference();
-
         this.btn_comparar = root.findViewById(R.id.btn_Comparar);
         this.btn_volver = root.findViewById(R.id.btn_Volver);
         this.btn_agregar = root.findViewById(R.id.btn_Agregar);
@@ -63,7 +73,10 @@ public class Fragment_lista_compras extends Fragment {
         this.marca = root.findViewById(R.id.etxtMarca);
         this.presentacion = root.findViewById(R.id.etxtPresentacion);
         this.cantidad = root.findViewById(R.id.etxtCantidad);
-        this.recyclerviewresultado = root.findViewById(R.id.recyclerViewResultado);
+        this.productos_agregados = root.findViewById(R.id.lista_productos_agregados);
+        //this.recyclerviewresultado = root.findViewById(R.id.recyclerViewResultado);
+
+        inicializarFirebase();
 
         btn_comparar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,10 +108,10 @@ public class Fragment_lista_compras extends Fragment {
             @Override
             public void onClick(View v) {
 
-                mProductosList = new ArrayList<>();
-                recyclerviewresultado.setLayoutManager(new LinearLayoutManager(getContext()));
+//                mProductosList = new ArrayList<>();
+//                recyclerviewresultado.setLayoutManager(new LinearLayoutManager(getContext()));
 
-                getProductosFirebase();
+//                getProductosFirebase();
 
                 /*https://www.youtube.com/watch?v=em2CWW5-9Rc 24.25
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -132,6 +145,22 @@ public class Fragment_lista_compras extends Fragment {
         btn_agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String _codigo_producto = codigo_producto.getText().toString();
+                String _marca = marca.getText().toString();
+                String _presentacion = presentacion.getText().toString();
+                String _cantidad = cantidad.getText().toString();
+                if(_codigo_producto.equals("") || _marca.equals("") || _presentacion.equals("") || _cantidad.equals(""))  {
+                    validar();
+                } else {
+                    class_lista_compras lista_compras = new class_lista_compras();
+                    lista_compras.setId(UUID.randomUUID().toString());
+                    //corregir y pasar el id del usuario.
+                    lista_compras.setId_usuario("1");
+                    class_producto producto = new class_producto();
+                    databaseReference.child("lista_compras").child(lista_compras.getId()).setValue(lista_compras);
+                    Toast.makeText(getContext(), "Agregar", Toast.LENGTH_LONG).show();
+                    limpiarDatos();
+                }
 
                 /*//Instanciar también base de datos para lista de compras y guardar ids.
 
@@ -147,7 +176,35 @@ public class Fragment_lista_compras extends Fragment {
         return root;
     }
 
-    private void getProductosFirebase(){
+    private void inicializarFirebase() {
+        FirebaseApp.initializeApp(getContext());
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+    }
+
+    private void validar() {
+        String _codigo_producto = codigo_producto.getText().toString();
+        String _marca = marca.getText().toString();
+        String _presentacion = presentacion.getText().toString();
+        String _cantidad = cantidad.getText().toString();
+
+        if(_codigo_producto.equals("")) {codigo_producto.setError("Codigo producto requerido");}
+
+        else if (_marca.equals("")){marca.setError("Marca requerida");}
+
+        else if(_presentacion.equals("")){presentacion.setError("Presentacion requerida");}
+
+        else if(_cantidad.equals("")){cantidad.setError("Cantidad requerida");}
+    }
+
+    private void limpiarDatos(){
+        codigo_producto.setText("");
+        marca.setText("");
+        presentacion.setText("");
+        cantidad.setText("");
+    }
+
+/*    private void getProductosFirebase(){
         bbdd.child("Productos").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -167,5 +224,5 @@ public class Fragment_lista_compras extends Fragment {
             }
         });
     }
-
+*/
 }

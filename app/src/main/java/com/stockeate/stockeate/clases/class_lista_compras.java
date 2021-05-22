@@ -3,6 +3,9 @@ package com.stockeate.stockeate.clases;
 public class class_lista_compras {
     private String id, id_usuario;
 
+    public class_lista_compras() {
+    }
+
     public class_lista_compras(String id, String id_usuario) {
         this.id = id;
         this.id_usuario = id_usuario;
