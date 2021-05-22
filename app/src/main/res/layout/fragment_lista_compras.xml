@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo_framework"
-    tools:context=".ui.lista_compras.Fragment_lista_compras">
+    tools:context=".ui.lista_compras.Fragment_lista_compras"
+    tools:menu="@menu/activity_menu">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -77,23 +78,40 @@
                 android:hint="Presentacion"
                 android:background="#053F51B5" />
 
+            <Button
+                android:id="@+id/btn_Buscar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:backgroundTint="#2196F3"
+                android:text="BUSCAR"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewResultado"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="20dp"
+                android:hint="Resultado" />
+
             <EditText
                 android:id="@+id/etxtCantidad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="20dp"
                 android:hint="Cantidad"
                 android:background="#053F51B5" />
 
             <Button
+                android:id="@+id/btn_Agregar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 app:backgroundTint="#2196F3"
                 android:text="AGREGAR"/>
 
 
             <ListView
+                android:id="@+id/lista_productos_agregados"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 tools:layout_editor_absoluteX="79dp"
