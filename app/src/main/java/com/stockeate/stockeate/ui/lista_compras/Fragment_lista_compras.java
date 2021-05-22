@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -48,8 +49,8 @@ public class Fragment_lista_compras extends Fragment {
     private Button btn_comparar, btn_volver, btn_agregar, btn_buscar;
     private EditText codigo_producto, marca, presentacion, cantidad;
     private ListView productos_agregados;
-    //private Adapter_productos mAdapter;
-    //private ArrayList<class_producto> mProductosList;
+    private ArrayAdapter<class_producto> mArrayAdapterProducto;
+    private ArrayList<class_producto> mProductosList = null;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     //RecyclerView recyclerviewresultado; //me permite administrar las vistas
@@ -77,6 +78,7 @@ public class Fragment_lista_compras extends Fragment {
         //this.recyclerviewresultado = root.findViewById(R.id.recyclerViewResultado);
 
         inicializarFirebase();
+        //todos los metodos que usen firebase deben ir abajo del inicializador
 
         btn_comparar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,38 +109,9 @@ public class Fragment_lista_compras extends Fragment {
         btn_buscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                mProductosList = new ArrayList<>();
-//                recyclerviewresultado.setLayoutManager(new LinearLayoutManager(getContext()));
-
-//                getProductosFirebase();
-
-                /*https://www.youtube.com/watch?v=em2CWW5-9Rc 24.25
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference firebaseReference = database.getReference("stockeate-3d9e6-default-rtdb/Productos");
-
-                //
-                String codigo_producto_buscar = codigo_producto.getText().toString();
-
-                //BUSCO POR CODIGO DE PRODUCTO (ID DE BASE DE DATOS)
-                Query q = firebaseReference.orderByChild("id").equalTo(codigo_producto_buscar);
-                q.addListenerForSingleValueEvent(new ValueEventListener() {
-
-                    @Override
-                    public void onDataChange(@NonNull @NotNull DataSnapshot dataSnapshot) {
-                        Log.d("Buscar", "Paso por la busqueda" + resultado);
-                        //VER PORQUE NO ESTA ENTRANDO AL FOR 15/05
-                        for (DataSnapshot data : dataSnapshot.getChildren()) {
-                            class_producto clase_producto = new class_producto();
-                            clase_producto.setId(data.child("id").getValue().toString());
-                            resultado.setText(codigo_producto_buscar);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull @NotNull DatabaseError error) {}
-                });
-            }*/
+                mProductosList = new ArrayList<class_producto>();
+                listarproductos();
+//
             }
         });
 
@@ -156,7 +129,6 @@ public class Fragment_lista_compras extends Fragment {
                     lista_compras.setId(UUID.randomUUID().toString());
                     //corregir y pasar el id del usuario.
                     lista_compras.setId_usuario("1");
-                    class_producto producto = new class_producto();
                     databaseReference.child("lista_compras").child(lista_compras.getId()).setValue(lista_compras);
                     Toast.makeText(getContext(), "Agregar", Toast.LENGTH_LONG).show();
                     limpiarDatos();
@@ -174,6 +146,34 @@ public class Fragment_lista_compras extends Fragment {
         });
 
         return root;
+    }
+
+    private void listarproductos() {
+        databaseReference.child("Productos").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                mProductosList.clear();
+                if (snapshot.exists()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        class_producto productos = new class_producto();
+                        productos.setId(dataSnapshot.getKey());
+                        productos.setId_categoria(dataSnapshot.child("categoria").getValue().toString());
+                        productos.setMarca(dataSnapshot.child("marca").getValue().toString());
+                        productos.setPresentacion(dataSnapshot.child("presentacion").getValue().toString());
+
+                        mProductosList.add(productos);
+
+                        mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
+                        productos_agregados.setAdapter(mArrayAdapterProducto);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void inicializarFirebase() {
@@ -203,26 +203,4 @@ public class Fragment_lista_compras extends Fragment {
         presentacion.setText("");
         cantidad.setText("");
     }
-
-/*    private void getProductosFirebase(){
-        bbdd.child("Productos").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                mProductosList.clear();
-                if (snapshot.exists()){
-                    for(DataSnapshot dataSnapshot: snapshot.getChildren()){
-                        String producto = dataSnapshot.child("marca").getValue().toString();
-                        mProductosList.add(new class_producto(marca));
-                    }
-
-                    mAdapter = new Adapter_productos(mProductosList, R.layout.lista_productos);
-                    recyclerviewresultado.setAdapter(mAdapter);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-            }
-        });
-    }
-*/
 }

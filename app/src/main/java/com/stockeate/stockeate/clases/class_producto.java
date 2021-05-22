@@ -5,12 +5,11 @@ import android.widget.EditText;
 import java.util.ArrayList;
 
 public class class_producto {
-    private String id, id_categoria, codigo_barra, marca, presentacion, unidad;
-    private float precio_unitario;
+    private String id, id_categoria, codigo_barra, marca, presentacion, unidad, precio_unitario;
 
     public class_producto(){}
 
-    public class_producto(String id, String categoria, String codigo_barra, String marca, String presentacion, String unidad, float precio_unitario) {
+    public class_producto(String id, String categoria, String codigo_barra, String marca, String presentacion, String unidad, String precio_unitario) {
         this.id = id;
         this.id_categoria = categoria;
         this.codigo_barra = codigo_barra;
@@ -68,11 +67,16 @@ public class class_producto {
         this.unidad = unidad;
     }
 
-    public float getPrecio_unitario() {
+    public String getPrecio_unitario() {
         return precio_unitario;
     }
 
-    public void setPrecio_unitario(float precio_unitario) {
+    public void setPrecio_unitario(String precio_unitario) {
         this.precio_unitario = precio_unitario;
+    }
+
+    @Override
+    public String toString() {
+        return id_categoria + ' ' + marca + ' ' + presentacion;
     }
 }
