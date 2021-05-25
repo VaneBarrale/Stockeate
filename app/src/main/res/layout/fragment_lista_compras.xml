@@ -53,29 +53,18 @@
             app:layout_editor_absoluteY="50dp"
             tools:ignore="MissingConstraints">
 
+            <Spinner
+                android:id="@+id/filtroTipo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dialog"/>
 
             <EditText
-                android:id="@+id/etxtCodigoProducto"
+                android:id="@+id/etxtFiltro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:hint="Codigo producto"
-                android:background="#053F51B5" />
-
-            <EditText
-                android:id="@+id/etxtMarca"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:hint="Marca"
-                android:background="#053F51B5" />
-
-            <EditText
-                android:id="@+id/etxtPresentacion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:hint="Presentacion"
+                android:hint="Ingresa una palabra clave para buscar"
                 android:background="#053F51B5" />
 
             <Button
@@ -86,12 +75,18 @@
                 app:backgroundTint="#2196F3"
                 android:text="BUSCAR"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewResultado"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginTop="20dp"
-                android:hint="Resultado" />
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ListView
+                    android:id="@+id/ListViewResultado"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="20dp"
+                    android:hint="Resultado" />
+
+            </ScrollView>
 
             <EditText
                 android:id="@+id/etxtCantidad"

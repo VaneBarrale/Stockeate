@@ -1,22 +1,21 @@
 package com.stockeate.stockeate.clases;
 
-import android.widget.EditText;
-
-import java.util.ArrayList;
-
 public class class_producto {
-    private String id, id_categoria, codigo_barra, marca, presentacion, unidad, precio_unitario;
+    private String id, id_categoria, codigo_barra, marca, id_presentacion, id_unidad, precio_unitario;
 
     public class_producto(){}
 
-    public class_producto(String id, String categoria, String codigo_barra, String marca, String presentacion, String unidad, String precio_unitario) {
+    public class_producto(String id, String id_categoria, String codigo_barra, String marca, String id_presentacion, String id_unidad, String precio_unitario) {
         this.id = id;
-        this.id_categoria = categoria;
+        this.id_categoria = id_categoria;
         this.codigo_barra = codigo_barra;
         this.marca = marca;
-        this.presentacion = presentacion;
-        this.unidad = unidad;
+        this.id_presentacion = id_presentacion;
+        this.id_unidad = id_unidad;
         this.precio_unitario = precio_unitario;
+    }
+
+    public <T> class_producto(T value) {
     }
 
     public String getId() {
@@ -27,11 +26,11 @@ public class class_producto {
         this.id = id;
     }
 
-    public String getId_categoria() {
+    public String getIdCategoria() {
         return id_categoria;
     }
 
-    public void setId_categoria(String id_categoria) {
+    public void setIdCategoria(String id_categoria) {
         this.id_categoria = id_categoria;
     }
 
@@ -51,20 +50,20 @@ public class class_producto {
         this.marca = marca;
     }
 
-    public String getPresentacion() {
-        return presentacion;
+    public String getIdPresentacion() {
+        return id_presentacion;
     }
 
-    public void setPresentacion(String presentacion) {
-        this.presentacion = presentacion;
+    public void setIdPresentacion(String id_presentacion) {
+        this.id_presentacion = id_presentacion;
     }
 
-    public String getUnidad() {
-        return unidad;
+    public String getIdUnidad() {
+        return id_unidad;
     }
 
-    public void setUnidad(String unidad) {
-        this.unidad = unidad;
+    public void setIdUnidad(String unidad) {
+        this.id_unidad = id_unidad;
     }
 
     public String getPrecio_unitario() {
@@ -77,6 +76,5 @@ public class class_producto {
 
     @Override
     public String toString() {
-        return id_categoria + ' ' + marca + ' ' + presentacion;
-    }
+        return id_categoria  + ' ' + marca + ' ' + id_presentacion; }
 }
