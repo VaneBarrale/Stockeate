@@ -1,5 +1,6 @@
 package com.stockeate.stockeate.ui.lista_compras;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,10 +38,10 @@ public class Fragment_lista_compras extends Fragment {
 
     private ViewModel_lista_compras viewModelListacompras;
     private Button btn_comparar, btn_volver, btn_agregar, btn_buscar;
-    private EditText categoria, marca, presentacion, cantidad;
+    private EditText categoria, marca, presentacion, cantidad, unidad;
     private ListView productos_agregados;
-    private ArrayAdapter<class_producto> mArrayAdapterProducto;
-    private ArrayList<class_producto> mProductosList = null;
+    private ArrayAdapter<String> mArrayAdapterProducto;
+    private ArrayList<String> mProductosList = null;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     private ListView listaResultado;
@@ -141,16 +142,25 @@ public class Fragment_lista_compras extends Fragment {
         String jsonFileContent = utiles.leerJson(getContext(), "productos.json");
         JSONArray jsonArray = new JSONArray(jsonFileContent);
         for (int i = 0; i < jsonArray.length(); i++) {
+            class_producto productos = new class_producto();
+
             JSONObject jsonObj = jsonArray.getJSONObject(i);
             String id = jsonObj.getString("id");
-            String categoria = jsonObj.getString("categoria");
-            String marca = jsonObj.getString("marca");
-            String presentacion = jsonObj.getString("presentacion");
-            String unidad = jsonObj.getString("unidad");
-            Log.d("datos json ", id + " " + categoria + " " + marca + " " + presentacion + " " + unidad);
-        } // hasta aca
+            //agrego if
+            if (jsonObj.getString("categoria").equals(categoria.getText().toString())) {
+                productos.setCategoria(productos.getCategoria());
+            } else if (jsonObj.getString("marca").equals(marca.getText().toString())) {
+                productos.setMarca(productos.getMarca());
+            } else if (jsonObj.getString("presentacion").equals(presentacion.getText().toString())) {
+                productos.setMarca(productos.getPresentacion());
+            }
+            Log.d("datos json ", id + " " + categoria + " " + marca + " " + presentacion + " " + productos.getUnidad());
 
-    }
+            mProductosList.add(jsonObj.getString("id") + " " + jsonObj.getString("categoria") + " " + jsonObj.getString("marca") + " " + jsonObj.getString("presentacion") + " " + jsonObj.getString("unidad"));
+        }
+        mArrayAdapterProducto = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
+        listaResultado.setAdapter(mArrayAdapterProducto);
+    } // hasta aca
 
     private void inicializarFirebase() {
         FirebaseApp.initializeApp(getContext());

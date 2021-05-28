@@ -83,18 +83,11 @@
                 app:backgroundTint="#2196F3"
                 android:text="BUSCAR"/>
 
-            <ScrollView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ListView
-                    android:id="@+id/ListViewResultado"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="20dp"
-                    android:hint="Resultado" />
-
-            </ScrollView>
+            <ListView
+                android:id="@+id/ListViewResultado"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:hint="Resultado" />
 
             <EditText
                 android:id="@+id/etxtCantidad"
