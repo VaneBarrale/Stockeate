@@ -1,0 +1,65 @@
+[
+  {
+    "id": "1",
+    "categoria": "gaseosa",
+    "marca": "Coca-Cola",
+    "presentacion": "2.5",
+    "unidad": "Litros"
+  },
+  {
+    "id": "2",
+    "categoria": "gaseosa",
+    "marca": "Naranpol",
+    "presentacion": "1.5",
+    "unidad": "Litros"
+  },
+  {
+    "id": "3",
+    "categoria": "aceite",
+    "marca": "Natura",
+    "presentacion": "3",
+    "unidad": "Litros"
+  },
+  {
+    "id": "4",
+    "categoria": "aceite",
+    "marca": "Patito",
+    "presentacion": "1.5",
+    "unidad": "Litros"
+  },
+  {
+    "id": "5",
+    "categoria": "masitas dulces",
+    "marca": "Pepitos",
+    "presentacion": "500",
+    "unidad": "gramos"
+  },
+  {
+    "id": "6",
+    "categoria": "masitas saladas",
+    "marca": "Terrabusi",
+    "presentacion": "1",
+    "unidad": "unidad"
+  },
+  {
+    "id": "7",
+    "categoria": "masitas dulces",
+    "marca": "Sonrisas",
+    "presentacion": "300",
+    "unidad": "gramos"
+  },
+  {
+    "id": "8",
+    "categoria": "jamon cocido",
+    "marca": "casona",
+    "presentacion": "250",
+    "unidad": "gramos"
+  },
+  {
+    "id": "9",
+    "categoria": "queso cremos",
+    "marca": "La serenisima",
+    "presentacion": "1",
+    "unidad": "kilo"
+  }
+]

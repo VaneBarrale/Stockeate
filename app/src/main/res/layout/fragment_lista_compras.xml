@@ -48,23 +48,31 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
             android:orientation="vertical"
             app:layout_editor_absoluteY="50dp"
             tools:ignore="MissingConstraints">
 
-            <Spinner
-                android:id="@+id/filtroTipo"
+            <EditText
+                android:id="@+id/etxCategoria"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:spinnerMode="dialog"/>
+                android:hint="Categoria. Ejemplo gaseosa"
+                android:background="#053F51B5" />
 
             <EditText
-                android:id="@+id/etxtFiltro"
+                android:id="@+id/etxtMarca"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:hint="Ingresa una palabra clave para buscar"
+                android:hint="Marca. Ejemplo Coca-Cola"
+                android:background="#053F51B5" />
+
+            <EditText
+                android:id="@+id/etxtPresentacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:hint="Presentacion. Ejemplo 2,5"
                 android:background="#053F51B5" />
 
             <Button
