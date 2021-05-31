@@ -1,6 +1,8 @@
 package com.stockeate.stockeate.ui.lista_compras;
 
+import android.icu.text.CaseMap;
 import android.os.Bundle;
+import android.text.BoringLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -140,25 +142,85 @@ public class Fragment_lista_compras extends Fragment {
     private void listarproductos() throws IOException, JSONException {
         mProductosList.clear();
 
+        Boolean guardar;
+
         //Asi lee los datos del json estatico
         String jsonFileContent = utiles.leerJson(getContext(), "productos.json");
         JSONArray jsonArray = new JSONArray(jsonFileContent);
+        Log.d("Longitud json ", String.valueOf(jsonArray.length()));
+        Log.d("json ", jsonArray.toString());
         for (int i = 0; i < jsonArray.length(); i++) {
             class_producto productos = new class_producto();
-
+            Log.d("dentro del for ", String.valueOf(i));
             JSONObject jsonObj = jsonArray.getJSONObject(i);
-            //agrego if. Esto es lo que hay que corregir para que muestr ebien el mProductosList porque esta mostrando archivo completo
-            if (jsonObj.getString("categoria").equals(categoria.getText().toString()) && jsonObj.getString("marca").equals(marca.getText().toString()) && jsonObj.getString("presentacion").equals(presentacion.getText().toString()) && jsonObj.getString("unidad").equals(unidad.getText().toString())) {
-                productos.setId(jsonObj.getString("id"));
-                productos.setCategoria(categoria.getText().toString());
-                productos.setMarca(marca.getText().toString());
-                productos.setPresentacion(presentacion.getText().toString());
-                productos.setUnidad(unidad.getText().toString());
-            }
 
+            guardar = true;
+
+            if(!categoria.getText().toString().isEmpty() ||
+                    !marca.getText().toString().isEmpty() ||
+                    !presentacion.getText().toString().isEmpty()||
+                    !presentacion.getText().toString().isEmpty()||
+                    !unidad.getText().toString().isEmpty()) {
+                //agrego if. Esto es lo que hay que corregir para que muestr ebien el mProductosList porque esta mostrando archivo completo
+                if (!categoria.getText().toString().isEmpty()) {
+                    if (jsonObj.getString("categoria").equals(categoria.getText().toString())) {
+                        if (guardar) {
+                            guardar = true;
+                        } else {
+                            guardar = false;
+                        }
+                        ;
+                    } else {
+                        guardar = false;
+                    }
+                }
+                if (!marca.getText().toString().isEmpty()) {
+                    if (jsonObj.getString("marca").equals(marca.getText().toString())) {
+                        if (guardar) {
+                            guardar = true;
+                        } else {
+                            guardar = false;
+                        }
+                        ;
+                    } else {
+                        guardar = false;
+                    }
+                }
+                if (!presentacion.getText().toString().isEmpty()) {
+                    if (jsonObj.getString("presentacion").equals(presentacion.getText().toString())) {
+                        if (guardar) {
+                            guardar = true;
+                        } else {
+                            guardar = false;
+                        }
+                        ;
+                    } else {
+                        guardar = false;
+                    }
+                }
+                if (!unidad.getText().toString().isEmpty()) {
+                    if (jsonObj.getString("unidad").equals(unidad.getText().toString())) {
+                        if (guardar) {
+                            guardar = true;
+                        } else {
+                            guardar = false;
+                        }
+                        ;
+                    } else {
+                        guardar = false;
+                    }
+                }
+                if (guardar) {
+                    productos.setId(jsonObj.getString("id"));
+                    productos.setCategoria(jsonObj.getString("categoria"));
+                    productos.setMarca(jsonObj.getString("marca"));
+                    productos.setPresentacion(jsonObj.getString("presentacion"));
+                    productos.setUnidad(jsonObj.getString("unidad"));
+                    mProductosList.add(productos);
+                }
+            }
             Log.d("datos json ", productos.getId() + " " + productos.getCategoria() + " " + productos.getMarca() + " " + productos.getPresentacion() + " " + productos.getUnidad());
-            
-            mProductosList.add(productos);
+
         }
 
         mProductosList.removeAll(Collections.singleton(null));
