@@ -1,6 +1,5 @@
 package com.stockeate.stockeate.ui.lista_compras;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +32,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Fragment_lista_compras extends Fragment {
 
@@ -40,8 +40,8 @@ public class Fragment_lista_compras extends Fragment {
     private Button btn_comparar, btn_volver, btn_agregar, btn_buscar;
     private EditText categoria, marca, presentacion, cantidad, unidad;
     private ListView productos_agregados;
-    private ArrayAdapter<String> mArrayAdapterProducto;
-    private ArrayList<String> mProductosList = null;
+    private ArrayAdapter<class_producto> mArrayAdapterProducto;
+    private ArrayList<class_producto> mProductosList = null;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     private ListView listaResultado;
@@ -65,6 +65,7 @@ public class Fragment_lista_compras extends Fragment {
         this.marca = root.findViewById(R.id.etxtMarca);
         this.presentacion = root.findViewById(R.id.etxtPresentacion);
         this.cantidad = root.findViewById(R.id.etxtCantidad);
+        this.unidad = root.findViewById(R.id.etxtUnidad);
         this.productos_agregados = root.findViewById(R.id.lista_productos_agregados);
         this.listaResultado = root.findViewById(R.id.ListViewResultado);
 
@@ -100,7 +101,7 @@ public class Fragment_lista_compras extends Fragment {
         btn_buscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mProductosList = new ArrayList<>();
+                mProductosList = new ArrayList<class_producto>();
                 try {
                     listarproductos();
                 } catch (IOException e) {
@@ -108,6 +109,7 @@ public class Fragment_lista_compras extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                limpiarDatos();
             }
         });
 
@@ -145,22 +147,24 @@ public class Fragment_lista_compras extends Fragment {
             class_producto productos = new class_producto();
 
             JSONObject jsonObj = jsonArray.getJSONObject(i);
-            String id = jsonObj.getString("id");
-            //agrego if
-            if (jsonObj.getString("categoria").equals(categoria.getText().toString())) {
-                productos.setCategoria(productos.getCategoria());
-            } else if (jsonObj.getString("marca").equals(marca.getText().toString())) {
-                productos.setMarca(productos.getMarca());
-            } else if (jsonObj.getString("presentacion").equals(presentacion.getText().toString())) {
-                productos.setMarca(productos.getPresentacion());
+            //agrego if. Esto es lo que hay que corregir para que muestr ebien el mProductosList porque esta mostrando archivo completo
+            if (jsonObj.getString("categoria").equals(categoria.getText().toString()) && jsonObj.getString("marca").equals(marca.getText().toString()) && jsonObj.getString("presentacion").equals(presentacion.getText().toString()) && jsonObj.getString("unidad").equals(unidad.getText().toString())) {
+                productos.setId(jsonObj.getString("id"));
+                productos.setCategoria(categoria.getText().toString());
+                productos.setMarca(marca.getText().toString());
+                productos.setPresentacion(presentacion.getText().toString());
+                productos.setUnidad(unidad.getText().toString());
             }
-            Log.d("datos json ", id + " " + categoria + " " + marca + " " + presentacion + " " + productos.getUnidad());
 
-            mProductosList.add(jsonObj.getString("id") + " " + jsonObj.getString("categoria") + " " + jsonObj.getString("marca") + " " + jsonObj.getString("presentacion") + " " + jsonObj.getString("unidad"));
+            Log.d("datos json ", productos.getId() + " " + productos.getCategoria() + " " + productos.getMarca() + " " + productos.getPresentacion() + " " + productos.getUnidad());
+            
+            mProductosList.add(productos);
         }
-        mArrayAdapterProducto = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
+
+        mProductosList.removeAll(Collections.singleton(null));
+        mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
         listaResultado.setAdapter(mArrayAdapterProducto);
-    } // hasta aca
+    } // hasta aca https://www.youtube.com/watch?v=h71Ia9iFWfI
 
     private void inicializarFirebase() {
         FirebaseApp.initializeApp(getContext());
@@ -173,6 +177,7 @@ public class Fragment_lista_compras extends Fragment {
         String _marca = marca.getText().toString();
         String _presentacion = presentacion.getText().toString();
         String _cantidad = cantidad.getText().toString();
+        String _unidad = unidad.getText().toString();
 
         if(_categoria.equals("")) {categoria.setError("Categoria requerida");}
 
@@ -181,6 +186,8 @@ public class Fragment_lista_compras extends Fragment {
         else if(_presentacion.equals("")){presentacion.setError("Presentacion requerida");}
 
         else if(_cantidad.equals("")){cantidad.setError("Cantidad requerida");}
+
+        else if (_unidad.equals("")){unidad.setError("Unidad Requerida");}
     }
 
     private void limpiarDatos(){
@@ -188,5 +195,6 @@ public class Fragment_lista_compras extends Fragment {
         marca.setText("");
         presentacion.setText("");
         cantidad.setText("");
+        unidad.setText("");
     }
 }

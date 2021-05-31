@@ -72,7 +72,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:hint="Presentacion. Ejemplo 2,5"
+                android:hint="Presentacion. Ejemplo 2.5"
+                android:background="#053F51B5" />
+
+            <EditText
+                android:id="@+id/etxtUnidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:hint="Unidad. Ejemplo Litros"
                 android:background="#053F51B5" />
 
             <Button
