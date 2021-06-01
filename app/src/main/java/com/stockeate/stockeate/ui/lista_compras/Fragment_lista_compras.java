@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -115,27 +116,6 @@ public class Fragment_lista_compras extends Fragment {
             }
         });
 
-        /*btn_agregar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String _codigo_producto = codigo_producto.getText().toString();
-                String _marca = marca.getText().toString();
-                String _presentacion = presentacion.getText().toString();
-                String _cantidad = cantidad.getText().toString();
-                if(_codigo_producto.equals("") || _marca.equals("") || _presentacion.equals("") || _cantidad.equals(""))  {
-                    validar();
-                } else {
-                    class_lista_compras lista_compras = new class_lista_compras();
-                    lista_compras.setId(UUID.randomUUID().toString());
-                    //corregir y pasar el id del usuario.
-                    lista_compras.setId_usuario("1");
-                    databaseReference.child("lista_compras").child(lista_compras.getId()).setValue(lista_compras);
-                    Toast.makeText(getContext(), "Agregar", Toast.LENGTH_LONG).show();
-                    limpiarDatos();
-                }
-            }
-        });*/
-
         return root;
     }
 
@@ -219,20 +199,46 @@ public class Fragment_lista_compras extends Fragment {
                     mProductosList.add(productos);
                 }
             }
-            Log.d("datos json ", productos.getId() + " " + productos.getCategoria() + " " + productos.getMarca() + " " + productos.getPresentacion() + " " + productos.getUnidad());
-
         }
 
         mProductosList.removeAll(Collections.singleton(null));
         mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
         listaResultado.setAdapter(mArrayAdapterProducto);
-    } // hasta aca https://www.youtube.com/watch?v=h71Ia9iFWfI
+
+        listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            }
+        });
+
+    }
 
     private void inicializarFirebase() {
         FirebaseApp.initializeApp(getContext());
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
     }
+
+         /*btn_agregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String _codigo_producto = codigo_producto.getText().toString();
+                String _marca = marca.getText().toString();
+                String _presentacion = presentacion.getText().toString();
+                String _cantidad = cantidad.getText().toString();
+                if(_codigo_producto.equals("") || _marca.equals("") || _presentacion.equals("") || _cantidad.equals(""))  {
+                    validar();
+                } else {
+                    class_lista_compras lista_compras = new class_lista_compras();
+                    lista_compras.setId(UUID.randomUUID().toString());
+                    //corregir y pasar el id del usuario.
+                    lista_compras.setId_usuario("1");
+                    databaseReference.child("lista_compras").child(lista_compras.getId()).setValue(lista_compras);
+                    Toast.makeText(getContext(), "Agregar", Toast.LENGTH_LONG).show();
+                    limpiarDatos();
+                }
+            }
+        });*/
 
     private void validar() {
         String _categoria = categoria.getText().toString();

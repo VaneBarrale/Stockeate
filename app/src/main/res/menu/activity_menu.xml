@@ -1,27 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/icon_buscar"
-        android:icon="@drawable/ic_outline_search_24"
-        android:title="Buscar"
-        app:showAsAction="always"/>
 
-    <item
-        android:id="@+id/icon_agregar"
-        android:icon="@drawable/ic_outline_add_24"
-        android:title="Agregar"
-        app:showAsAction="always"/>
-
-    <item
-        android:id="@+id/icon_eliminar"
-        android:icon="@drawable/ic_outline_delete_24"
-        android:title="Eliminar"
-        app:showAsAction="always"/>
-
-    <item
-        android:id="@+id/icon_guardar"
-        android:icon="@drawable/ic_outline_save_24"
-        android:title="Guardar"
-        app:showAsAction="always"/>
 </menu>
