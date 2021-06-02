@@ -2,15 +2,17 @@ package com.stockeate.stockeate.clases;
 
 public class class_producto {
     private String id, categoria, marca, presentacion, unidad;
+    private float precio;
 
     public class_producto(){}
 
-    public class_producto(String Id, String categoria, String marca, String presentacion, String unidad) {
+    public class_producto(String Id, String categoria, String marca, String presentacion, String unidad, float precio) {
         this.id = id;
         this.categoria = categoria;
         this.marca = marca;
         this.presentacion = presentacion;
         this.unidad = unidad;
+        this.precio = precio;
     }
 
     public String getId() {

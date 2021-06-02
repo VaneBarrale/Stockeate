@@ -12,18 +12,26 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.arch.core.executor.DefaultTaskExecutor;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.stockeate.stockeate.R;
+import com.stockeate.stockeate.clases.class_detalle_lista_compras;
+import com.stockeate.stockeate.clases.class_lista_compras;
 import com.stockeate.stockeate.clases.class_producto;
 import com.stockeate.stockeate.ui.comparar_precios.Fragment_Comparar_Precios;
 import com.stockeate.stockeate.ui.home.HomeFragment;
@@ -45,6 +53,8 @@ public class Fragment_lista_compras extends Fragment {
     private ListView productos_agregados;
     private ArrayAdapter<class_producto> mArrayAdapterProducto;
     private ArrayList<class_producto> mProductosList = null;
+    private ArrayList<class_detalle_lista_compras> mDetalleLista = null;
+    private ArrayAdapter<class_detalle_lista_compras> mAdapterDetalleLista;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     private ListView listaResultado;
@@ -72,7 +82,6 @@ public class Fragment_lista_compras extends Fragment {
         this.productos_agregados = root.findViewById(R.id.lista_productos_agregados);
         this.listaResultado = root.findViewById(R.id.ListViewResultado);
 
-        inicializarFirebase();
         //todos los metodos que usen firebase deben ir abajo del inicializador
 
         btn_comparar.setOnClickListener(new View.OnClickListener() {
@@ -136,10 +145,10 @@ public class Fragment_lista_compras extends Fragment {
 
             guardar = true;
 
-            if(!categoria.getText().toString().isEmpty() ||
+            if (!categoria.getText().toString().isEmpty() ||
                     !marca.getText().toString().isEmpty() ||
-                    !presentacion.getText().toString().isEmpty()||
-                    !presentacion.getText().toString().isEmpty()||
+                    !presentacion.getText().toString().isEmpty() ||
+                    !presentacion.getText().toString().isEmpty() ||
                     !unidad.getText().toString().isEmpty()) {
                 //agrego if. Esto es lo que hay que corregir para que muestr ebien el mProductosList porque esta mostrando archivo completo
                 if (!categoria.getText().toString().isEmpty()) {
@@ -205,57 +214,64 @@ public class Fragment_lista_compras extends Fragment {
         mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
         listaResultado.setAdapter(mArrayAdapterProducto);
 
-        listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listaResultado.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                int i = 0, j = 0;
+                mDetalleLista = new ArrayList<class_detalle_lista_compras>();
+
+                mDetalleLista.clear();
+                class_lista_compras lista_compras = new class_lista_compras();
+                class_detalle_lista_compras detalle_lista_compras = new class_detalle_lista_compras();
+
+                lista_compras.setId(String.valueOf(i++));
+                lista_compras.setId_usuario("1");
+
+                detalle_lista_compras.setId(String.valueOf(j++));
+                detalle_lista_compras.setId_lista_compras(String.valueOf(i));
+                try {
+                    detalle_lista_compras.setId_producto(jsonArray.getJSONObject(position).getString("id"));
+                    detalle_lista_compras.setUnidad(jsonArray.getJSONObject(position).getString("unidad"));
+                    detalle_lista_compras.setCantidad(cantidad.getText().toString());
+                    detalle_lista_compras.setPrecio((float) jsonArray.getJSONObject(position).getDouble("precio"));
+                    detalle_lista_compras.setMarca(jsonArray.getJSONObject(position).getString("marca"));
+                    detalle_lista_compras.setPresentacion(jsonArray.getJSONObject(position).getString("presentacion"));
+                } catch (JSONException e) {
+                    e.printStackTrace(); }
+
+                /*detalle_lista_compras.setId_producto("1");
+                detalle_lista_compras.setMarca("Coca-Cola");
+                detalle_lista_compras.setPresentacion("2.5");
+                detalle_lista_compras.setPrecio((float) (120.00));
+                detalle_lista_compras.setCantidad("1");
+                detalle_lista_compras.setUnidad("Litros");*/
+
+                Log.i("aca", "hasta aca pasa");
+
+                btn_agregar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (!detalle_lista_compras.getId_producto().toString().isEmpty())
+                        {
+                            String _cantidad = cantidad.getText().toString();
+                            if (_cantidad.equals("")){cantidad.setError("Cantidad requerida");}
+
+                            mDetalleLista.add(detalle_lista_compras);
+                            mAdapterDetalleLista = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mDetalleLista);
+                            productos_agregados.setAdapter(mAdapterDetalleLista);
+                            Toast.makeText(getContext(), "Producto Seleccionado", Toast.LENGTH_SHORT).show();
+                            Log.i("Detalle Lista", mDetalleLista.toString());
+                        }
+                        else {
+                            Toast.makeText(getContext(), "Seleccione un producto de la lista", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                return true;
             }
         });
 
-    }
-
-    private void inicializarFirebase() {
-        FirebaseApp.initializeApp(getContext());
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
-    }
-
-         /*btn_agregar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String _codigo_producto = codigo_producto.getText().toString();
-                String _marca = marca.getText().toString();
-                String _presentacion = presentacion.getText().toString();
-                String _cantidad = cantidad.getText().toString();
-                if(_codigo_producto.equals("") || _marca.equals("") || _presentacion.equals("") || _cantidad.equals(""))  {
-                    validar();
-                } else {
-                    class_lista_compras lista_compras = new class_lista_compras();
-                    lista_compras.setId(UUID.randomUUID().toString());
-                    //corregir y pasar el id del usuario.
-                    lista_compras.setId_usuario("1");
-                    databaseReference.child("lista_compras").child(lista_compras.getId()).setValue(lista_compras);
-                    Toast.makeText(getContext(), "Agregar", Toast.LENGTH_LONG).show();
-                    limpiarDatos();
-                }
-            }
-        });*/
-
-    private void validar() {
-        String _categoria = categoria.getText().toString();
-        String _marca = marca.getText().toString();
-        String _presentacion = presentacion.getText().toString();
-        String _cantidad = cantidad.getText().toString();
-        String _unidad = unidad.getText().toString();
-
-        if(_categoria.equals("")) {categoria.setError("Categoria requerida");}
-
-        else if(_marca.equals("")){marca.setError("Marca requerida");}
-
-        else if(_presentacion.equals("")){presentacion.setError("Presentacion requerida");}
-
-        else if(_cantidad.equals("")){cantidad.setError("Cantidad requerida");}
-
-        else if (_unidad.equals("")){unidad.setError("Unidad Requerida");}
     }
 
     private void limpiarDatos(){
@@ -265,4 +281,5 @@ public class Fragment_lista_compras extends Fragment {
         cantidad.setText("");
         unidad.setText("");
     }
+
 }
