@@ -84,6 +84,8 @@ public class Fragment_lista_compras extends Fragment {
 
         //todos los metodos que usen firebase deben ir abajo del inicializador
 
+        mDetalleLista = new ArrayList<class_detalle_lista_compras>();
+
         btn_comparar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,7 +127,62 @@ public class Fragment_lista_compras extends Fragment {
             }
         });
 
+        listaResultado.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                int i = 0, j = 0;
+
+                class_lista_compras lista_compras = new class_lista_compras();
+                class_detalle_lista_compras detalle_lista_compras = new class_detalle_lista_compras();
+
+                lista_compras.setId(String.valueOf(i++));
+                lista_compras.setId_usuario("1");
+
+                detalle_lista_compras.setId(String.valueOf(j++));
+                detalle_lista_compras.setId_lista_compras(String.valueOf(i));
+                detalle_lista_compras.setId_producto(mProductosList.get(position).getId());
+                detalle_lista_compras.setCategoria(mProductosList.get(position).getCategoria());
+                detalle_lista_compras.setUnidad(mProductosList.get(position).getUnidad());
+                detalle_lista_compras.setId_producto(mProductosList.get(position).getId());
+                detalle_lista_compras.setCantidad(cantidad.getText().toString());
+                detalle_lista_compras.setMarca(mProductosList.get(position).getMarca());
+                detalle_lista_compras.setPresentacion(mProductosList.get(position).getPresentacion());
+
+                /*detalle_lista_compras.setId_producto("1");
+                detalle_lista_compras.setMarca("Coca-Cola");
+                detalle_lista_compras.setPresentacion("2.5");
+                detalle_lista_compras.setPrecio((float) (120.00));
+                detalle_lista_compras.setCantidad("1");
+                detalle_lista_compras.setUnidad("Litros");*/
+
+                Log.i("aca", "hasta aca pasa");
+
+                btn_agregar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (!detalle_lista_compras.getId_producto().isEmpty())
+                        {
+                            String _cantidad = cantidad.getText().toString();
+                            if (_cantidad.equals("")){cantidad.setError("Cantidad requerida");}
+
+                            mDetalleLista.add(detalle_lista_compras);
+                            mAdapterDetalleLista = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mDetalleLista);
+                            productos_agregados.setAdapter(mAdapterDetalleLista);
+                            Toast.makeText(getContext(), "Producto Seleccionado", Toast.LENGTH_SHORT).show();
+                            Log.i("Detalle Lista", mDetalleLista.toString());
+                        }
+                        else {
+                            Toast.makeText(getContext(), "Seleccione un producto de la lista", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                return true;
+            }
+        });
+
         return root;
+
     }
 
     private void listarproductos() throws IOException, JSONException {
@@ -150,7 +207,6 @@ public class Fragment_lista_compras extends Fragment {
                     !presentacion.getText().toString().isEmpty() ||
                     !presentacion.getText().toString().isEmpty() ||
                     !unidad.getText().toString().isEmpty()) {
-                //agrego if. Esto es lo que hay que corregir para que muestr ebien el mProductosList porque esta mostrando archivo completo
                 if (!categoria.getText().toString().isEmpty()) {
                     if (jsonObj.getString("categoria").equals(categoria.getText().toString())) {
                         if (guardar) {
@@ -213,65 +269,6 @@ public class Fragment_lista_compras extends Fragment {
         mProductosList.removeAll(Collections.singleton(null));
         mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
         listaResultado.setAdapter(mArrayAdapterProducto);
-
-        listaResultado.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                int i = 0, j = 0;
-                mDetalleLista = new ArrayList<class_detalle_lista_compras>();
-
-                mDetalleLista.clear();
-                class_lista_compras lista_compras = new class_lista_compras();
-                class_detalle_lista_compras detalle_lista_compras = new class_detalle_lista_compras();
-
-                lista_compras.setId(String.valueOf(i++));
-                lista_compras.setId_usuario("1");
-
-                detalle_lista_compras.setId(String.valueOf(j++));
-                detalle_lista_compras.setId_lista_compras(String.valueOf(i));
-                try {
-                    detalle_lista_compras.setId_producto(jsonArray.getJSONObject(position).getString("id"));
-                    detalle_lista_compras.setUnidad(jsonArray.getJSONObject(position).getString("unidad"));
-                    detalle_lista_compras.setCantidad(cantidad.getText().toString());
-                    detalle_lista_compras.setPrecio((float) jsonArray.getJSONObject(position).getDouble("precio"));
-                    detalle_lista_compras.setMarca(jsonArray.getJSONObject(position).getString("marca"));
-                    detalle_lista_compras.setPresentacion(jsonArray.getJSONObject(position).getString("presentacion"));
-                } catch (JSONException e) {
-                    e.printStackTrace(); }
-
-                /*detalle_lista_compras.setId_producto("1");
-                detalle_lista_compras.setMarca("Coca-Cola");
-                detalle_lista_compras.setPresentacion("2.5");
-                detalle_lista_compras.setPrecio((float) (120.00));
-                detalle_lista_compras.setCantidad("1");
-                detalle_lista_compras.setUnidad("Litros");*/
-
-                Log.i("aca", "hasta aca pasa");
-
-                btn_agregar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        if (!detalle_lista_compras.getId_producto().toString().isEmpty())
-                        {
-                            String _cantidad = cantidad.getText().toString();
-                            if (_cantidad.equals("")){cantidad.setError("Cantidad requerida");}
-
-                            mDetalleLista.add(detalle_lista_compras);
-                            mAdapterDetalleLista = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mDetalleLista);
-                            productos_agregados.setAdapter(mAdapterDetalleLista);
-                            Toast.makeText(getContext(), "Producto Seleccionado", Toast.LENGTH_SHORT).show();
-                            Log.i("Detalle Lista", mDetalleLista.toString());
-                        }
-                        else {
-                            Toast.makeText(getContext(), "Seleccione un producto de la lista", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                return true;
-            }
-        });
-
     }
 
     private void limpiarDatos(){
