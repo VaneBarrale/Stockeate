@@ -93,8 +93,8 @@
 
             <ListView
                 android:id="@+id/ListViewResultado"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:hint="Resultado" />
 
             <EditText
@@ -116,8 +116,8 @@
 
             <ListView
                 android:id="@+id/lista_productos_agregados"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_width="wrap_content"
+                android:layout_height="400dp"
                 tools:layout_editor_absoluteX="79dp"
                 tools:layout_editor_absoluteY="445dp" />
 

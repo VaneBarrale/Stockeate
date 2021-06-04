@@ -1,8 +1,6 @@
 package com.stockeate.stockeate.ui.lista_compras;
 
-import android.icu.text.CaseMap;
 import android.os.Bundle;
-import android.text.BoringLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,23 +10,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.arch.core.executor.DefaultTaskExecutor;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_detalle_lista_compras;
 import com.stockeate.stockeate.clases.class_lista_compras;
@@ -41,6 +31,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,15 +40,13 @@ import java.util.Collections;
 public class Fragment_lista_compras extends Fragment {
 
     private ViewModel_lista_compras viewModelListacompras;
-    private Button btn_comparar, btn_volver, btn_agregar, btn_buscar;
+    private Button btn_comparar, btn_volver, btn_agregar, btn_buscar, btn_guardar;
     private EditText categoria, marca, presentacion, cantidad, unidad;
     private ListView productos_agregados;
     private ArrayAdapter<class_producto> mArrayAdapterProducto;
     private ArrayList<class_producto> mProductosList = null;
     private ArrayList<class_detalle_lista_compras> mDetalleLista = null;
     private ArrayAdapter<class_detalle_lista_compras> mAdapterDetalleLista;
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
     private ListView listaResultado;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -74,6 +64,7 @@ public class Fragment_lista_compras extends Fragment {
         this.btn_volver = root.findViewById(R.id.btn_Volver);
         this.btn_agregar = root.findViewById(R.id.btn_Agregar);
         this.btn_buscar = root.findViewById(R.id.btn_Buscar);
+        this.btn_guardar = root.findViewById(R.id.btn_Guardar);
         this.categoria = root.findViewById(R.id.etxCategoria);
         this.marca = root.findViewById(R.id.etxtMarca);
         this.presentacion = root.findViewById(R.id.etxtPresentacion);
@@ -123,13 +114,12 @@ public class Fragment_lista_compras extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                limpiarDatos();
             }
         });
 
-        listaResultado.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int i = 0, j = 0;
 
                 class_lista_compras lista_compras = new class_lista_compras();
@@ -164,19 +154,45 @@ public class Fragment_lista_compras extends Fragment {
                         if (!detalle_lista_compras.getId_producto().isEmpty())
                         {
                             String _cantidad = cantidad.getText().toString();
-                            if (_cantidad.equals("")){cantidad.setError("Cantidad requerida");}
-
-                            mDetalleLista.add(detalle_lista_compras);
-                            mAdapterDetalleLista = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mDetalleLista);
-                            productos_agregados.setAdapter(mAdapterDetalleLista);
-                            Toast.makeText(getContext(), "Producto Seleccionado", Toast.LENGTH_SHORT).show();
-                            Log.i("Detalle Lista", mDetalleLista.toString());
+                            if (_cantidad.equals("")){
+                                cantidad.setError("Cantidad requerida");
+                            } else {
+                                mDetalleLista.add(detalle_lista_compras);
+                                mAdapterDetalleLista = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mDetalleLista);
+                                productos_agregados.setAdapter(mAdapterDetalleLista);
+                                Log.i("Detalle Lista", mDetalleLista.toString());
+                            }
                         }
+                        //ESTE MENSAJE NO SALE!
                         else {
                             Toast.makeText(getContext(), "Seleccione un producto de la lista", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+            }
+        });
+
+        btn_guardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!mDetalleLista.isEmpty()){
+                    Toast.makeText(getContext(), "Guardado con exito", Toast.LENGTH_SHORT).show();
+                    limpiarDatos();
+                    mArrayAdapterProducto.clear();
+                }
+                else {
+                    Toast.makeText(getContext(), "Agregue productos a la lista", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        productos_agregados.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                mDetalleLista.remove(position);
+                mAdapterDetalleLista = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mDetalleLista);
+                productos_agregados.setAdapter(mAdapterDetalleLista);
+                Toast.makeText(getContext(), "Producto eliminado", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
