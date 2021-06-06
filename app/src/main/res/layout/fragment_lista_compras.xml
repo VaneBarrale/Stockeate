@@ -31,14 +31,23 @@
 
             <TextView
                 android:id="@+id/txtSumaProductos"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:text="Tu lista de compras!"
                 android:textColor="@android:color/black"
                 android:textSize="17dp"
                 android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_MisListas"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                app:backgroundTint="#2196F3"
+                android:text="MIS LISTAS"/>
 
         </LinearLayout>
 

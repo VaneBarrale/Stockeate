@@ -23,6 +23,7 @@ import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_detalle_lista_compras;
 import com.stockeate.stockeate.clases.class_lista_compras;
 import com.stockeate.stockeate.clases.class_producto;
+import com.stockeate.stockeate.ui.mis_listas_compras.Fragment_mis_listas_compras;
 import com.stockeate.stockeate.ui.comparar_precios.Fragment_Comparar_Precios;
 import com.stockeate.stockeate.ui.home.HomeFragment;
 import com.stockeate.stockeate.utiles.utiles;
@@ -31,8 +32,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +39,7 @@ import java.util.Collections;
 public class Fragment_lista_compras extends Fragment {
 
     private ViewModel_lista_compras viewModelListacompras;
-    private Button btn_comparar, btn_volver, btn_agregar, btn_buscar, btn_guardar;
+    private Button btn_comparar, btn_volver, btn_agregar, btn_buscar, btn_guardar, btn_listas;
     private EditText categoria, marca, presentacion, cantidad, unidad;
     private ListView productos_agregados;
     private ArrayAdapter<class_producto> mArrayAdapterProducto;
@@ -65,6 +64,7 @@ public class Fragment_lista_compras extends Fragment {
         this.btn_agregar = root.findViewById(R.id.btn_Agregar);
         this.btn_buscar = root.findViewById(R.id.btn_Buscar);
         this.btn_guardar = root.findViewById(R.id.btn_Guardar);
+        this.btn_listas = root.findViewById(R.id.btn_MisListas);
         this.categoria = root.findViewById(R.id.etxCategoria);
         this.marca = root.findViewById(R.id.etxtMarca);
         this.presentacion = root.findViewById(R.id.etxtPresentacion);
@@ -76,6 +76,17 @@ public class Fragment_lista_compras extends Fragment {
         //todos los metodos que usen firebase deben ir abajo del inicializador
 
         mDetalleLista = new ArrayList<class_detalle_lista_compras>();
+
+        btn_listas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment_mis_listas_compras fragment_mis_listas_compras = new Fragment_mis_listas_compras();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_lista_compras, fragment_mis_listas_compras);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
 
         btn_comparar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,18 +143,10 @@ public class Fragment_lista_compras extends Fragment {
                 detalle_lista_compras.setId_lista_compras(String.valueOf(i));
                 detalle_lista_compras.setId_producto(mProductosList.get(position).getId());
                 detalle_lista_compras.setCategoria(mProductosList.get(position).getCategoria());
-                detalle_lista_compras.setUnidad(mProductosList.get(position).getUnidad());
-                detalle_lista_compras.setId_producto(mProductosList.get(position).getId());
-                detalle_lista_compras.setCantidad(cantidad.getText().toString());
                 detalle_lista_compras.setMarca(mProductosList.get(position).getMarca());
                 detalle_lista_compras.setPresentacion(mProductosList.get(position).getPresentacion());
-
-                /*detalle_lista_compras.setId_producto("1");
-                detalle_lista_compras.setMarca("Coca-Cola");
-                detalle_lista_compras.setPresentacion("2.5");
-                detalle_lista_compras.setPrecio((float) (120.00));
-                detalle_lista_compras.setCantidad("1");
-                detalle_lista_compras.setUnidad("Litros");*/
+                detalle_lista_compras.setUnidad(mProductosList.get(position).getUnidad());
+                detalle_lista_compras.setCantidad(cantidad.getText().toString());
 
                 Log.i("aca", "hasta aca pasa");
 
