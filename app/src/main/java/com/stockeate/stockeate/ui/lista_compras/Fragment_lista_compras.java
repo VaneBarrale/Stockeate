@@ -32,7 +32,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -153,7 +159,6 @@ public class Fragment_lista_compras extends Fragment {
                 btn_agregar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         if (!detalle_lista_compras.getId_producto().isEmpty())
                         {
                             String _cantidad = cantidad.getText().toString();
@@ -179,10 +184,17 @@ public class Fragment_lista_compras extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!mDetalleLista.isEmpty()){
+                    try {
+                        String jsonFileContent = utiles.escribirJson(getContext(), "detalle_lista_compras.json", "Hola");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    //https://www.youtube.com/watch?v=U_N10Gzqotw
+                    //https://www.youtube.com/watch?v=oq4VXszJFYs
                     Toast.makeText(getContext(), "Guardado con exito", Toast.LENGTH_SHORT).show();
                     limpiarDatos();
                     mArrayAdapterProducto.clear();
-                }
+                    }
                 else {
                     Toast.makeText(getContext(), "Agregue productos a la lista", Toast.LENGTH_SHORT).show();
                 }
@@ -289,6 +301,33 @@ public class Fragment_lista_compras extends Fragment {
         mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
         listaResultado.setAdapter(mArrayAdapterProducto);
     }
+
+    /* ESTO SERÍA SI NO LA TUVIERA EN UTILES
+    public void escribir(){
+        BufferedWriter writer = null;
+        try {
+            FileOutputStream fileOutputStream = getContext().openFileOutput("prueba.json", getContext().MODE_WORLD_READABLE);
+            String data = presentacion.getText().toString();
+            writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+            writer.write(data);
+            writer.flush();
+            presentacion.setText("");
+            Toast.makeText(getContext(), "Escrito ok", Toast.LENGTH_SHORT).show();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (writer!=null){
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    System.err.println("Error al cerrar");
+                    e.printStackTrace();
+                }
+            }
+        }
+    }*/
 
     private void limpiarDatos(){
         categoria.setText("");

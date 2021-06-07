@@ -72,18 +72,10 @@
 
                 <Button
                     android:id="@+id/btn_Volver"
-                    android:layout_width="180dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:backgroundTint="#2196F3"
                     android:text="Volver"/>
-
-                <Button
-                    android:id="@+id/btn_Consultar"
-                    android:layout_width="180dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    app:backgroundTint="#2196F3"
-                    android:text="Consultar"/>
 
             </LinearLayout>
 

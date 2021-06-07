@@ -86,7 +86,9 @@ public class Fragment_mis_listas_compras extends Fragment {
         Log.d("Longitud json detalle", String.valueOf(jsonArray.length()));
         Log.d("json ", jsonArray.toString());
         for (int i = 0; i < jsonArray.length(); i++) {
+
             class_detalle_lista_compras detalle_lista_compras = new class_detalle_lista_compras();
+
             Log.d("dentro del 2 for ", String.valueOf(i));
             JSONObject jsonObj = jsonArray.getJSONObject(i);
             if(jsonObj.getString("id_usuario").equals("1")){
@@ -99,7 +101,7 @@ public class Fragment_mis_listas_compras extends Fragment {
                 detalle_lista_compras.setUnidad(jsonObj.getString("unidad"));
                 detalle_lista_compras.setCantidad(jsonObj.getString("cantidad"));
                 mDetalleLista.add(detalle_lista_compras);
-                Log.i("lista", mDetalleLista.toString());
+
             }
         }
         mArrayAdapterDetalle = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mDetalleLista);
