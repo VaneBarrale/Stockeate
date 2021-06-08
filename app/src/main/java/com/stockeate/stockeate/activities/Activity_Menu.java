@@ -1,10 +1,16 @@
 package com.stockeate.stockeate.activities;
 
+import android.content.ClipData;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.stockeate.stockeate.Item.ItemFragment;
 import com.stockeate.stockeate.R;
 
 import androidx.navigation.NavController;
@@ -18,6 +24,8 @@ import androidx.appcompat.widget.Toolbar;
 public class Activity_Menu extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

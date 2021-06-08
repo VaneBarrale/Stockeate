@@ -32,12 +32,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -184,13 +187,37 @@ public class Fragment_lista_compras extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!mDetalleLista.isEmpty()){
+                    int i=0;
+                    /* ESTO FUNCIONA
                     try {
+
                         String jsonFileContent = utiles.escribirJson(getContext(), "detalle_lista_compras.json", "Hola");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     //https://www.youtube.com/watch?v=U_N10Gzqotw
-                    //https://www.youtube.com/watch?v=oq4VXszJFYs
+                    //https://www.youtube.com/watch?v=oq4VXszJFYs*/
+
+                class_detalle_lista_compras detalle_lista_compras = new class_detalle_lista_compras();
+
+                try {
+                    JSONObject json = new JSONObject();
+                    InputStream is = Fragment_lista_compras.this.getClass().getClassLoader().getResourceAsStream("assets/" + "detalle_lista_compras.json");
+
+                    json.put("id", i++);
+                    json.put("id_lista_compras",detalle_lista_compras.getId_lista_compras());
+                    json.put("id_producto", detalle_lista_compras.getId_producto());
+                    json.put("id_usuario", "1");
+                    json.put("categoria", detalle_lista_compras.getCategoria());
+                    json.put("marca", detalle_lista_compras.getMarca());
+                    json.put("presentacion", detalle_lista_compras.getPresentacion());
+                    json.put("unidad", detalle_lista_compras.getUnidad());
+                    json.put("cantidad", cantidad);
+                    Log.i("Json", json.toString());
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                     Toast.makeText(getContext(), "Guardado con exito", Toast.LENGTH_SHORT).show();
                     limpiarDatos();
                     mArrayAdapterProducto.clear();
@@ -336,5 +363,7 @@ public class Fragment_lista_compras extends Fragment {
         cantidad.setText("");
         unidad.setText("");
     }
+
+
 
 }
