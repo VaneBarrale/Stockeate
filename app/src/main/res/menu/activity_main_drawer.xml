@@ -37,10 +37,5 @@
             android:icon="@drawable/nuevo_local"
             android:title="Agregar local" />
 
-        <item
-            android:id="@+id/nav_salir"
-            android:icon="@drawable/salir"
-            android:title="Salir"/>
-
     </group>
 </menu>

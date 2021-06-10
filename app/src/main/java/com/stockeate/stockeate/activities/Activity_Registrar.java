@@ -182,7 +182,7 @@ public class Activity_Registrar extends AppCompatActivity {
         userRegistered = new class_usuarios(userEmail);
         userRegistered.setMail(userEmail);
 
-        DatabaseReference firebaseReference = FirebaseDatabase.getInstance().getReference("stockeate/User");
+        DatabaseReference firebaseReference = FirebaseDatabase.getInstance().getReference("stockeate-3d9e6-default-rtdb/User");
         String key = firebaseReference.push().getKey();
         userRegistered.setId(key);
         firebaseReference.child(key).setValue(userRegistered);
@@ -192,7 +192,7 @@ public class Activity_Registrar extends AppCompatActivity {
 
     private void userRegistered(final GoogleSignInAccount acct) {
 
-        DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference("stockeate/Usuarios");
+        DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference("stockeate-3d9e6-default-rtdb/Usuarios");
         mDatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

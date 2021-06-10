@@ -200,6 +200,50 @@
 
         </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/llhorizontalsalir"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="100dp">
+
+        <ImageButton
+            android:id="@+id/btn_Salir"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="320dp"
+            android:background="#053F51B5"
+            android:src="@drawable/ic_baseline_exit_to_app_24"
+            tools:layout_editor_absoluteX="278dp"
+            tools:layout_editor_absoluteY="370dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llhorizontaltxtsalir"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="100dp">
+
+        <TextView
+            android:id="@+id/text_salir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="280dp"
+            android:gravity="center_horizontal"
+            android:text="Salir"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints"/>
+
+    </LinearLayout>
 
     </LinearLayout>
 

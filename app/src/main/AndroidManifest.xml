@@ -17,7 +17,8 @@
         android:label="Stockeate"
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Stockeate">
+        android:theme="@style/Theme.Stockeate"
+        android:hardwareAccelerated="true">
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

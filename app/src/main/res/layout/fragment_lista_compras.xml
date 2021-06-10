@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo_framework"
-    tools:context=".ui.lista_compras.Fragment_lista_compras">
+    tools:context=".ui.lista_compras.Fragment_lista_compras"
+    tools:menu="@menu/activity_menu">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -30,14 +31,23 @@
 
             <TextView
                 android:id="@+id/txtSumaProductos"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:text="Tu lista de compras!"
                 android:textColor="@android:color/black"
                 android:textSize="17dp"
                 android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_MisListas"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                app:backgroundTint="#2196F3"
+                android:text="MIS LISTAS"/>
 
         </LinearLayout>
 
@@ -47,18 +57,15 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
             android:orientation="vertical"
             app:layout_editor_absoluteY="50dp"
             tools:ignore="MissingConstraints">
 
-
             <EditText
-                android:id="@+id/etxtCodigoProducto"
+                android:id="@+id/etxCategoria"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:hint="Codigo producto"
+                android:hint="Categoria. Ejemplo gaseosa"
                 android:background="#053F51B5" />
 
             <EditText
@@ -66,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:hint="Marca"
+                android:hint="Marca. Ejemplo Coca-Cola"
                 android:background="#053F51B5" />
 
             <EditText
@@ -74,28 +81,52 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:hint="Presentacion"
+                android:hint="Presentacion. Ejemplo 2.5"
                 android:background="#053F51B5" />
+
+            <EditText
+                android:id="@+id/etxtUnidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:hint="Unidad. Ejemplo Litros"
+                android:background="#053F51B5" />
+
+            <Button
+                android:id="@+id/btn_Buscar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:backgroundTint="#2196F3"
+                android:text="BUSCAR"/>
+
+            <ListView
+                android:id="@+id/ListViewResultado"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="Resultado" />
 
             <EditText
                 android:id="@+id/etxtCantidad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="20dp"
                 android:hint="Cantidad"
                 android:background="#053F51B5" />
 
             <Button
+                android:id="@+id/btn_Agregar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 app:backgroundTint="#2196F3"
                 android:text="AGREGAR"/>
 
 
             <ListView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:id="@+id/lista_productos_agregados"
+                android:layout_width="wrap_content"
+                android:layout_height="400dp"
                 tools:layout_editor_absoluteX="79dp"
                 tools:layout_editor_absoluteY="445dp" />
 

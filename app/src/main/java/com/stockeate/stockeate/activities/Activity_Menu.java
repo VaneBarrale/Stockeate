@@ -2,7 +2,6 @@ package com.stockeate.stockeate.activities;
 
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.ImageButton;
 
 import com.google.android.material.navigation.NavigationView;
 import com.stockeate.stockeate.R;

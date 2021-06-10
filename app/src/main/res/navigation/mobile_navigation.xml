@@ -9,7 +9,26 @@
         android:id="@+id/nav_home"
         android:name="com.stockeate.stockeate.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_lista_compras"
+            app:destination="@id/nav_lista_compras" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_nuevo_local"
+            app:destination="@id/nav_nuevo_local" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_escanear_codigos_barra"
+            app:destination="@id/nav_escanear_codigos_barra" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_promocion"
+            app:destination="@id/nav_promocion" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_actualizacion_precios"
+            app:destination="@id/nav_actualizacion_precios" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_ubicacion"
+            app:destination="@id/nav_ubicacion" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_lista_compras"
@@ -46,4 +65,5 @@
         android:name="com.stockeate.stockeate.ui.nuevo_comercio.nuevo_comercio"
         android:label="@string/menu_nuevo_local"
         tools:layout="@layout/fragment_nuevo_comercio" />
-</navigation>
+
+   </navigation>
