@@ -65,4 +65,5 @@
         android:name="com.stockeate.stockeate.ui.nuevo_comercio.nuevo_comercio"
         android:label="@string/menu_nuevo_local"
         tools:layout="@layout/fragment_nuevo_comercio" />
-</navigation>
+
+   </navigation>

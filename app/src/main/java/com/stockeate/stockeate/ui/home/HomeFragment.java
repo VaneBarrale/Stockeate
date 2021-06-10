@@ -1,9 +1,14 @@
 package com.stockeate.stockeate.ui.home;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
@@ -14,6 +19,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.stockeate.stockeate.R;
+import com.stockeate.stockeate.activities.Activity_Menu;
+import com.stockeate.stockeate.activities.MainActivity;
 import com.stockeate.stockeate.ui.escanear_codigos_barra.Fragment_escanear_codigos_barra;
 import com.stockeate.stockeate.ui.lista_compras.Fragment_lista_compras;
 import com.stockeate.stockeate.ui.nuevo_comercio.nuevo_comercio;
@@ -24,7 +31,7 @@ import com.stockeate.stockeate.ui.ubicacion.ubicacion;
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
-    private ImageButton btn_compras, btn_escanear, btn_ubicacion, btn_precio, btn_promocion, btn_nuevo_comercio;
+    private ImageButton btn_salir, btn_compras, btn_escanear, btn_ubicacion, btn_precio, btn_promocion, btn_nuevo_comercio;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
@@ -41,6 +48,7 @@ public class HomeFragment extends Fragment {
         btn_precio = root.findViewById(R.id.btn_precio);
         btn_promocion = root.findViewById(R.id.btn_promocion);
         btn_nuevo_comercio = root.findViewById(R.id.btn_nuevo_comercio);
+        btn_salir = root.findViewById(R.id.btn_Salir);
 
         btn_compras.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +114,32 @@ public class HomeFragment extends Fragment {
                 transaction.replace(R.id.fragment_home, nuevo_comercio);
                 transaction.addToBackStack(null);
                 transaction.commit();
+            }
+        });
+
+        btn_salir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Salir");
+                builder.setMessage("¿Estás seguro que querés salir?");
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getActivity().finishAffinity();
+                        Intent i = new Intent(getActivity(), MainActivity.class);
+                        startActivity(i);
+                        System.exit(0);
+                    }
+                });
+
+                builder.show();
             }
         });
 
