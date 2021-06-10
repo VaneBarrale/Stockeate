@@ -45,8 +45,13 @@ public class MainActivity extends AppCompatActivity{
         editor = preferences.edit();
 
         if (revisarSesion()){
-            Intent i = new Intent(MainActivity.this, Activity_Menu.class);
-            startActivity(i);
+            et_email.setText(preferences.getString("Email",""));
+            et_password.setText(preferences.getString("Pass",""));
+            recordarme.setChecked(true);
+
+            /*cambiar de lado esto*/
+            /*Intent i = new Intent(MainActivity.this, Activity_Menu.class);
+            startActivity(i);*/
         }
 
         tv_registraraqui.setOnClickListener(new View.OnClickListener() {
@@ -73,11 +78,20 @@ public class MainActivity extends AppCompatActivity{
                 firebaseUser = firebaseAuth.getCurrentUser();
 
                 verificacionInicioSesion();
+
+
+                if (recordarme.isChecked()){
+                    editor.putString("Email",et_email.getText().toString());
+                    editor.putString("Pass",et_password.getText().toString());
+                    editor.apply();
+                }
                 guardarSesion(recordarme.isChecked());
 
                 //cambiar esto y ponerlo dentro del if de verificacionInicioSesion()
                 Intent login = new Intent(MainActivity.this, Activity_Menu.class);
                 startActivity(login);
+
+
             }
         });
     }
