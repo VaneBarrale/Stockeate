@@ -2,6 +2,7 @@ package com.stockeate.stockeate.utiles;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
@@ -19,12 +20,16 @@ public class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<Str
     @Override
     protected List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
 
+        Log.d("Pasa por aca", "Entro ParserTask");
+
         JSONObject jObject;
         List<List<HashMap<String, String>>> routes = null;
 
         try{
             jObject = new JSONObject(jsonData[0]);
             DirectionsJSONParser parser = new DirectionsJSONParser();
+
+            Log.d("Entro parser ", parser.toString());
 
             routes = parser.parse(jObject);
         }catch(Exception e){
@@ -36,12 +41,10 @@ public class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<Str
     @Override
     protected void onPostExecute(List<List<HashMap<String, String>>> result) {
         ArrayList<LatLng> points = null;
-        PolylineOptions lineOptions = null;
-        MarkerOptions markerOptions = new MarkerOptions();
+        PolylineOptions lineOptions = new PolylineOptions();
 
         for(int i=0;i<result.size();i++){
             points = new ArrayList<LatLng>();
-            lineOptions = new PolylineOptions();
 
             List<HashMap<String, String>> path = result.get(i);
 
@@ -59,6 +62,9 @@ public class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<Str
             lineOptions.width(4);
             lineOptions.color(Color.rgb(0,0,255));
         }
+
+        Log.d("Entro ParserTask", "Entro " + lineOptions);
+
         if(lineOptions!=null) {
             GoogleMap mGoogleMap = null;
             mGoogleMap.addPolyline(lineOptions);

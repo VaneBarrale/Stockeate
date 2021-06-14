@@ -1,6 +1,7 @@
 package com.stockeate.stockeate.ui.ubicacion;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -140,6 +141,9 @@ public class ubicacion extends Fragment implements OnMapReadyCallback {
     };
 
     private void comoLlegar(LatLng origen, LatLng destino){
+
+        //https://jonathanmelgoza.com/blog/trazar-ruta-punto-a-otro-google-maps-android/
+
         Log.d("Como llegar ", "Entro");
 
         MarkerOptions marcadorDestino= new MarkerOptions();
@@ -151,14 +155,19 @@ public class ubicacion extends Fragment implements OnMapReadyCallback {
         downloadTask.execute(url);
     }
 
-    private String obtenerDireccionesURL(LatLng origin,LatLng dest){
-        Log.d("Obtener direcciones ", "Entro");
+    @SuppressLint("LongLogTag")
+    private String obtenerDireccionesURL(LatLng origin, LatLng dest){
+        Log.d("Obtener direcciones URL", "Entro");
         String str_origin = "origin="+origin.latitude+","+origin.longitude;
         String str_dest = "destination="+dest.latitude+","+dest.longitude;
+        Log.d("Obtener direcciones destino y origen ", "Entro " + str_origin + "&" + str_dest);
         String sensor = "sensor=false";
-        String parameters = str_origin+"&"+str_dest+"&"+sensor;
+        String key = "key=AIzaSyBjuy-FREuZA1HLk2xwI37JOfWkLYWgmhc";
+        String parameters = str_origin+"&"+str_dest+"&"+key;
+        //prueba de que la URL funciona con los parametros del ejemplo https://maps.googleapis.com/maps/api/directions/json?origin=-31.407625,-62.08034166666666&destination=-31.4249992,-62.0841599&key=AIzaSyBjuy-FREuZA1HLk2xwI37JOfWkLYWgmhc
         String output = "json";
         String url = "https://maps.googleapis.com/maps/api/directions/"+output+"?"+parameters;
+        Log.d("Url", "Entro" + url);
         return url;
     }
 
