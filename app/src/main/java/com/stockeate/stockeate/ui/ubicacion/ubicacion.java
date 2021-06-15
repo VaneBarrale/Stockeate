@@ -108,6 +108,7 @@ public class ubicacion extends Fragment implements OnMapReadyCallback {
         LatLng coordenadas = new LatLng(lat, lon);
         LatLng destino = new LatLng(-31.4249992, -62.0841599);
         comoLlegar(coordenadas, destino);
+        Log.d("Llamada como llegar", "Entro paso como llegar");
         CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas, 16);
         if (marcador != null) {
             marcador.remove();
