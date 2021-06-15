@@ -1,5 +1,6 @@
 package com.stockeate.stockeate.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -7,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.ConditionVariable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,9 +16,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.stockeate.stockeate.R;
+
+import org.jetbrains.annotations.NotNull;
+
 public class MainActivity extends AppCompatActivity{
 
     private Button btn_login;
@@ -75,23 +83,38 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View v) {
 
                 firebaseAuth = FirebaseAuth.getInstance();
-                firebaseUser = firebaseAuth.getCurrentUser();
 
-                verificacionInicioSesion();
+                firebaseAuth.signInWithEmailAndPassword(et_email.getText().toString(),et_password.getText().toString())
+                        .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                                    Toast.makeText(MainActivity.this, "Se ha iniciado sesión", Toast.LENGTH_SHORT).show();
+                                    Log.w("Login Failed", "signInWithEmail:Success", task.getException());
+
+                                    guardarSesion(recordarme.isChecked());
+                                    Intent login = new Intent(MainActivity.this, Activity_Menu.class);
+                                    startActivity(login);
+                                }else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w("Login Failed", "signInWithEmail:failure", task.getException());
+                                    Toast.makeText(MainActivity.this, "El usuario no se encuentra logueado", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+                /*verificacionInicioSesion();*/
 
 
-                if (recordarme.isChecked()){
+                /*if (recordarme.isChecked()){
                     editor.putString("Email",et_email.getText().toString());
                     editor.putString("Pass",et_password.getText().toString());
                     editor.apply();
-                }
-                guardarSesion(recordarme.isChecked());
+                }*/
+                /*guardarSesion(recordarme.isChecked());*/
 
                 //cambiar esto y ponerlo dentro del if de verificacionInicioSesion()
-                Intent login = new Intent(MainActivity.this, Activity_Menu.class);
-                startActivity(login);
-
-
             }
         });
     }
@@ -106,6 +129,12 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void guardarSesion(boolean checked){
+        if (checked){
+
+            editor.putString("Email",et_email.getText().toString());
+            editor.putString("Pass",et_password.getText().toString());
+
+        }
         editor.putBoolean("Sesion", checked);
         editor.apply();
     }
