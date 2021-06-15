@@ -231,7 +231,7 @@ public class ubicacion extends Fragment implements OnMapReadyCallback {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            ParserTask parserTask = new ParserTask();
+            ParserTask parserTask = new ParserTask(mMap);
 
             parserTask.execute(result);
         }

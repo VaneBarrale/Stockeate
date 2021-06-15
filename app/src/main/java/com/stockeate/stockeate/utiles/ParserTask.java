@@ -17,6 +17,11 @@ import java.util.List;
 
 public class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String,String>>> >{
 
+    private GoogleMap gMap;
+    public ParserTask(GoogleMap googleMap) {
+        this.gMap = googleMap;
+    }
+
     @Override
     protected List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
 
@@ -40,7 +45,7 @@ public class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<Str
 
     @Override
     protected void onPostExecute(List<List<HashMap<String, String>>> result) {
-        ArrayList<LatLng> points = null;
+        ArrayList<LatLng> points = new ArrayList<LatLng>();
         PolylineOptions lineOptions = new PolylineOptions();
 
         for(int i=0;i<result.size();i++){
@@ -58,16 +63,17 @@ public class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<Str
                 points.add(position);
             }
 
+            Log.d("Points", "Entro " + points);
             lineOptions.addAll(points);
             lineOptions.width(4);
             lineOptions.color(Color.rgb(0,0,255));
         }
 
         Log.d("Entro ParserTask", "Entro " + lineOptions);
+        Log.d("Entro gMap", "Entro " + gMap);
 
-        if(lineOptions!=null) {
-            GoogleMap mGoogleMap = null;
-            mGoogleMap.addPolyline(lineOptions);
+        if(lineOptions!=null && gMap != null) {
+            gMap.addPolyline(lineOptions);
         }
     }
 }
