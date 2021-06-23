@@ -13,9 +13,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -31,11 +37,14 @@ public class MainActivity extends AppCompatActivity{
     private TextView tv_registraraqui, tv_recuperar;
     private EditText et_email, et_password;
     private CheckBox recordarme;
+    private ImageView ic_loginGoogle;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 
     private FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
+    private GoogleSignInClient mGoogleSignInClient;
+    GoogleSignInAccount account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +57,18 @@ public class MainActivity extends AppCompatActivity{
         this.recordarme = findViewById(R.id.chkRecordarme);
         this.tv_registraraqui = findViewById(R.id.textRegistrate);
         this.tv_recuperar = findViewById(R.id.txtOlvidasteTuContraseña);
+        this.ic_loginGoogle = findViewById(R.id.ic_googleLogin);
 
         preferences = this.getSharedPreferences("sesiones", Context.MODE_PRIVATE);
         editor = preferences.edit();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        this.account = GoogleSignIn.getLastSignedInAccount(this);
 
         if (revisarSesion()){
             et_email.setText(preferences.getString("Email",""));
@@ -91,7 +109,7 @@ public class MainActivity extends AppCompatActivity{
                                 if (task.isSuccessful()) {
                                     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                                     Toast.makeText(MainActivity.this, "Se ha iniciado sesión", Toast.LENGTH_SHORT).show();
-                                    Log.w("Login Failed", "signInWithEmail:Success", task.getException());
+                                    Log.w("Login Success", "signInWithEmail:Success", task.getException());
 
                                     guardarSesion(recordarme.isChecked());
                                     Intent login = new Intent(MainActivity.this, Activity_Menu.class);
@@ -117,6 +135,50 @@ public class MainActivity extends AppCompatActivity{
                 //cambiar esto y ponerlo dentro del if de verificacionInicioSesion()
             }
         });
+
+        ic_loginGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                googleLogin();
+            }
+        });
+    }
+
+    private void googleLogin(){
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, 9001);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == 9001) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            this.account = completedTask.getResult(ApiException.class);
+            Toast.makeText(MainActivity.this, "Se ha iniciado sesión", Toast.LENGTH_SHORT).show();
+            Log.w("Login Success", "signInWithGoogle:Success");
+
+            Intent login = new Intent(MainActivity.this, Activity_Menu.class);
+            startActivity(login);
+
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w("Login Failed", "signInWithGoogle:failure");
+            Log.w("Login Failed", e.toString());
+            Toast.makeText(MainActivity.this, "El usuario no se encuentra logueado", Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     private void verificacionInicioSesion(){
