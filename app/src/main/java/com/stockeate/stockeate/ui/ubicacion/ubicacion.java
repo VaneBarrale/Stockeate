@@ -106,7 +106,8 @@ public class ubicacion extends Fragment implements OnMapReadyCallback {
         Log.d("Mi ubicacion actual ", "Entro");
 
         LatLng coordenadas = new LatLng(lat, lon);
-        LatLng destino = new LatLng(-31.4249992, -62.0841599);
+        LatLng destino = new LatLng(-31.42773493119209, -62.11414910012128);
+        mMap.addMarker(new MarkerOptions().position(destino).title("Hipermercado Anselmi"));
         comoLlegar(coordenadas, destino);
         Log.d("Llamada como llegar", "Entro paso como llegar");
         CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas, 16);

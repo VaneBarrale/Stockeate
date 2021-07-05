@@ -122,7 +122,6 @@ public class Fragment_lista_compras extends Fragment {
             }
         });
 
-        //arreglar la busqueda cuando los filtros son muchos.
         btn_buscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,8 +156,6 @@ public class Fragment_lista_compras extends Fragment {
                 detalle_lista_compras.setUnidad(mProductosList.get(position).getUnidad());
                 detalle_lista_compras.setCantidad(cantidad.getText().toString());
 
-                Log.i("aca", "hasta aca pasa");
-
                 btn_agregar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -188,15 +185,6 @@ public class Fragment_lista_compras extends Fragment {
             public void onClick(View v) {
                 if (!mDetalleLista.isEmpty()){
                     int i=0;
-                    /* ESTO FUNCIONA
-                    try {
-
-                        String jsonFileContent = utiles.escribirJson(getContext(), "detalle_lista_compras.json", "Hola");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    //https://www.youtube.com/watch?v=U_N10Gzqotw
-                    //https://www.youtube.com/watch?v=oq4VXszJFYs*/
 
                 class_detalle_lista_compras detalle_lista_compras = new class_detalle_lista_compras();
 
@@ -319,6 +307,7 @@ public class Fragment_lista_compras extends Fragment {
                     productos.setMarca(jsonObj.getString("marca"));
                     productos.setPresentacion(jsonObj.getString("presentacion"));
                     productos.setUnidad(jsonObj.getString("unidad"));
+                    productos.setId(jsonObj.getString("codigo_barra"));
                     mProductosList.add(productos);
                 }
             }
