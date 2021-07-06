@@ -23,6 +23,7 @@ import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_detalle_lista_compras;
 import com.stockeate.stockeate.clases.class_lista_compras;
 import com.stockeate.stockeate.clases.class_producto;
+import com.stockeate.stockeate.ui.escanear_codigos_barra.Fragment_escanear_codigos_barra;
 import com.stockeate.stockeate.ui.mis_listas_compras.Fragment_mis_listas_compras;
 import com.stockeate.stockeate.ui.comparar_precios.Fragment_Comparar_Precios;
 import com.stockeate.stockeate.ui.home.HomeFragment;
@@ -48,7 +49,7 @@ import java.util.Collections;
 public class Fragment_lista_compras extends Fragment {
 
     private ViewModel_lista_compras viewModelListacompras;
-    private Button btn_comparar, btn_volver, btn_agregar, btn_buscar, btn_guardar, btn_listas;
+    private Button btn_comparar, btn_volver, btn_agregar, btn_buscar, btn_guardar, btn_listas, btn_cod_barra;
     private EditText categoria, marca, presentacion, cantidad, unidad;
     private ListView productos_agregados;
     private ArrayAdapter<class_producto> mArrayAdapterProducto;
@@ -74,6 +75,7 @@ public class Fragment_lista_compras extends Fragment {
         this.btn_buscar = root.findViewById(R.id.btn_Buscar);
         this.btn_guardar = root.findViewById(R.id.btn_Guardar);
         this.btn_listas = root.findViewById(R.id.btn_MisListas);
+        this.btn_cod_barra = root.findViewById(R.id.btn_BuscarCodigoBarra);
         this.categoria = root.findViewById(R.id.etxCategoria);
         this.marca = root.findViewById(R.id.etxtMarca);
         this.presentacion = root.findViewById(R.id.etxtPresentacion);
@@ -213,6 +215,17 @@ public class Fragment_lista_compras extends Fragment {
                 else {
                     Toast.makeText(getContext(), "Agregue productos a la lista", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        btn_cod_barra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment_escanear_codigos_barra escanear_codigos_barra = new Fragment_escanear_codigos_barra();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_lista_compras, escanear_codigos_barra);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 
