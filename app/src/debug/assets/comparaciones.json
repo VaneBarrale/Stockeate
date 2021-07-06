@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "id_local": "5",
+    "local": "Hipermercado Anselmi",
+    "precio_total": 10000.30
+  },
+  {
+    "id": "2",
+    "id_local": "1",
+    "local": "Careglio Hnos Castelli",
+    "precio_total": 11000.40
+  },
+  {
+    "id": "3",
+    "id_local": "2",
+    "local": "El norte",
+    "precio_total": 7500.30
+  },
+  {
+    "id": "4",
+    "id_local": "3",
+    "local": "Careglio Hnos Sarmiento",
+    "precio_total": 8000.30
+  },
+  {
+    "id": "5",
+    "id_local": "4",
+    "local": "Pingüino",
+    "precio_total": 9050.76
+  }
+]

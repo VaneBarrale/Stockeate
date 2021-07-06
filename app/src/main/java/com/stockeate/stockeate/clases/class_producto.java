@@ -1,17 +1,18 @@
 package com.stockeate.stockeate.clases;
 
 public class class_producto {
-    private String id, categoria, marca, presentacion, unidad;
+    private String id, categoria, marca, presentacion, unidad, codigo_barra;
     private float precio;
 
     public class_producto(){}
 
-    public class_producto(String Id, String categoria, String marca, String presentacion, String unidad, float precio) {
+    public class_producto(String Id, String categoria, String marca, String presentacion, String unidad, String codigo_barra, float precio) {
         this.id = id;
         this.categoria = categoria;
         this.marca = marca;
         this.presentacion = presentacion;
         this.unidad = unidad;
+        this.codigo_barra = codigo_barra;
         this.precio = precio;
     }
 
@@ -54,6 +55,10 @@ public class class_producto {
     public void setUnidad(String unidad) {
         this.unidad = unidad;
     }
+
+    public String getCodigo_barra() {return codigo_barra; }
+
+    public void setCodigo_barra(String codigo_barra) { this.codigo_barra = codigo_barra; }
 
     @Override
     public String toString() {
