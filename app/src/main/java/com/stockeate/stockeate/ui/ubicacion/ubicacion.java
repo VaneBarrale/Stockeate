@@ -39,6 +39,8 @@ import java.net.URL;
 
 import static com.stockeate.stockeate.R.layout.fragment_ubicacion;
 
+//PARA VER LA LINEA DESDE COMO LLEGAR AL HIPER POR EJEMPLO DESCOMENTAR LAS LINEAS 111, 112, 113 LatLng destino = new LatLng(-31.42773493119209, -62.11414910012128);
+
 public class ubicacion extends Fragment implements OnMapReadyCallback {
 
     private UbicacionViewModel viewModelUbicacion;
@@ -79,7 +81,7 @@ public class ubicacion extends Fragment implements OnMapReadyCallback {
 
     }
 
-    private void miUbicacion() {
+    public void miUbicacion() {
         Log.d("Mi ubicacion ", "Entro");
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Log.d("Mi ubicacion ", "Entro al if");
@@ -106,9 +108,9 @@ public class ubicacion extends Fragment implements OnMapReadyCallback {
         Log.d("Mi ubicacion actual ", "Entro");
 
         LatLng coordenadas = new LatLng(lat, lon);
-        LatLng destino = new LatLng(-31.42773493119209, -62.11414910012128);
-        mMap.addMarker(new MarkerOptions().position(destino).title("Hipermercado Anselmi"));
-        comoLlegar(coordenadas, destino);
+        //LatLng destino = new LatLng(-31.42773493119209, -62.11414910012128);
+        //mMap.addMarker(new MarkerOptions().position(destino).title("Hipermercado Anselmi"));
+        //comoLlegar(coordenadas, destino);
         Log.d("Llamada como llegar", "Entro paso como llegar");
         CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas, 16);
         if (marcador != null) {
@@ -142,7 +144,7 @@ public class ubicacion extends Fragment implements OnMapReadyCallback {
         }
     };
 
-    private void comoLlegar(LatLng origen, LatLng destino){
+    public void comoLlegar(LatLng origen, LatLng destino){
 
         //https://jonathanmelgoza.com/blog/trazar-ruta-punto-a-otro-google-maps-android/
 

@@ -1,5 +1,6 @@
 package com.stockeate.stockeate.ui.comparar_precios;
 
+import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,11 +14,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TableLayout;
+import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_comparar_precios;
 import com.stockeate.stockeate.clases.class_detalle_lista_compras;
@@ -81,17 +85,6 @@ public class Fragment_Comparar_Precios extends Fragment {
             }
         });
 
-        btn_como_llegar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ubicacion ubicacion = new ubicacion();
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_comparar_precios, ubicacion);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
-
         try {
             cargarDatosTabla();
         } catch (IOException e) {
@@ -99,6 +92,50 @@ public class Fragment_Comparar_Precios extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        listaComparacion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int i = 0, j = 0;
+
+                class_comparar_precios comparar_precios = new class_comparar_precios();
+
+                comparar_precios.setId(String.valueOf(mComparacionList.get(position).getId()));
+                comparar_precios.setId_local(String.valueOf(mComparacionList.get(position).getId_local()));
+                comparar_precios.setLocal(String.valueOf(mComparacionList.get(position).getLocal()));
+                comparar_precios.setPrecio_total(Float.parseFloat(String.valueOf(mComparacionList.get(position).getPrecio_total())));
+
+                if(!comparar_precios.getId().isEmpty()){
+                    btn_como_llegar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ubicacion ubicacion = new ubicacion();
+                            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+
+                            LatLng origen= new LatLng(-31.407994999999996,-62.08017333333334);
+
+                            String id_local = (mComparacionList.get(position).getId_local());
+
+                            Log.d("El local ", "Este es el local " + id_local);
+
+                            //VER PORQUE EL ID DEL LOCAL ESTA NULL
+                            //if(id_local=="5"){
+                                LatLng destino = new LatLng(-31.42773493119209, -62.11414910012128);
+                                ubicacion.comoLlegar(origen, destino);
+                            //}
+
+                            transaction.replace(R.id.fragment_comparar_precios, ubicacion);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                        }
+                    });
+                }
+                //este mensaje no sale.
+                else{
+                    Toast.makeText(getContext(), "Seleccione un local de la lista", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         return root;
     }
