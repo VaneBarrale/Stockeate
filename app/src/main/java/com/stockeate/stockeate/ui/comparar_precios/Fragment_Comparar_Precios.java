@@ -114,15 +114,49 @@ public class Fragment_Comparar_Precios extends Fragment {
 
                             LatLng origen= new LatLng(-31.407994999999996,-62.08017333333334);
 
-                            String id_local = (mComparacionList.get(position).getId_local());
+                            String id_local = String.valueOf(mComparacionList.get(position).getId_local());
 
                             Log.d("El local ", "Este es el local " + id_local);
 
-                            //VER PORQUE EL ID DEL LOCAL ESTA NULL
-                            //if(id_local=="5"){
+                            switch (id_local) {
+                                case "1":
+                                    //Castelli
+                                    LatLng destino1 = new LatLng(-31.4222692, -62.0885534);
+                                    ubicacion.comoLlegar(origen, destino1);
+                                    break;
+                                case "2":
+                                    //Norte
+                                    LatLng destino2 = new LatLng(-31.417809772868658, -62.08937372955097);
+                                    ubicacion.comoLlegar(origen, destino2);
+                                    break;
+                                case "3":
+                                    //Chapu 9 de julio
+                                    LatLng destino3 = new LatLng(-31.4315541,-62.0822393);
+                                    ubicacion.comoLlegar(origen, destino3);
+                                    break;
+                                case "4":
+                                    //Pigüino
+                                    LatLng destino4 = new LatLng(-31.4305975, -62.0794611);
+                                    ubicacion.comoLlegar(origen, destino4);
+                                    break;
+                                case "5":
+                                    //Hiper
+                                    LatLng destino5 = new LatLng(-31.42773493119209, -62.11414910012128);
+                                    ubicacion.comoLlegar(origen, destino5);
+                                    break;
+                                case "6":
+                                    //Vea
+                                    LatLng destino6 = new LatLng(-31.428872563164568, -62.08971817117201);
+                                    ubicacion.comoLlegar(origen, destino6);
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            /*if(id_local=="5"){
                                 LatLng destino = new LatLng(-31.42773493119209, -62.11414910012128);
                                 ubicacion.comoLlegar(origen, destino);
-                            //}
+                            }*/
 
                             transaction.replace(R.id.fragment_comparar_precios, ubicacion);
                             transaction.addToBackStack(null);
@@ -153,6 +187,7 @@ public class Fragment_Comparar_Precios extends Fragment {
             JSONObject jsonObj = jsonArray.getJSONObject(i);
             comparar_precios.setLocal(jsonObj.getString("local"));
             comparar_precios.setPrecio_total(Float.parseFloat(jsonObj.getString("precio_total")));
+            comparar_precios.setId_local(jsonObj.getString("id_local"));
             mComparacionList.add(comparar_precios);
         }
 
