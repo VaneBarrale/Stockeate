@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:background="#053F51B5"
-                android:hint="Codigo producto" />
+                android:hint="Categoria. Ejemplo gaseosa" />
 
             <EditText
                 android:id="@+id/etxtMarca"
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:background="#053F51B5"
-                android:hint="Marca" />
+                android:hint="Marca. Ejemplo Coca-Cola" />
 
             <EditText
                 android:id="@+id/etxtPresentacion"
@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:background="#053F51B5"
-                android:hint="Presentacion" />
+                android:hint="Presentacion. Ejemplo 2.5" />
 
             <EditText
                 android:id="@+id/etxtComercio"
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:background="#053F51B5"
-                android:hint="Comercio" />
+                android:hint="Comercio. Ejemplo Hipermercado Anselmi" />
 
             <Button
                 android:id="@+id/btn_Buscar"
@@ -90,7 +90,7 @@
                 android:layout_marginTop="50dp"
                 app:backgroundTint="#2196F3"
                 android:text="Buscar"/>
-            
+
             <LinearLayout
                 android:id="@+id/llhorizontallc2"
                 android:layout_width="match_parent"

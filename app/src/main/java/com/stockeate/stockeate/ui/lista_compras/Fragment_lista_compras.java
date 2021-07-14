@@ -320,7 +320,7 @@ public class Fragment_lista_compras extends Fragment {
                     productos.setMarca(jsonObj.getString("marca"));
                     productos.setPresentacion(jsonObj.getString("presentacion"));
                     productos.setUnidad(jsonObj.getString("unidad"));
-                    productos.setId(jsonObj.getString("codigo_barra"));
+                    productos.setCodigo_barra(jsonObj.getString("codigo_barra"));
                     mProductosList.add(productos);
                 }
             }
