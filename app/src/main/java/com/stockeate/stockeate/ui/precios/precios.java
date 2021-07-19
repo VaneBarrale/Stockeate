@@ -1,5 +1,6 @@
 package com.stockeate.stockeate.ui.precios;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +30,7 @@ import com.stockeate.stockeate.utiles.utiles;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,7 +42,7 @@ import static com.stockeate.stockeate.R.layout.text_view_with_line_height_from_a
 
 public class precios extends Fragment {
 
-    private EditText categoria, marca, presentacion, comercio;
+    private EditText categoria, marca, presentacion, comercio, precio_nuevo;
     private Button btn_actualizar, btn_buscar, btn_volver, btn_buscar_cod_barra;
     private PreciosViewModel viewModelPrecios;
     private ArrayAdapter<class_producto> mArrayAdapterProducto;
@@ -60,6 +63,7 @@ public class precios extends Fragment {
         this.marca = root.findViewById(R.id.etxtMarca);
         this.presentacion = root.findViewById(R.id.etxtPresentacion);
         this.comercio = root.findViewById(R.id.etxtComercio);
+        this.precio_nuevo = root.findViewById(R.id.txvPrecionuevo);
         this.btn_actualizar = root.findViewById(R.id.btn_actualizar);
         this.btn_buscar = root.findViewById(R.id.btn_Buscar);
         this.btn_volver = root.findViewById(R.id.btn_Volver);
@@ -102,6 +106,8 @@ public class precios extends Fragment {
                 transaction.commit();
             }
         });
+
+        actualizarPrecios();
 
         listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -208,5 +214,63 @@ public class precios extends Fragment {
         Log.d("Producto", "Producto " + productos.toString());
         Log.d("Precio", "Precio " + precio_actual);
         //txv_precio_actual = productos.getPrecio();*/
+    }
+
+    private void limpiarDatos() {
+        categoria.setText("");
+        marca.setText("");
+        presentacion.setText("");
+        comercio.setText("");
+        mProductosList.clear();
+        mArrayAdapterProducto.clear();
+        txv_precio_actual.setText("");
+        precio_nuevo.setText("");
+    }
+
+    public void recuperarCodigo(String codigo) throws IOException, JSONException {
+        Log.d("Codigo recuperado", "codigo " + codigo);
+
+        //revisar desde aca, da error porque son fragment. Ver desde escanear como lo paso sin que se rompa
+
+        /*String jsonFileContent1 = utiles.leerJson(getContext(), "productos.json");
+        JSONArray jsonArray1 = new JSONArray(jsonFileContent1);
+        Log.d("Longitud json 1 ", String.valueOf(jsonArray1.length()));
+        Log.d("json 1", jsonArray1.toString());
+        for (int i = 0; i < jsonArray1.length(); i++) {
+            try {
+                JSONObject jsonObj1 = jsonArray1.getJSONObject(i);
+                //Si el codigo de barra coincide seteo
+                Log.d("Codigo de barra ANTES IF", "Existe el codido de barra " + codigo);
+
+                if (jsonObj1.getString("codigo_barra").equals(codigo)) {
+                    Log.d("Codigo de barra", "Existe el codido de barra " + codigo);
+                    //productos.setPrecio(jsonObj.getDouble("precio"));
+                    actualizarPrecios();
+                }
+                else {
+                    Toast.makeText(getContext(), "El producto no existe", Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }*/
+    }
+
+    private void actualizarPrecios(){
+        btn_actualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!txv_precio_actual.getText().toString().isEmpty()) {
+                    if (!precio_nuevo.getText().toString().isEmpty()) {
+                        limpiarDatos();
+                        Toast.makeText(getContext(), "Actualizado con exito", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(getContext(), "Coloque un precio para actualizar", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Seleccione un producto para actualizar", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

@@ -25,6 +25,7 @@ import com.google.zxing.integration.android.IntentResult;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_producto;
 import com.stockeate.stockeate.ui.comparar_precios.Fragment_Comparar_Precios;
+import com.stockeate.stockeate.ui.precios.precios;
 import com.stockeate.stockeate.utiles.utiles;
 
 import org.json.JSONArray;
@@ -111,8 +112,6 @@ public class Fragment_escanear_codigos_barra extends Fragment {
                 Toast.makeText(getContext(), result.getContents(), Toast.LENGTH_SHORT).show();
                 resultadoEscaneo.setText(result.getContents());
 
-                //desde aca empece a tocar 05/07
-
                 String jsonFileContent = null;
                 try {
                     jsonFileContent = utiles.leerJson(getContext(), "productos.json");
@@ -155,6 +154,18 @@ public class Fragment_escanear_codigos_barra extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                }
+
+                String resultadoEscaneoString = resultadoEscaneo.getText().toString();
+                Log.d("Resultado escaneo", "resultado escaneo " + resultadoEscaneoString);
+
+                precios precio = new precios();
+                try {
+                    precio.recuperarCodigo(resultadoEscaneoString);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
                 mProductosList.removeAll(Collections.singleton(null));

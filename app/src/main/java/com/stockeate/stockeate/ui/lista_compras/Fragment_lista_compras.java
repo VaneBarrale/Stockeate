@@ -364,8 +364,7 @@ public class Fragment_lista_compras extends Fragment {
         presentacion.setText("");
         cantidad.setText("");
         unidad.setText("");
+        mProductosList.clear();
+        mArrayAdapterProducto.clear();
     }
-
-
-
 }
