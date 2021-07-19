@@ -6,6 +6,7 @@
     "presentacion": "2.5",
     "unidad": "Litros",
     "precio": 120.00,
+    "comercio": "Careglio Hnos Sarmiento",
     "codigo_barra": "7790040929609"
   },
   {
@@ -15,6 +16,7 @@
     "presentacion": "1.5",
     "unidad": "Litros",
     "precio": 100.15,
+    "comercio": "El norte",
     "codigo_barra": "7790040929610"
   },
   {
@@ -24,6 +26,7 @@
     "presentacion": "3",
     "unidad": "Litros",
     "precio": 200.00,
+    "comercio": "El norte",
     "codigo_barra": "7790040929611"
   },
   {
@@ -33,6 +36,7 @@
     "presentacion": "1.5",
     "unidad": "Litros",
     "precio": 250.10,
+    "comercio": "Careglio Hnos Castelli",
     "codigo_barra": "7790040929612"
   },
   {
@@ -42,6 +46,7 @@
     "presentacion": "500",
     "unidad": "gramos",
     "precio": 50.52,
+    "comercio": "Hipermercado Anselmi",
     "codigo_barra": "7790040929613"
   },
   {
@@ -51,6 +56,7 @@
     "presentacion": "1",
     "unidad": "unidad",
     "precio": 87.10,
+    "comercio": "Careglio Hnos Castelli",
     "codigo_barra": "7790040929614"
   },
   {
@@ -60,6 +66,7 @@
     "presentacion": "300",
     "unidad": "gramos",
     "precio": 56.30,
+    "comercio": "Careglio Hnos Castelli",
     "codigo_barra": "7790040929615"
   },
   {
@@ -69,6 +76,7 @@
     "presentacion": "250",
     "unidad": "gramos",
     "precio": 250.60,
+    "comercio": "Hipermercado Anselmi",
     "codigo_barra": "7790040929616"
   },
   {
@@ -78,6 +86,7 @@
     "presentacion": "1",
     "unidad": "kilo",
     "precio": 500.20,
+    "comercio": "Careglio Hnos Sarmiento",
     "codigo_barra": "7790040929617"
   }
 ]

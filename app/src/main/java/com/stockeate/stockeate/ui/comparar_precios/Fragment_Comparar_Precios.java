@@ -114,9 +114,10 @@ public class Fragment_Comparar_Precios extends Fragment {
 
                             LatLng origen= new LatLng(-31.407994999999996,-62.08017333333334);
 
-                            String id_local = (mComparacionList.get(position).getId_local());
+                            String id_local = String.valueOf(mComparacionList.get(position).getId_local());
 
                             Log.d("El local ", "Este es el local " + id_local);
+
 
                             //VER PORQUE EL ID DEL LOCAL ESTA NULL
                             if(id_local=="5"){
@@ -153,6 +154,7 @@ public class Fragment_Comparar_Precios extends Fragment {
             JSONObject jsonObj = jsonArray.getJSONObject(i);
             comparar_precios.setLocal(jsonObj.getString("local"));
             comparar_precios.setPrecio_total(Float.parseFloat(jsonObj.getString("precio_total")));
+            comparar_precios.setId_local(jsonObj.getString("id_local"));
             mComparacionList.add(comparar_precios);
         }
 
