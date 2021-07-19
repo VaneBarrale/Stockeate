@@ -101,27 +101,29 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View v) {
 
                 firebaseAuth = FirebaseAuth.getInstance();
+                if (et_email.getText().toString().isEmpty() || et_password.getText().toString().isEmpty()){
+                    Toast.makeText(MainActivity.this, "eMail o Contraseña invalido", Toast.LENGTH_SHORT).show();
+                }else {
+                    firebaseAuth.signInWithEmailAndPassword(et_email.getText().toString(), et_password.getText().toString())
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                                        Toast.makeText(MainActivity.this, "Se ha iniciado sesión", Toast.LENGTH_SHORT).show();
+                                        Log.w("Login Success", "signInWithEmail:Success", task.getException());
 
-                firebaseAuth.signInWithEmailAndPassword(et_email.getText().toString(),et_password.getText().toString())
-                        .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                                    Toast.makeText(MainActivity.this, "Se ha iniciado sesión", Toast.LENGTH_SHORT).show();
-                                    Log.w("Login Success", "signInWithEmail:Success", task.getException());
-
-                                    guardarSesion(recordarme.isChecked());
-                                    Intent login = new Intent(MainActivity.this, Activity_Menu.class);
-                                    startActivity(login);
-                                }else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w("Login Failed", "signInWithEmail:failure", task.getException());
-                                    Toast.makeText(MainActivity.this, "El usuario no se encuentra logueado", Toast.LENGTH_SHORT).show();
+                                        guardarSesion(recordarme.isChecked());
+                                        Intent login = new Intent(MainActivity.this, Activity_Menu.class);
+                                        startActivity(login);
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        Log.w("Login Failed", "signInWithEmail:failure", task.getException());
+                                        Toast.makeText(MainActivity.this, "eMail o Contraseña invalido", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
-
+                            });
+                }
                 /*verificacionInicioSesion();*/
 
 

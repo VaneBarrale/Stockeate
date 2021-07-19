@@ -119,10 +119,10 @@ public class Fragment_Comparar_Precios extends Fragment {
                             Log.d("El local ", "Este es el local " + id_local);
 
                             //VER PORQUE EL ID DEL LOCAL ESTA NULL
-                            //if(id_local=="5"){
+                            if(id_local=="5"){
                                 LatLng destino = new LatLng(-31.42773493119209, -62.11414910012128);
                                 ubicacion.comoLlegar(origen, destino);
-                            //}
+                            }
 
                             transaction.replace(R.id.fragment_comparar_precios, ubicacion);
                             transaction.addToBackStack(null);
