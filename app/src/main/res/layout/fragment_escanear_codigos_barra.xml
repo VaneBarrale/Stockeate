@@ -12,7 +12,7 @@
     <LinearLayout
         android:id="@+id/llverticallc"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="50dp"
         tools:ignore="MissingConstraints"
         android:orientation="vertical">
@@ -20,21 +20,39 @@
         <Button
             android:id="@+id/btn_Escanear"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             app:backgroundTint="#2196F3"
             android:text="Abrir escaner"/>
 
+        <ListView
+            android:id="@+id/ListViewResultado"
+            android:layout_width="match_parent"
+            android:layout_height="126dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="Resultado" />
+
         <TextView
             android:id="@+id/txtResultadoEscaneo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textSize="15dp"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/btnCompararPreciosLista"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:layout_marginLeft="20dp"
-            android:textSize="15dp" />
+            android:layout_marginRight="20dp"
+            app:backgroundTint="#2196F3"
+            android:text="Comparar precios"/>
 
     </LinearLayout>
 

@@ -32,10 +32,6 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".activities.Activity_como_llegar"
-            android:label="@string/title_activity_como_llegar" />
-
-        <activity
             android:name=".activities.Activity_Menu"
             android:label="@string/title_activity_menu2"
             android:theme="@style/Theme.Stockeate.NoActionBar" />

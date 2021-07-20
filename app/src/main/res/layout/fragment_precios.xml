@@ -45,7 +45,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
             android:orientation="vertical"
             app:layout_editor_absoluteY="50dp"
@@ -55,9 +54,8 @@
                 android:id="@+id/etxtCodigoProducto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
                 android:background="#053F51B5"
-                android:hint="Codigo producto" />
+                android:hint="Categoria. Ejemplo gaseosa" />
 
             <EditText
                 android:id="@+id/etxtMarca"
@@ -65,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:background="#053F51B5"
-                android:hint="Marca" />
+                android:hint="Marca. Ejemplo Coca-Cola" />
 
             <EditText
                 android:id="@+id/etxtPresentacion"
@@ -73,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:background="#053F51B5"
-                android:hint="Presentacion" />
+                android:hint="Presentacion. Ejemplo 2.5" />
 
             <EditText
                 android:id="@+id/etxtComercio"
@@ -81,16 +79,39 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:background="#053F51B5"
-                android:hint="Comercio" />
+                android:hint="Comercio. Ejemplo Hipermercado Anselmi" />
 
-            <Button
-                android:id="@+id/btn_Buscar"
+            <LinearLayout
+                android:id="@+id/llhorizontallc6"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                app:backgroundTint="#2196F3"
-                android:text="Buscar"/>
-            
+                android:layout_height="43dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
+
+                <Button
+                    android:id="@+id/btn_BuscarCodigoBarra"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="POR COD. BARRA"
+                    app:backgroundTint="#2196F3" />
+
+                <Button
+                    android:id="@+id/btn_Buscar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Buscar"
+                    android:layout_marginLeft="20dp"
+                    app:backgroundTint="#2196F3" />
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/ListViewResultado"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:hint="Resultado" />
+
             <LinearLayout
                 android:id="@+id/llhorizontallc2"
                 android:layout_width="match_parent"
@@ -113,6 +134,8 @@
                     android:layout_width="100dp"
                     android:layout_height="50dp"
                     android:layout_marginLeft="150dp"
+                    android:gravity="center"
+                    android:textStyle="bold"
                     android:background="@android:color/holo_blue_dark"
                     android:textColor="#FFFFFF" />
 

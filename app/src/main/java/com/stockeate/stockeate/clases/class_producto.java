@@ -1,18 +1,22 @@
 package com.stockeate.stockeate.clases;
 
+import android.widget.EditText;
+
 public class class_producto {
-    private String id, categoria, marca, presentacion, unidad;
-    private float precio;
+    private String id, categoria, marca, presentacion, unidad, codigo_barra, comercio;
+    private double precio;
 
     public class_producto(){}
 
-    public class_producto(String Id, String categoria, String marca, String presentacion, String unidad, float precio) {
+    public class_producto(String Id, String categoria, String marca, String presentacion, String unidad, String codigo_barra, String comercio, float precio) {
         this.id = id;
         this.categoria = categoria;
         this.marca = marca;
         this.presentacion = presentacion;
         this.unidad = unidad;
+        this.codigo_barra = codigo_barra;
         this.precio = precio;
+        this.comercio = comercio;
     }
 
     public String getId() {
@@ -54,6 +58,18 @@ public class class_producto {
     public void setUnidad(String unidad) {
         this.unidad = unidad;
     }
+
+    public String getCodigo_barra() {return codigo_barra; }
+
+    public void setCodigo_barra(String codigo_barra) { this.codigo_barra = codigo_barra; }
+
+    public double getPrecio() {return precio; }
+
+    public void setPrecio(double precio) { this.precio = precio; }
+
+    public String getComercio() {return comercio; }
+
+    public void setComercio(String comercio) { this.comercio = comercio; }
 
     @Override
     public String toString() {

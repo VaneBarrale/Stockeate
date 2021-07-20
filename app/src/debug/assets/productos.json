@@ -5,7 +5,9 @@
     "marca": "Coca-Cola",
     "presentacion": "2.5",
     "unidad": "Litros",
-    "precio": 120.00
+    "precio": 120.00,
+    "comercio": "Careglio Hnos Sarmiento",
+    "codigo_barra": "7790040929609"
   },
   {
     "id": "2",
@@ -13,7 +15,9 @@
     "marca": "Naranpol",
     "presentacion": "1.5",
     "unidad": "Litros",
-    "precio": 100.15
+    "precio": 100.15,
+    "comercio": "El norte",
+    "codigo_barra": "0607869282181"
   },
   {
     "id": "3",
@@ -21,7 +25,9 @@
     "marca": "Natura",
     "presentacion": "3",
     "unidad": "Litros",
-    "precio": 200.00
+    "precio": 200.00,
+    "comercio": "El norte",
+    "codigo_barra": "7794000960442"
   },
   {
     "id": "4",
@@ -29,7 +35,9 @@
     "marca": "Patito",
     "presentacion": "1.5",
     "unidad": "Litros",
-    "precio": 250.10
+    "precio": 250.10,
+    "comercio": "Careglio Hnos Castelli",
+    "codigo_barra": "7790040929612"
   },
   {
     "id": "5",
@@ -37,7 +45,9 @@
     "marca": "Pepitos",
     "presentacion": "500",
     "unidad": "gramos",
-    "precio": 50.52
+    "precio": 50.52,
+    "comercio": "Hipermercado Anselmi",
+    "codigo_barra": "7790040929613"
   },
   {
     "id": "6",
@@ -45,7 +55,9 @@
     "marca": "Terrabusi",
     "presentacion": "1",
     "unidad": "unidad",
-    "precio": 87.10
+    "precio": 87.10,
+    "comercio": "Careglio Hnos Castelli",
+    "codigo_barra": "7790040929614"
   },
   {
     "id": "7",
@@ -53,7 +65,9 @@
     "marca": "Sonrisas",
     "presentacion": "300",
     "unidad": "gramos",
-    "precio": 56.30
+    "precio": 56.30,
+    "comercio": "Careglio Hnos Castelli",
+    "codigo_barra": "7790040929615"
   },
   {
     "id": "8",
@@ -61,7 +75,9 @@
     "marca": "casona",
     "presentacion": "250",
     "unidad": "gramos",
-    "precio": 250.60
+    "precio": 250.60,
+    "comercio": "Hipermercado Anselmi",
+    "codigo_barra": "7790040929616"
   },
   {
     "id": "9",
@@ -69,6 +85,8 @@
     "marca": "La serenisima",
     "presentacion": "1",
     "unidad": "kilo",
-    "precio": 500.20
+    "precio": 500.20,
+    "comercio": "Careglio Hnos Sarmiento",
+    "codigo_barra": "7790040929617"
   }
 ]

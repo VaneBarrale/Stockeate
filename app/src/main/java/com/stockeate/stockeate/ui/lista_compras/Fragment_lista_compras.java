@@ -1,5 +1,6 @@
 package com.stockeate.stockeate.ui.lista_compras;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,13 +20,17 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_detalle_lista_compras;
 import com.stockeate.stockeate.clases.class_lista_compras;
 import com.stockeate.stockeate.clases.class_producto;
+import com.stockeate.stockeate.ui.escanear_codigos_barra.Fragment_escanear_codigos_barra;
 import com.stockeate.stockeate.ui.mis_listas_compras.Fragment_mis_listas_compras;
 import com.stockeate.stockeate.ui.comparar_precios.Fragment_Comparar_Precios;
 import com.stockeate.stockeate.ui.home.HomeFragment;
+import com.stockeate.stockeate.ui.precios.precios;
 import com.stockeate.stockeate.utiles.utiles;
 
 import org.json.JSONArray;
@@ -48,7 +53,7 @@ import java.util.Collections;
 public class Fragment_lista_compras extends Fragment {
 
     private ViewModel_lista_compras viewModelListacompras;
-    private Button btn_comparar, btn_volver, btn_agregar, btn_buscar, btn_guardar, btn_listas;
+    private Button btn_comparar, btn_volver, btn_agregar, btn_buscar, btn_guardar, btn_listas, btn_cod_barra;
     private EditText categoria, marca, presentacion, cantidad, unidad;
     private ListView productos_agregados;
     private ArrayAdapter<class_producto> mArrayAdapterProducto;
@@ -74,6 +79,7 @@ public class Fragment_lista_compras extends Fragment {
         this.btn_buscar = root.findViewById(R.id.btn_Buscar);
         this.btn_guardar = root.findViewById(R.id.btn_Guardar);
         this.btn_listas = root.findViewById(R.id.btn_MisListas);
+        this.btn_cod_barra = root.findViewById(R.id.btn_BuscarCodigoBarra);
         this.categoria = root.findViewById(R.id.etxCategoria);
         this.marca = root.findViewById(R.id.etxtMarca);
         this.presentacion = root.findViewById(R.id.etxtPresentacion);
@@ -122,7 +128,6 @@ public class Fragment_lista_compras extends Fragment {
             }
         });
 
-        //arreglar la busqueda cuando los filtros son muchos.
         btn_buscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,15 +162,12 @@ public class Fragment_lista_compras extends Fragment {
                 detalle_lista_compras.setUnidad(mProductosList.get(position).getUnidad());
                 detalle_lista_compras.setCantidad(cantidad.getText().toString());
 
-                Log.i("aca", "hasta aca pasa");
-
                 btn_agregar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!detalle_lista_compras.getId_producto().isEmpty())
-                        {
+                        if (!detalle_lista_compras.getId_producto().isEmpty()) {
                             String _cantidad = cantidad.getText().toString();
-                            if (_cantidad.equals("")){
+                            if (_cantidad.equals("")) {
                                 cantidad.setError("Cantidad requerida");
                             } else {
                                 mDetalleLista.add(detalle_lista_compras);
@@ -186,45 +188,42 @@ public class Fragment_lista_compras extends Fragment {
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mDetalleLista.isEmpty()){
-                    int i=0;
-                    /* ESTO FUNCIONA
-                    try {
+                if (!mDetalleLista.isEmpty()) {
+                    int i = 0;
 
-                        String jsonFileContent = utiles.escribirJson(getContext(), "detalle_lista_compras.json", "Hola");
-                    } catch (IOException e) {
+                    class_detalle_lista_compras detalle_lista_compras = new class_detalle_lista_compras();
+
+                    try {
+                        JSONObject json = new JSONObject();
+                        InputStream is = Fragment_lista_compras.this.getClass().getClassLoader().getResourceAsStream("assets/" + "detalle_lista_compras.json");
+
+                        json.put("id", i++);
+                        json.put("id_lista_compras", detalle_lista_compras.getId_lista_compras());
+                        json.put("id_producto", detalle_lista_compras.getId_producto());
+                        json.put("id_usuario", "1");
+                        json.put("categoria", detalle_lista_compras.getCategoria());
+                        json.put("marca", detalle_lista_compras.getMarca());
+                        json.put("presentacion", detalle_lista_compras.getPresentacion());
+                        json.put("unidad", detalle_lista_compras.getUnidad());
+                        json.put("cantidad", cantidad);
+                        Log.i("Json", json.toString());
+
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    //https://www.youtube.com/watch?v=U_N10Gzqotw
-                    //https://www.youtube.com/watch?v=oq4VXszJFYs*/
-
-                class_detalle_lista_compras detalle_lista_compras = new class_detalle_lista_compras();
-
-                try {
-                    JSONObject json = new JSONObject();
-                    InputStream is = Fragment_lista_compras.this.getClass().getClassLoader().getResourceAsStream("assets/" + "detalle_lista_compras.json");
-
-                    json.put("id", i++);
-                    json.put("id_lista_compras",detalle_lista_compras.getId_lista_compras());
-                    json.put("id_producto", detalle_lista_compras.getId_producto());
-                    json.put("id_usuario", "1");
-                    json.put("categoria", detalle_lista_compras.getCategoria());
-                    json.put("marca", detalle_lista_compras.getMarca());
-                    json.put("presentacion", detalle_lista_compras.getPresentacion());
-                    json.put("unidad", detalle_lista_compras.getUnidad());
-                    json.put("cantidad", cantidad);
-                    Log.i("Json", json.toString());
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
                     Toast.makeText(getContext(), "Guardado con exito", Toast.LENGTH_SHORT).show();
                     limpiarDatos();
                     mArrayAdapterProducto.clear();
-                    }
-                else {
+                } else {
                     Toast.makeText(getContext(), "Agregue productos a la lista", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        btn_cod_barra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                escanear();
             }
         });
 
@@ -240,6 +239,75 @@ public class Fragment_lista_compras extends Fragment {
         });
 
         return root;
+
+    }
+
+    public void escanear(){
+        IntentIntegrator integrator = IntentIntegrator.forSupportFragment(Fragment_lista_compras.this);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+        integrator.setPrompt("ESCANEAR CODIGO");
+        integrator.setCameraId(0); //0 es la camara trasera
+        integrator.setBeepEnabled(true);
+        integrator.setBarcodeImageEnabled(true); //habilito para que pueda leer correctamente.
+        integrator.initiateScan();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        String resultadoEscaneo = null;
+        boolean guardar;
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        Toast.makeText(getContext(), result.getContents(), Toast.LENGTH_SHORT).show();
+        resultadoEscaneo = (result.getContents());
+
+        Log.d("Resultado escaneo ", "Resultado " + resultadoEscaneo);
+
+        String jsonFileContent = null;
+        try {
+            jsonFileContent = utiles.leerJson(getContext(), "productos.json");
+        } catch (IOException e) {
+            e.printStackTrace(); }
+
+        JSONArray jsonArray = null;
+        try {
+            jsonArray = new JSONArray(jsonFileContent);
+        } catch (JSONException e) {
+            e.printStackTrace(); }
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            class_producto productos = new class_producto();
+            try {
+                JSONObject jsonObj = jsonArray.getJSONObject(i);
+                guardar = true;
+                if (jsonObj.getString("codigo_barra").equals(resultadoEscaneo)) {
+                    if (guardar) {
+                        guardar = true;
+                    } else {
+                        guardar = false;
+                    };
+                }
+                else {
+                    guardar = false;
+                }
+                if (guardar) {
+                    mProductosList = new ArrayList<class_producto>();
+                    productos.setId(jsonObj.getString("id"));
+                    productos.setCategoria(jsonObj.getString("categoria"));
+                    productos.setMarca(jsonObj.getString("marca"));
+                    productos.setPresentacion(jsonObj.getString("presentacion"));
+                    productos.setUnidad(jsonObj.getString("unidad"));
+                    productos.setId(jsonObj.getString("codigo_barra"));
+                    productos.setPrecio(jsonObj.getDouble("precio"));
+                    mProductosList.add(productos);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        mProductosList.removeAll(Collections.singleton(null));
+        mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
+        listaResultado.setAdapter(mArrayAdapterProducto);
 
     }
 
@@ -319,6 +387,7 @@ public class Fragment_lista_compras extends Fragment {
                     productos.setMarca(jsonObj.getString("marca"));
                     productos.setPresentacion(jsonObj.getString("presentacion"));
                     productos.setUnidad(jsonObj.getString("unidad"));
+                    productos.setCodigo_barra(jsonObj.getString("codigo_barra"));
                     mProductosList.add(productos);
                 }
             }
@@ -356,14 +425,14 @@ public class Fragment_lista_compras extends Fragment {
         }
     }*/
 
-    private void limpiarDatos(){
+    private void limpiarDatos() {
         categoria.setText("");
         marca.setText("");
         presentacion.setText("");
         cantidad.setText("");
         unidad.setText("");
+        mProductosList.clear();
+        mArrayAdapterProducto.clear();
+        mAdapterDetalleLista.clear();
     }
-
-
-
 }
