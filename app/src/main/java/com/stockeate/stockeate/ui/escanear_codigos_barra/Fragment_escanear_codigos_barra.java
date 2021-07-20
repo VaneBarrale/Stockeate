@@ -25,6 +25,7 @@ import com.google.zxing.integration.android.IntentResult;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_producto;
 import com.stockeate.stockeate.ui.comparar_precios.Fragment_Comparar_Precios;
+import com.stockeate.stockeate.ui.lista_compras.Fragment_lista_compras;
 import com.stockeate.stockeate.ui.precios.precios;
 import com.stockeate.stockeate.utiles.utiles;
 
@@ -152,21 +153,6 @@ public class Fragment_escanear_codigos_barra extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }
-
-                String resultadoEscaneoString = resultadoEscaneo.getText().toString();
-
-                precios precio = new precios();
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                try {
-                    transaction.replace(R.id.fragment_escanear_codigos_barra, precio);
-                    precio.recuperarCodigo(resultadoEscaneoString);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
 
                 mProductosList.removeAll(Collections.singleton(null));
