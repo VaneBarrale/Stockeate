@@ -124,8 +124,6 @@ public class Fragment_escanear_codigos_barra extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Log.d("Longitud json ", String.valueOf(jsonArray.length()));
-                Log.d("json ", jsonArray.toString());
                 for (int i = 0; i < jsonArray.length(); i++) {
                     class_producto productos = new class_producto();
                     try {
@@ -157,11 +155,14 @@ public class Fragment_escanear_codigos_barra extends Fragment {
                 }
 
                 String resultadoEscaneoString = resultadoEscaneo.getText().toString();
-                Log.d("Resultado escaneo", "resultado escaneo " + resultadoEscaneoString);
 
                 precios precio = new precios();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 try {
+                    transaction.replace(R.id.fragment_escanear_codigos_barra, precio);
                     precio.recuperarCodigo(resultadoEscaneoString);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {

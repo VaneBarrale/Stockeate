@@ -116,8 +116,6 @@ public class Fragment_Comparar_Precios extends Fragment {
 
                             String id_local = String.valueOf(mComparacionList.get(position).getId_local());
 
-                            Log.d("El local ", "Este es el local " + id_local);
-
                             switch (id_local) {
                                 case "1":
                                     //Castelli
@@ -178,12 +176,9 @@ public class Fragment_Comparar_Precios extends Fragment {
 
         String jsonFileContent = utiles.leerJson(getContext(), "comparaciones.json");
         JSONArray jsonArray = new JSONArray(jsonFileContent);
-        Log.d("Longitud json ", String.valueOf(jsonArray.length()));
-        Log.d("json ", jsonArray.toString());
 
         for (int i = 0; i < jsonArray.length(); i++) {
             class_comparar_precios comparar_precios = new class_comparar_precios();
-            Log.d("dentro del for ", String.valueOf(i));
             JSONObject jsonObj = jsonArray.getJSONObject(i);
             comparar_precios.setLocal(jsonObj.getString("local"));
             comparar_precios.setPrecio_total(Float.parseFloat(jsonObj.getString("precio_total")));

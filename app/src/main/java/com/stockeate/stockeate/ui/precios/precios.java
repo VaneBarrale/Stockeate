@@ -101,6 +101,8 @@ public class precios extends Fragment {
             public void onClick(View v) {
                 Fragment_escanear_codigos_barra escanear_codigos_barra = new Fragment_escanear_codigos_barra();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                //Ver porque da error
+                //escanear_codigos_barra.escanear();
                 transaction.replace(R.id.fragment_precios, escanear_codigos_barra);
                 transaction.addToBackStack(null);
                 transaction.commit();
@@ -232,26 +234,21 @@ public class precios extends Fragment {
 
         //revisar desde aca, da error porque son fragment. Ver desde escanear como lo paso sin que se rompa
 
-        /*String jsonFileContent1 = utiles.leerJson(getContext(), "productos.json");
-        JSONArray jsonArray1 = new JSONArray(jsonFileContent1);
-        Log.d("Longitud json 1 ", String.valueOf(jsonArray1.length()));
-        Log.d("json 1", jsonArray1.toString());
-        for (int i = 0; i < jsonArray1.length(); i++) {
-            try {
-                JSONObject jsonObj1 = jsonArray1.getJSONObject(i);
-                //Si el codigo de barra coincide seteo
-                Log.d("Codigo de barra ANTES IF", "Existe el codido de barra " + codigo);
+        /*String jsonFileContent = utiles.leerJson(getContext(), "productos.json");
+        JSONArray jsonArray = new JSONArray(jsonFileContent);
+        Log.d("Longitud json 1", String.valueOf(jsonArray.length()));
+        Log.d("json ", jsonArray.toString());
 
-                if (jsonObj1.getString("codigo_barra").equals(codigo)) {
+        for (int i = 0; i < jsonArray.length(); i++) {
+            Log.d("dentro del for 1", String.valueOf(i));
+            JSONObject jsonObj = jsonArray.getJSONObject(i);
+
+            if (jsonObj.getString("codigo_barra").equals(codigo)) {
                     Log.d("Codigo de barra", "Existe el codido de barra " + codigo);
                     //productos.setPrecio(jsonObj.getDouble("precio"));
-                    actualizarPrecios();
-                }
-                else {
-                    Toast.makeText(getContext(), "El producto no existe", Toast.LENGTH_SHORT).show();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+                    //actualizarPrecios();
+            } else {
+                Toast.makeText(getContext(), "El producto no existe", Toast.LENGTH_SHORT).show();
             }
         }*/
     }
