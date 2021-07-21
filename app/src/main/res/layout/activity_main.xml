@@ -66,14 +66,12 @@
                 android:id="@+id/llhorizontalusuario"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginStart="30dp"
                 android:layout_marginTop="50dp"
-                android:layout_marginEnd="30dp"
                 android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/login_email_editText"
-                    android:layout_width="match_parent"
+                    android:layout_width="290dp"
                     android:layout_height="50dp"
                     android:ems="10"
                     android:hint="Email"
@@ -82,8 +80,8 @@
 
                 <ImageView
                     android:id="@+id/imageView4"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="30dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/usuario" />
 
@@ -93,25 +91,35 @@
                 android:id="@+id/llhorizontalcontraseña"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:layout_marginStart="30dp"
+
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="30dp"
+
                 android:orientation="horizontal">
 
 
                 <EditText
                     android:id="@+id/login_password_editText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
+                    android:layout_width="290dp"
+                    android:layout_height="50dp"
                     android:ems="10"
-                    android:inputType="textPassword"
-                    android:text="Contraseña" />
+                    android:hint="*******"
+                    android:inputType="textPassword" />
+
+                <ImageView
+                    android:id="@+id/show_pass_btn"
+                    android:layout_width="30dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:alpha=".5"
+                    android:padding="5dp"
+                    android:src="@android:drawable/ic_menu_view" />
 
                 <ImageView
                     android:id="@+id/imageView3"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="30dp"
+                    android:layout_height="50dp"
                     app:srcCompat="@drawable/candado" />
 
             </LinearLayout>
@@ -186,8 +194,10 @@
 
                 <ImageView
                     android:id="@+id/ic_googleLogin"
-                    android:layout_width="wrap_content"
+                    android:layout_width="41dp"
                     android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:translationX="128dp"
                     app:srcCompat="@drawable/iconogmail" />
             </LinearLayout>
 

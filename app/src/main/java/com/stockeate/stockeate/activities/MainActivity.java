@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.ConditionVariable;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,9 +37,9 @@ public class MainActivity extends AppCompatActivity{
 
     private Button btn_login;
     private TextView tv_registraraqui, tv_recuperar;
-    private EditText et_email, et_password;
+    private EditText et_email,et_password;
     private CheckBox recordarme;
-    private ImageView ic_loginGoogle;
+    private ImageView ic_loginGoogle,ic_mostrarPass;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity{
         this.tv_registraraqui = findViewById(R.id.textRegistrate);
         this.tv_recuperar = findViewById(R.id.txtOlvidasteTuContraseña);
         this.ic_loginGoogle = findViewById(R.id.ic_googleLogin);
+        this.ic_mostrarPass = findViewById(R.id.show_pass_btn);
 
         preferences = this.getSharedPreferences("sesiones", Context.MODE_PRIVATE);
         editor = preferences.edit();
@@ -144,6 +147,13 @@ public class MainActivity extends AppCompatActivity{
                 googleLogin();
             }
         });
+
+        ic_mostrarPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowHidePass(ic_mostrarPass);
+            }
+        });
     }
 
     private void googleLogin(){
@@ -205,5 +215,25 @@ public class MainActivity extends AppCompatActivity{
 
     private boolean revisarSesion(){
         return this.preferences.getBoolean("Sesion", false);
+    }
+
+    private void ShowHidePass(View view){
+
+        if(view.getId()==R.id.show_pass_btn){
+
+            if(et_password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+                //((ImageView(view)).setImageResource(R.drawable.hide_password);
+
+                //Show Password
+                et_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            }
+            else{
+                //((ImageView)(view)).setImageResource(R.drawable.show_password);
+
+                //Hide Password
+                et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+            }
+        }
     }
 }
