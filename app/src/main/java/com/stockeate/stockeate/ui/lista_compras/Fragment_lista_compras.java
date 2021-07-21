@@ -88,6 +88,9 @@ public class Fragment_lista_compras extends Fragment {
         this.productos_agregados = root.findViewById(R.id.lista_productos_agregados);
         this.listaResultado = root.findViewById(R.id.ListViewResultado);
 
+        btn_comparar.setEnabled(false);
+        btn_guardar.setEnabled(false);
+
         //todos los metodos que usen firebase deben ir abajo del inicializador
 
         mDetalleLista = new ArrayList<class_detalle_lista_compras>();
@@ -180,6 +183,8 @@ public class Fragment_lista_compras extends Fragment {
                         else {
                             Toast.makeText(getContext(), "Seleccione un producto de la lista", Toast.LENGTH_SHORT).show();
                         }
+                        btn_comparar.setEnabled(true);
+                        btn_guardar.setEnabled(true);
                     }
                 });
             }

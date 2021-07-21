@@ -79,6 +79,7 @@
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="20dp"
+                    android:enabled="true"
                     android:text="Como llegar"
                     app:backgroundTint="#2196F3" />
 

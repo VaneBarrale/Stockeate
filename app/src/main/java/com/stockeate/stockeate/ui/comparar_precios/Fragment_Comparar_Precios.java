@@ -61,6 +61,8 @@ public class Fragment_Comparar_Precios extends Fragment {
         this.btn_como_llegar = root.findViewById(R.id.btn_como_llegar);
         this.listaComparacion = root.findViewById(R.id.ListViewComparacion);
 
+        btn_como_llegar.setEnabled(false);
+
         mComparacionList = new ArrayList<class_comparar_precios>();
 
         btn_detalle.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +108,7 @@ public class Fragment_Comparar_Precios extends Fragment {
                 comparar_precios.setPrecio_total(Float.parseFloat(String.valueOf(mComparacionList.get(position).getPrecio_total())));
 
                 if(!comparar_precios.getId().isEmpty()){
+                    btn_como_llegar.setEnabled(true);
                     btn_como_llegar.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
