@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +20,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.activities.Activity_Menu;
 import com.stockeate.stockeate.activities.MainActivity;
@@ -32,6 +39,7 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private ImageButton btn_salir, btn_compras, btn_escanear, btn_ubicacion, btn_precio, btn_promocion, btn_nuevo_comercio;
+    private GoogleSignInClient mGoogleSignInClient;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
@@ -49,6 +57,13 @@ public class HomeFragment extends Fragment {
         btn_promocion = root.findViewById(R.id.btn_promocion);
         btn_nuevo_comercio = root.findViewById(R.id.btn_nuevo_comercio);
         btn_salir = root.findViewById(R.id.btn_Salir);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(HomeFragment.super.getContext(), gso);
 
         btn_compras.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +147,8 @@ public class HomeFragment extends Fragment {
                 builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        mGoogleSignInClient.signOut();
+                        Toast.makeText(HomeFragment.super.getContext(), "El usuario no se encuentra logueado", Toast.LENGTH_SHORT).show();
                         getActivity().finishAffinity();
                         Intent i = new Intent(getActivity(), MainActivity.class);
                         startActivity(i);

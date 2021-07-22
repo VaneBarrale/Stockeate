@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.ConditionVariable;
+import android.os.Parcelable;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity{
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         this.account = GoogleSignIn.getLastSignedInAccount(this);
+        Log.w("account", account.toString());
 
         if (revisarSesion()){
             et_email.setText(preferences.getString("Email",""));
@@ -181,6 +183,7 @@ public class MainActivity extends AppCompatActivity{
             Log.w("Login Success", "signInWithGoogle:Success");
 
             Intent login = new Intent(MainActivity.this, Activity_Menu.class);
+            //login.putExtra("GoogleSignInClient", mGoogleSignInClient.toString());
             startActivity(login);
 
         } catch (ApiException e) {
