@@ -8,105 +8,117 @@
     android:background="@drawable/fondo_framework"
     tools:context=".ui.ubicacion.ubicacion">
 
-    <LinearLayout
-        android:id="@+id/llverticallc"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/llhorizontallc"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            tools:ignore="MissingConstraints">
-
-            <TextView
-                android:id="@+id/txtPromociones"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_marginLeft="20dp"
-                android:text="Agrega los locales nuevos acá!"
-                android:textColor="@android:color/black"
-                android:textSize="17dp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llverticallc1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical"
-            app:layout_editor_absoluteY="50dp"
-            tools:ignore="MissingConstraints">
+            android:orientation="vertical" >
 
-            <EditText
-                android:id="@+id/etxtCuit"
+            <LinearLayout
+                android:id="@+id/llverticallc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:hint="CUIT"
-                android:background="#053F51B5" />
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints">
 
-            <EditText
-                android:id="@+id/etxtDescripcion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:hint="Descripcion"
-                android:background="#053F51B5" />
+                <LinearLayout
+                    android:id="@+id/llhorizontallc"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    tools:ignore="MissingConstraints">
 
-            <EditText
-                android:id="@+id/etxtDomicilio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:hint="Domicilio"
-                android:background="#053F51B5" />
+                    <TextView
+                        android:id="@+id/txtPromociones"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="center"
+                        android:text="Agrega los locales nuevos acá!"
+                        android:textColor="@android:color/black"
+                        android:textSize="17dp"
+                        android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/Localidad"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="25dp"
-                android:hint="Localidad"
-                android:background="#053F51B5" />
+                </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/llverticallc1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical"
+                    app:layout_editor_absoluteY="50dp"
+                    tools:ignore="MissingConstraints">
+
+                    <EditText
+                        android:id="@+id/etxtCuit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:background="#053F51B5"
+                        android:hint="CUIT" />
+
+                    <EditText
+                        android:id="@+id/etxtDescripcion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:background="#053F51B5"
+                        android:hint="Descripcion" />
+
+                    <EditText
+                        android:id="@+id/etxtDomicilio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:background="#053F51B5"
+                        android:hint="Domicilio" />
+
+                    <Spinner
+                        android:id="@+id/Localidad"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="25dp"
+                        android:background="#053F51B5"
+                        android:hint="Localidad" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llhorizontallc2"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="100dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    tools:ignore="MissingConstraints">
+
+                    <Button
+                        android:id="@+id/btn_Volver"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="Volver"
+                        app:backgroundTint="#2196F3" />
+
+                    <Button
+                        android:id="@+id/btn_agregar"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="Agregar"
+                        app:backgroundTint="#2196F3" />
+
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
+    </ScrollView>
 
-        <LinearLayout
-            android:id="@+id/llhorizontallc2"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="100dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            tools:ignore="MissingConstraints">
-
-            <Button
-                android:id="@+id/btn_Volver"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                app:backgroundTint="#2196F3"
-                android:text="Volver"/>
-
-            <Button
-                android:id="@+id/btn_agregar"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                app:backgroundTint="#2196F3"
-                android:text="Agregar"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
