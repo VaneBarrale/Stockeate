@@ -9,7 +9,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +50,6 @@ public class ubicacion extends Fragment implements OnMapReadyCallback {
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @NonNull Bundle savedInstanceState) {
         viewModelUbicacion = new ViewModelProvider(this).get(UbicacionViewModel.class);
         View root = inflater.inflate(fragment_ubicacion, container, false);
-        Log.d("Aca", "Por aca paso - oncreateView");
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.mapa);
         mapFragment.getMapAsync(this);
@@ -72,7 +70,6 @@ public class ubicacion extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        Log.d("Aca", "Por aca paso");
         miUbicacion();
         /*LatLng san_francisco = new LatLng(-31.4249815, -62.0840299);
         mMap.addMarker(new MarkerOptions().position(san_francisco).title("San Francisco"));
@@ -82,9 +79,7 @@ public class ubicacion extends Fragment implements OnMapReadyCallback {
     }
 
     public void miUbicacion() {
-        Log.d("Mi ubicacion ", "Entro");
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Log.d("Mi ubicacion ", "Entro al if");
             return;
         }
         LocationManager locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -95,23 +90,19 @@ public class ubicacion extends Fragment implements OnMapReadyCallback {
 
 
     private void actualizarUbicacion(Location location) {
-        Log.d("Mis coordenadas ", "Entro");
         if (location != null) {
             lat = location.getLatitude();
             lon = location.getLongitude();
             ubicacionActual(lat, lon);
-            Log.d("Mis coordenadas ", lat + " " + lon);
         }
     }
 
     private void ubicacionActual(double lat, double lon) {
-        Log.d("Mi ubicacion actual ", "Entro");
 
         LatLng coordenadas = new LatLng(lat, lon);
         //LatLng destino = new LatLng(-31.42773493119209, -62.11414910012128);
         //mMap.addMarker(new MarkerOptions().position(destino).title("Hipermercado Anselmi"));
         //comoLlegar(coordenadas, destino);
-        Log.d("Llamada como llegar", "Entro paso como llegar");
         CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas, 16);
         if (marcador != null) {
             marcador.remove();
@@ -125,18 +116,15 @@ public class ubicacion extends Fragment implements OnMapReadyCallback {
     LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(@NonNull Location location) {
-            Log.d("Location Listener ", "Entro");
             actualizarUbicacion(location);
         }
 
         @Override
         public void onProviderEnabled(@NonNull String provider) {
-            Log.d("Location Enabled", "Entro");
         }
 
         @Override
         public void onProviderDisabled(@NonNull String provider) {
-            Log.d("Location Disabled", "Entro");
         }
 
         @Override
@@ -148,8 +136,6 @@ public class ubicacion extends Fragment implements OnMapReadyCallback {
 
         //https://jonathanmelgoza.com/blog/trazar-ruta-punto-a-otro-google-maps-android/
 
-        Log.d("Como llegar ", "Entro");
-
         MarkerOptions marcadorDestino= new MarkerOptions();
         marcadorDestino.position(destino);
         marcadorDestino.title("Este es tu destino");
@@ -159,19 +145,15 @@ public class ubicacion extends Fragment implements OnMapReadyCallback {
         downloadTask.execute(url);
     }
 
-    @SuppressLint("LongLogTag")
     private String obtenerDireccionesURL(LatLng origin, LatLng dest){
-        Log.d("Obtener direcciones URL", "Entro");
         String str_origin = "origin="+origin.latitude+","+origin.longitude;
         String str_dest = "destination="+dest.latitude+","+dest.longitude;
-        Log.d("Obtener direcciones destino y origen ", "Entro " + str_origin + "&" + str_dest);
         String sensor = "sensor=false";
         String key = "key=AIzaSyBjuy-FREuZA1HLk2xwI37JOfWkLYWgmhc";
         String parameters = str_origin+"&"+str_dest+"&"+key;
         //prueba de que la URL funciona con los parametros del ejemplo https://maps.googleapis.com/maps/api/directions/json?origin=-31.407625,-62.08034166666666&destination=-31.4249992,-62.0841599&key=AIzaSyBjuy-FREuZA1HLk2xwI37JOfWkLYWgmhc
         String output = "json";
         String url = "https://maps.googleapis.com/maps/api/directions/"+output+"?"+parameters;
-        Log.d("Url", "Entro" + url);
         return url;
     }
 
@@ -180,14 +162,11 @@ public class ubicacion extends Fragment implements OnMapReadyCallback {
         @Override
         protected String doInBackground(String... url) {
 
-            Log.d("DowloadTask ", "Entro");
-
             String data = "";
 
             try{
                 data = downloadUrl(url[0]);
             }catch(Exception e){
-                Log.d("ERROR WS",e.toString());
             }
             return data;
         }
@@ -222,7 +201,6 @@ public class ubicacion extends Fragment implements OnMapReadyCallback {
                 br.close();
 
             }catch(Exception e){
-                Log.d("Exception", e.toString());
             }finally{
                 iStream.close();
                 urlConnection.disconnect();

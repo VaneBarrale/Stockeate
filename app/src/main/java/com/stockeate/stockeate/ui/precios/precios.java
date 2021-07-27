@@ -1,5 +1,7 @@
 package com.stockeate.stockeate.ui.precios;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +22,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_producto;
 import com.stockeate.stockeate.ui.escanear_codigos_barra.Fragment_escanear_codigos_barra;
@@ -28,6 +33,7 @@ import com.stockeate.stockeate.utiles.utiles;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,7 +45,7 @@ import static com.stockeate.stockeate.R.layout.text_view_with_line_height_from_a
 
 public class precios extends Fragment {
 
-    private EditText categoria, marca, presentacion, comercio;
+    private EditText categoria, marca, presentacion, comercio, precio_nuevo;
     private Button btn_actualizar, btn_buscar, btn_volver, btn_buscar_cod_barra;
     private PreciosViewModel viewModelPrecios;
     private ArrayAdapter<class_producto> mArrayAdapterProducto;
@@ -60,6 +66,7 @@ public class precios extends Fragment {
         this.marca = root.findViewById(R.id.etxtMarca);
         this.presentacion = root.findViewById(R.id.etxtPresentacion);
         this.comercio = root.findViewById(R.id.etxtComercio);
+        this.precio_nuevo = root.findViewById(R.id.txvPrecionuevo);
         this.btn_actualizar = root.findViewById(R.id.btn_actualizar);
         this.btn_buscar = root.findViewById(R.id.btn_Buscar);
         this.btn_volver = root.findViewById(R.id.btn_Volver);
@@ -95,13 +102,11 @@ public class precios extends Fragment {
         btn_buscar_cod_barra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment_escanear_codigos_barra escanear_codigos_barra = new Fragment_escanear_codigos_barra();
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_precios, escanear_codigos_barra);
-                transaction.addToBackStack(null);
-                transaction.commit();
+            escanear();
             }
         });
+
+        actualizarPrecios();
 
         listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -114,6 +119,75 @@ public class precios extends Fragment {
         });
 
         return root;
+
+    }
+
+    public void escanear(){
+        IntentIntegrator integrator = IntentIntegrator.forSupportFragment(precios.this);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+        integrator.setPrompt("ESCANEAR CODIGO");
+        integrator.setCameraId(0); //0 es la camara trasera
+        integrator.setBeepEnabled(true);
+        integrator.setBarcodeImageEnabled(true); //habilito para que pueda leer correctamente.
+        integrator.initiateScan();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        String resultadoEscaneo = null;
+        boolean guardar;
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        Toast.makeText(getContext(), result.getContents(), Toast.LENGTH_SHORT).show();
+        resultadoEscaneo = (result.getContents());
+
+        Log.d("Resultado escaneo ", "Resultado " + resultadoEscaneo);
+
+        String jsonFileContent = null;
+        try {
+            jsonFileContent = utiles.leerJson(getContext(), "productos.json");
+        } catch (IOException e) {
+            e.printStackTrace(); }
+
+        JSONArray jsonArray = null;
+        try {
+            jsonArray = new JSONArray(jsonFileContent);
+        } catch (JSONException e) {
+            e.printStackTrace(); }
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            class_producto productos = new class_producto();
+            try {
+                JSONObject jsonObj = jsonArray.getJSONObject(i);
+                guardar = true;
+                if (jsonObj.getString("codigo_barra").equals(resultadoEscaneo)) {
+                    if (guardar) {
+                        guardar = true;
+                    } else {
+                        guardar = false;
+                    };
+                }
+                else {
+                    guardar = false;
+                }
+                if (guardar) {
+                    mProductosList = new ArrayList<class_producto>();
+                    productos.setId(jsonObj.getString("id"));
+                    productos.setCategoria(jsonObj.getString("categoria"));
+                    productos.setMarca(jsonObj.getString("marca"));
+                    productos.setPresentacion(jsonObj.getString("presentacion"));
+                    productos.setUnidad(jsonObj.getString("unidad"));
+                    productos.setId(jsonObj.getString("codigo_barra"));
+                    productos.setPrecio(jsonObj.getDouble("precio"));
+                    mProductosList.add(productos);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        mProductosList.removeAll(Collections.singleton(null));
+        mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
+        listaResultado.setAdapter(mArrayAdapterProducto);
 
     }
 
@@ -208,5 +282,58 @@ public class precios extends Fragment {
         Log.d("Producto", "Producto " + productos.toString());
         Log.d("Precio", "Precio " + precio_actual);
         //txv_precio_actual = productos.getPrecio();*/
+    }
+
+    private void limpiarDatos() {
+        categoria.setText("");
+        marca.setText("");
+        presentacion.setText("");
+        comercio.setText("");
+        mProductosList.clear();
+        mArrayAdapterProducto.clear();
+        txv_precio_actual.setText("");
+        precio_nuevo.setText("");
+    }
+
+    public void recuperarCodigo(String codigo) throws IOException, JSONException {
+        Log.d("Codigo recuperado", "codigo " + codigo);
+
+        //revisar desde aca, da error porque son fragment. Ver desde escanear como lo paso sin que se rompa
+
+        /*String jsonFileContent = utiles.leerJson(getContext(), "productos.json");
+        JSONArray jsonArray = new JSONArray(jsonFileContent);
+        Log.d("Longitud json 1", String.valueOf(jsonArray.length()));
+        Log.d("json ", jsonArray.toString());
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            Log.d("dentro del for 1", String.valueOf(i));
+            JSONObject jsonObj = jsonArray.getJSONObject(i);
+
+            if (jsonObj.getString("codigo_barra").equals(codigo)) {
+                    Log.d("Codigo de barra", "Existe el codido de barra " + codigo);
+                    //productos.setPrecio(jsonObj.getDouble("precio"));
+                    //actualizarPrecios();
+            } else {
+                Toast.makeText(getContext(), "El producto no existe", Toast.LENGTH_SHORT).show();
+            }
+        }*/
+    }
+
+    private void actualizarPrecios(){
+        btn_actualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!txv_precio_actual.getText().toString().isEmpty()) {
+                    if (!precio_nuevo.getText().toString().isEmpty()) {
+                        limpiarDatos();
+                        Toast.makeText(getContext(), "Actualizado con exito", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(getContext(), "Coloque un precio para actualizar", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Seleccione un producto para actualizar", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

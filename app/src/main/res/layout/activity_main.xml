@@ -29,10 +29,12 @@
                 tools:ignore="MissingConstraints">
 
                 <ImageView
+
                     android:id="@+id/imageView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/logoredondeado" />
+
 
             </LinearLayout>
 
@@ -190,6 +192,7 @@
                         android:translationX="128dp"
                         app:srcCompat="@drawable/iconogmail" />
                 </LinearLayout>
+
 
             </LinearLayout>
         </LinearLayout>

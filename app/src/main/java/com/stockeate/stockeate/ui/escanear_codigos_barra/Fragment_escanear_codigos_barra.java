@@ -25,6 +25,8 @@ import com.google.zxing.integration.android.IntentResult;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_producto;
 import com.stockeate.stockeate.ui.comparar_precios.Fragment_Comparar_Precios;
+import com.stockeate.stockeate.ui.lista_compras.Fragment_lista_compras;
+import com.stockeate.stockeate.ui.precios.precios;
 import com.stockeate.stockeate.utiles.utiles;
 
 import org.json.JSONArray;
@@ -35,6 +37,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static com.stockeate.stockeate.R.layout.fragment_comparar_precios;
 import static com.stockeate.stockeate.R.layout.fragment_escanear_codigos_barra;
 
 public class Fragment_escanear_codigos_barra extends Fragment {
@@ -55,6 +58,8 @@ public class Fragment_escanear_codigos_barra extends Fragment {
         this.resultadoEscaneo = root.findViewById(R.id.txtResultadoEscaneo);
         this.listaResultado = root.findViewById(R.id.ListViewResultado);
         this.comprar_precios = root.findViewById(R.id.btnCompararPreciosLista);
+
+        comprar_precios.setEnabled(false);
 
         escanear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,8 +116,6 @@ public class Fragment_escanear_codigos_barra extends Fragment {
                 Toast.makeText(getContext(), result.getContents(), Toast.LENGTH_SHORT).show();
                 resultadoEscaneo.setText(result.getContents());
 
-                //desde aca empece a tocar 05/07
-
                 String jsonFileContent = null;
                 try {
                     jsonFileContent = utiles.leerJson(getContext(), "productos.json");
@@ -125,8 +128,6 @@ public class Fragment_escanear_codigos_barra extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Log.d("Longitud json ", String.valueOf(jsonArray.length()));
-                Log.d("json ", jsonArray.toString());
                 for (int i = 0; i < jsonArray.length(); i++) {
                     class_producto productos = new class_producto();
                     try {
@@ -160,6 +161,7 @@ public class Fragment_escanear_codigos_barra extends Fragment {
                 mProductosList.removeAll(Collections.singleton(null));
                 mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
                 listaResultado.setAdapter(mArrayAdapterProducto);
+                comprar_precios.setEnabled(true);
             }
         }else{
             super.onActivityResult(requestCode, resultCode, data);

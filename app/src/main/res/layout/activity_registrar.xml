@@ -67,21 +67,36 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
-                <EditText
-                    android:id="@+id/etxtpassword"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:inputType="textPassword"
-                    android:hint="Contraseña" />
+                    android:layout_height="match_parent"
+                    app:endIconMode="password_toggle">
 
-                <EditText
-                    android:id="@+id/etxtconfirmpassword"
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etxtpassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:hint="Contraseña"
+                        android:inputType="textPassword"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="20dp"
-                    android:inputType="textPassword"
-                    android:hint="Confirmar Contraseña" />
+                    app:endIconMode="password_toggle">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etxtconfirmpassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:hint="Contraseña"
+                        android:inputType="textPassword"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageButton
                     android:id="@+id/imbGmail"
