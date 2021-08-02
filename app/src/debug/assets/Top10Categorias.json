@@ -1,0 +1,71 @@
+[
+  { "id": "1",
+    "id_usuario": "5",
+    "top_10_Categorias": [
+      {"top": 1,
+        "id_categoria": "1",
+        "categoria": "aceite"}]},
+  {
+    "id": "2",
+    "id_usuario": "5",
+    "top_10_Categorias": [
+      {"top": 2,
+        "id_categoria": "2",
+        "categoria": "gaseosa"}]},
+  {
+    "id": "3",
+    "id_usuario": "5",
+    "top_10_Categorias": [
+      {"top": 3,
+        "id_categoria": "3",
+        "categoria": "masitas dulces"}]},
+  {
+    "id": "4",
+    "id_usuario": "5",
+    "top_10_Categorias": [
+      {"top": 4,
+        "id_categoria": "4",
+        "categoria": "masitas saladas"}]},
+  {
+    "id": "5",
+    "id_usuario": "5",
+    "top_10_Categorias": [
+      {"top": 5,
+        "id_categoria": "5",
+        "categoria": "jamon cocido"}]},
+  {
+    "id": "6",
+    "id_usuario": "5",
+    "top_10_Categorias": [
+      {"top": 6,
+        "id_categoria": "6",
+        "categoria": "queso cremoso"}]},
+  {
+    "id": "7",
+    "id_usuario": "5",
+    "top_10_Categorias": [
+      {"top": 7,
+        "id_categoria": "7",
+        "categoria": "yerba"}]},
+  {
+    "id": "8",
+    "id_usuario": "5",
+    "top_10_Categorias": [
+      {"top": 8,
+        "id_categoria": "8",
+        "categoria": "azucar"}]},
+  {
+    "id": "9",
+    "id_usuario": "5",
+    "top_10_Categorias": [
+      {"top": 9,
+        "id_categoria": "9",
+        "categoria": "detergente"}]},
+  {
+    "id": "10",
+    "id_usuario": "5",
+    "top_10_Categorias": [
+      {"top": 10,
+        "id_categoria": "10",
+        "categoria": "lavandina"}]}
+]
