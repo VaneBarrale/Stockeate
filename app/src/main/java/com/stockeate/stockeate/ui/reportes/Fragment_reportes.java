@@ -20,6 +20,10 @@ import com.stockeate.stockeate.ui.categoria.Fragment_categorias;
 import com.stockeate.stockeate.ui.locales.Fragment_locales;
 import com.stockeate.stockeate.ui.marcas.Fragment_marcas;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+
 public class Fragment_reportes extends Fragment {
 
     private ReportesViewModel reportesViewModel;
@@ -43,6 +47,9 @@ public class Fragment_reportes extends Fragment {
             public void onClick(View v) {
                 Fragment_categorias fragment_categorias= new Fragment_categorias();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+
+                //fragment_categorias.cargarDatosTabla();
+
                 transaction.replace(R.id.fragment_reportes, fragment_categorias);
                 transaction.addToBackStack(null);
                 transaction.commit();
