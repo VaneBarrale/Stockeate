@@ -109,7 +109,7 @@
             <ListView
                 android:id="@+id/ListViewResultado"
                 android:layout_width="wrap_content"
-                android:layout_height="150dp"
+                android:layout_height="100dp"
                 android:hint="Resultado" />
 
             <LinearLayout

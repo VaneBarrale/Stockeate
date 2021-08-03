@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ubicacion"
+    android:id="@+id/fragment_nuevo_comercio"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo_framework"
-    tools:context=".ui.ubicacion.ubicacion">
+    tools:context=".ui.nuevo_comercio.nuevo_comercio">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -118,7 +118,9 @@
                 </LinearLayout>
 
             </LinearLayout>
+
         </LinearLayout>
+
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

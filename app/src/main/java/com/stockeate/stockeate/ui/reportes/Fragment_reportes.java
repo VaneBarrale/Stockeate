@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.ui.categoria.Fragment_categorias;
+import com.stockeate.stockeate.ui.home.HomeFragment;
 import com.stockeate.stockeate.ui.locales.Fragment_locales;
 import com.stockeate.stockeate.ui.marcas.Fragment_marcas;
 
@@ -28,6 +29,7 @@ public class Fragment_reportes extends Fragment {
 
     private ReportesViewModel reportesViewModel;
     private ImageButton btn_categorias, btn_marcas, btn_locales;
+    private Button btn_volver;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         reportesViewModel = new ViewModelProvider(this).get(ReportesViewModel.class);
@@ -41,6 +43,7 @@ public class Fragment_reportes extends Fragment {
         btn_categorias = root.findViewById(R.id.btn_categorias);
         btn_marcas = root.findViewById(R.id.btn_marcas);
         btn_locales = root.findViewById(R.id.btn_locales);
+        btn_volver  = root.findViewById(R.id.btn_Volver);
 
         btn_categorias.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +76,17 @@ public class Fragment_reportes extends Fragment {
                 Fragment_locales fragment_locales = new Fragment_locales();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_reportes, fragment_locales);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
+        btn_volver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HomeFragment homeFragment = new HomeFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_reportes, homeFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
