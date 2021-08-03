@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity{
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         this.account = GoogleSignIn.getLastSignedInAccount(this);
-        Log.w("account", account.toString());
+        //Log.w("account", account.toString());
 
         if (revisarSesion()){
             et_email.setText(preferences.getString("Email",""));

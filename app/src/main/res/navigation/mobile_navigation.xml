@@ -10,6 +10,7 @@
         android:name="com.stockeate.stockeate.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" >
+
         <action
             android:id="@+id/action_nav_home_to_nav_lista_compras"
             app:destination="@id/nav_lista_compras" />
@@ -26,8 +27,8 @@
             android:id="@+id/action_nav_home_to_nav_actualizacion_precios"
             app:destination="@id/nav_actualizacion_precios" />
         <action
-            android:id="@+id/action_nav_home_to_nav_ubicacion"
-            app:destination="@id/nav_ubicacion" />
+            android:id="@+id/action_nav_to_nav_reportes"
+            app:destination="@id/reportes" />
     </fragment>
 
     <fragment
@@ -43,10 +44,10 @@
         tools:layout="@layout/fragment_escanear_codigos_barra" />
 
     <fragment
-        android:id="@+id/nav_ubicacion"
-        android:name="com.stockeate.stockeate.ui.ubicacion.ubicacion"
-        android:label="@string/menu_ubicacion"
-        tools:layout="@layout/fragment_ubicacion" />
+        android:id="@+id/reportes"
+        android:name="com.stockeate.stockeate.ui.reportes.Fragment_reportes"
+        android:label="Reportes"
+        tools:layout="@layout/fragment_reportes"/>
 
     <fragment
         android:id="@+id/nav_promocion"

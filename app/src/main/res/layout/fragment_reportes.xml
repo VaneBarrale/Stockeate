@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_reportes"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo_framework"
+    tools:context=".ui.reportes.Fragment_reportes">
+
+    <LinearLayout
+        android:id="@+id/llverticallc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/llhorizontallc"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:id="@+id/txtReportes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginLeft="20dp"
+                android:text="Tus reportes aca!"
+                android:textColor="@android:color/black"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llhorizontal2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="400dp">
+
+            <ImageButton
+                android:id="@+id/btn_categorias"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="30dp"
+                android:adjustViewBounds="false"
+                android:background="#053F51B5"
+                android:src="@drawable/ic_outline_format_list_numbered_24"
+                tools:layout_editor_absoluteX="39dp"
+                tools:layout_editor_absoluteY="175dp"/>
+
+            <ImageButton
+                android:id="@+id/btn_marcas"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="30dp"
+                android:adjustViewBounds="false"
+                android:background="#053F51B5"
+                android:src="@drawable/marcas"
+                tools:layout_editor_absoluteX="39dp"
+                tools:layout_editor_absoluteY="175dp"/>
+
+            <ImageButton
+                android:id="@+id/btn_locales"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="30dp"
+                android:adjustViewBounds="false"
+                android:background="#053F51B5"
+                android:src="@drawable/ic_outline_add_business_24"
+                tools:layout_editor_absoluteX="39dp"
+                tools:layout_editor_absoluteY="175dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llhorizontal4"
+            android:layout_width="match_parent"
+            android:layout_height="81dp"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp">
+
+            <TextView
+                android:id="@+id/txt_top10categorias"
+                android:layout_width="92dp"
+                android:layout_height="56dp"
+                android:layout_marginLeft="30dp"
+                android:gravity="center"
+                android:text="Top 10 categoria"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="32dp"
+                tools:layout_editor_absoluteY="100dp" />
+
+            <TextView
+                android:id="@+id/txt_top10marcas"
+                android:layout_width="92dp"
+                android:layout_height="56dp"
+                android:layout_marginLeft="40dp"
+                android:gravity="center"
+                android:text="Top 10 marcas"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="32dp"
+                tools:layout_editor_absoluteY="100dp" />
+
+            <TextView
+                android:id="@+id/txt_top10locales"
+                android:layout_width="92dp"
+                android:layout_height="56dp"
+                android:layout_marginLeft="40dp"
+                android:gravity="center"
+                android:text="Top 10 locales"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="32dp"
+                tools:layout_editor_absoluteY="100dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

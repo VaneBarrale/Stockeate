@@ -18,9 +18,9 @@
             android:title="Escanear codigos de barra" />
 
         <item
-            android:id="@+id/nav_ubicacion"
-            android:icon="@drawable/ubicacion"
-            android:title="Llegar a destino" />
+            android:id="@+id/reportes"
+            android:icon="@drawable/informe"
+            android:title="Reportes" />
 
         <item
             android:id="@+id/nav_promocion"

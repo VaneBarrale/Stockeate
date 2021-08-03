@@ -46,12 +46,12 @@
                 tools:layout_editor_absoluteY="178dp" />
 
             <ImageButton
-                android:id="@+id/btn_ubicacion"
+                android:id="@+id/btn_reportes"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginLeft="30dp"
                 android:background="#053F51B5"
-                android:src="@drawable/ic_outline_location_on_24"
+                android:src="@drawable/ic_outline_assignment_24"
                 tools:layout_editor_absoluteX="278dp"
                 tools:layout_editor_absoluteY="178dp" />
 
@@ -92,12 +92,12 @@
                 tools:layout_editor_absoluteY="314dp" />
 
             <TextView
-                android:id="@+id/text_ubicacion"
+                android:id="@+id/text_reportes"
                 android:layout_width="98dp"
                 android:layout_height="51dp"
                 android:layout_marginLeft="30dp"
                 android:gravity="center"
-                android:text="Llegar a destino"
+                android:text="Reportes"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
                 tools:ignore="MissingConstraints"

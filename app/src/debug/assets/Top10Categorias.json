@@ -67,5 +67,12 @@
     "top_10_Categorias": [
       {"top": 10,
         "id_categoria": "10",
+        "categoria": "lavandina"}]},
+  {
+    "id": "11",
+    "id_usuario": "1",
+    "top_10_Categorias": [
+      {"top": 1,
+        "id_categoria": "10",
         "categoria": "lavandina"}]}
 ]

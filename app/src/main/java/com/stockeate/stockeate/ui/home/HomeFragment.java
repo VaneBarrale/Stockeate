@@ -33,12 +33,13 @@ import com.stockeate.stockeate.ui.lista_compras.Fragment_lista_compras;
 import com.stockeate.stockeate.ui.nuevo_comercio.nuevo_comercio;
 import com.stockeate.stockeate.ui.precios.precios;
 import com.stockeate.stockeate.ui.promocion.Fragment_Promocion;
+import com.stockeate.stockeate.ui.reportes.Fragment_reportes;
 import com.stockeate.stockeate.ui.ubicacion.ubicacion;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
-    private ImageButton btn_salir, btn_compras, btn_escanear, btn_ubicacion, btn_precio, btn_promocion, btn_nuevo_comercio;
+    private ImageButton btn_salir, btn_compras, btn_reportes, btn_escanear, btn_precio, btn_promocion, btn_nuevo_comercio;
     private GoogleSignInClient mGoogleSignInClient;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class HomeFragment extends Fragment {
 
         btn_compras = root.findViewById(R.id.btn_compras);
         btn_escanear = root.findViewById(R.id.btn_escanear);
-        btn_ubicacion = root.findViewById(R.id.btn_ubicacion);
+        btn_reportes = root.findViewById(R.id.btn_reportes);
         btn_precio = root.findViewById(R.id.btn_precio);
         btn_promocion = root.findViewById(R.id.btn_promocion);
         btn_nuevo_comercio = root.findViewById(R.id.btn_nuevo_comercio);
@@ -88,12 +89,12 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        btn_ubicacion.setOnClickListener(new View.OnClickListener() {
+        btn_reportes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ubicacion ubicacion = new ubicacion();
+                Fragment_reportes fragment_reportes = new Fragment_reportes();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_home, ubicacion);
+                transaction.replace(R.id.fragment_home, fragment_reportes);
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
