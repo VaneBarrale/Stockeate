@@ -17,6 +17,8 @@
             android:id="@+id/llverticallc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             tools:ignore="MissingConstraints"
             android:orientation="vertical">
 
@@ -51,14 +53,13 @@
                     android:id="@+id/llverticallc1"
                     android:layout_width="match_parent"
                     android:layout_height="500dp"
-                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginRight="20dp"
-                    android:orientation="vertical"
+                      android:orientation="vertical"
                     app:layout_editor_absoluteY="50dp"
                     tools:ignore="MissingConstraints">
 
                     <ListView
+                        android:id="@+id/listPromocionesExistentes"
                         android:layout_width="match_parent"
                         android:layout_height="477dp"
                         tools:layout_editor_absoluteX="68dp"
@@ -71,46 +72,27 @@
             <LinearLayout
                 android:id="@+id/llverticalpr1"
                 android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:layout_marginLeft="20dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:orientation="vertical"
-                app:layout_editor_absoluteY="50dp"
-                tools:ignore="MissingConstraints">
-
-                <Button
-                    android:id="@+id/btn_Agregar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="AGREGAR"
-                    app:backgroundTint="#2196F3" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llhorizontallc2"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:gravity="center_horizontal"
                 android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                app:layout_editor_absoluteY="50dp"
                 tools:ignore="MissingConstraints">
 
                 <Button
                     android:id="@+id/btn_Volver"
                     android:layout_width="150dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     app:backgroundTint="#2196F3"
                     android:text="Volver"/>
 
                 <Button
-                    android:id="@+id/btn_como_llegar"
+                    android:id="@+id/btn_Agregar"
                     android:layout_width="150dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="20dp"
-                    app:backgroundTint="#2196F3"
-                    android:text="Como llegar"/>
+                    android:text="AGREGAR"
+                    app:backgroundTint="#2196F3" />
 
             </LinearLayout>
 
