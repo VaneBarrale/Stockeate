@@ -1,12 +1,12 @@
 package com.stockeate.stockeate.clases;
 
 public class class_top_10 {
-    private String id,  id_local, local, id_categoria, categoria, id_marca, marca, top;
+    private String id,  id_local, local, id_categoria, categoria, id_marca, marca, top, usuario;
 
     public class_top_10() {
     }
 
-    public class_top_10(String id, String id_local, String local, String id_categoria, String categoria, String id_marca, String marca, String top) {
+    public class_top_10(String id, String id_local, String local, String id_categoria, String categoria, String id_marca, String marca, String top, String usuario) {
         this.id = id;
         this.id_local = id_local;
         this.local = local;
@@ -15,6 +15,7 @@ public class class_top_10 {
         this.id_marca = id_marca;
         this.marca = marca;
         this.top = top;
+        this.usuario = usuario;
     }
 
     public String getId() {
@@ -79,6 +80,14 @@ public class class_top_10 {
 
     public void setTop(String top) {
         this.top = top;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
     public String toString() {

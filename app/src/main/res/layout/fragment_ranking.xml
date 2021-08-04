@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/fragment_locales"
+    android:id="@+id/fragment_ranking"
     android:background="@drawable/fondo_framework"
-    tools:context=".ui.locales.Fragment_locales">
+    tools:context=".ui.Ranking.Fragment_ranking">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -30,13 +30,13 @@
                 tools:ignore="MissingConstraints">
 
                 <TextView
-                    android:id="@+id/txtLocales"
+                    android:id="@+id/txtRanking"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="20dp"
                     android:layout_marginStart="20dp"
                     android:gravity="center"
-                    android:text="Top 10 locales"
+                    android:text="Top 10 usuarios"
                     android:textColor="@android:color/black"
                     android:textSize="17dp"
                     android:textStyle="bold"/>
@@ -51,7 +51,7 @@
                 android:orientation="vertical">
 
                 <ListView
-                    android:id="@+id/listaLocales"
+                    android:id="@+id/listaUsuarios"
                     android:layout_width="match_parent"
                     android:layout_height="500dp"
                     tools:ignore="MissingConstraints"/>
