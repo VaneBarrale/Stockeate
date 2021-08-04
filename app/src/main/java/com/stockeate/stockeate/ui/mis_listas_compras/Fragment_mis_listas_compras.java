@@ -13,16 +13,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_detalle_lista_compras;
-import com.stockeate.stockeate.clases.class_producto;
-import com.stockeate.stockeate.ui.home.HomeFragment;
+import com.stockeate.stockeate.clases.class_lista_compras;
+import com.stockeate.stockeate.ui.detalle_mis_listas_compras.Fragment_Detalle_Mis_Listas_Compras;
 import com.stockeate.stockeate.ui.lista_compras.Fragment_lista_compras;
-import com.stockeate.stockeate.ui.lista_compras.ViewModel_lista_compras;
 import com.stockeate.stockeate.utiles.utiles;
 
 import org.json.JSONArray;
@@ -36,10 +37,10 @@ import java.util.Collections;
 public class Fragment_mis_listas_compras extends Fragment {
 
     private ViewModel_mis_listas_compras viewModel_mis_listas_compras;
-    private Button btn_volver;
-    private ArrayList<class_detalle_lista_compras> mDetalleLista = null;
+    private Button btn_volver, btn_detalle;
+    private ArrayList<class_lista_compras> mMisListas = null;
     private ListView listaDetalle;
-    private ArrayAdapter<class_detalle_lista_compras> mArrayAdapterDetalle;
+    private ArrayAdapter<class_lista_compras> mArrayAdapterMisListas;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -53,7 +54,10 @@ public class Fragment_mis_listas_compras extends Fragment {
         });
 
         this.btn_volver = root.findViewById(R.id.btn_Volver);
+        this.btn_detalle = root.findViewById(R.id.btn_Detalle);
         this.listaDetalle = root.findViewById(R.id.lw_detalle_lista_compras);
+
+        btn_detalle.setEnabled(false);
 
         try {
             mostrarLista();
@@ -74,38 +78,60 @@ public class Fragment_mis_listas_compras extends Fragment {
             }
         });
 
+        listaDetalle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int i = 0, j = 0;
+
+                btn_detalle.setEnabled(true);
+
+                String id_lista = mMisListas.get(position).getId_lista_compras();
+                Log.d("Lista de compras", "La lista de compras es " + id_lista);
+                btn_detalle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Fragment_Detalle_Mis_Listas_Compras detalle_mis_listas_compras = new Fragment_Detalle_Mis_Listas_Compras();
+                        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                        try {
+                            detalle_mis_listas_compras.leerDatos(id_lista, getContext());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        transaction.replace(R.id.fragment_mis_listas_compras, detalle_mis_listas_compras);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
+                });
+            }
+        });
+
         return root;
     }
 
     private void mostrarLista() throws IOException, JSONException {
 
-        mDetalleLista = new ArrayList<class_detalle_lista_compras>();
+        mMisListas = new ArrayList<class_lista_compras>();
 
-        String jsonFileContent = utiles.leerJson(getContext(), "detalle_lista_compras.json");
+        String jsonFileContent = utiles.leerJson(getContext(), "mis_listas_compras.json");
         JSONArray jsonArray = new JSONArray(jsonFileContent);
         Log.d("Longitud json detalle", String.valueOf(jsonArray.length()));
         Log.d("json ", jsonArray.toString());
         for (int i = 0; i < jsonArray.length(); i++) {
 
-            class_detalle_lista_compras detalle_lista_compras = new class_detalle_lista_compras();
+            class_lista_compras class_lista_compras = new class_lista_compras();
 
-            Log.d("dentro del 2 for ", String.valueOf(i));
             JSONObject jsonObj = jsonArray.getJSONObject(i);
             if(jsonObj.getString("id_usuario").equals("1")){
-                Log.i("Paso por el if", "if");
-                detalle_lista_compras.setId(jsonObj.getString("id"));
-                detalle_lista_compras.setId_lista_compras(jsonObj.getString("id_lista_compras"));
-                detalle_lista_compras.setCategoria(jsonObj.getString("categoria"));
-                detalle_lista_compras.setMarca(jsonObj.getString("marca"));
-                detalle_lista_compras.setPresentacion(jsonObj.getString("presentacion"));
-                detalle_lista_compras.setUnidad(jsonObj.getString("unidad"));
-                detalle_lista_compras.setCantidad(jsonObj.getString("cantidad"));
-                mDetalleLista.add(detalle_lista_compras);
-
+                class_lista_compras.setId(jsonObj.getString("id"));
+                class_lista_compras.setId_lista_compras(jsonObj.getString("id_lista_compras"));
+                class_lista_compras.setFecha(jsonObj.getString("fecha"));
+                mMisListas.add(class_lista_compras);
             }
         }
-        mArrayAdapterDetalle = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mDetalleLista);
-        listaDetalle.setAdapter(mArrayAdapterDetalle);
+        mArrayAdapterMisListas = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mMisListas);
+        listaDetalle.setAdapter(mArrayAdapterMisListas);
 
     }
 }
