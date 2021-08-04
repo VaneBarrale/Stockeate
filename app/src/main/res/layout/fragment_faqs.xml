@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_faqs"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.faqs.Fragment_faqs"
+    android:background="@drawable/fondo_framework">
+
+    <LinearLayout
+        android:id="@+id/llverticallc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/llhorizontallc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:id="@+id/txtfaqs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center"
+                android:text="Preguntas frecuentes"
+                android:textColor="@android:color/black"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/btn_listaCompras"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="50dp"
+                app:backgroundTint="#2196F3"
+                android:text="¿Cómo cargo una lista de compras?" />
+
+            <Button
+                android:id="@+id/btn_MisListas"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                app:backgroundTint="#2196F3"
+                android:text="¿Cómo busco una lista cargada?" />
+
+            <Button
+                android:id="@+id/btn_Pagos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                app:backgroundTint="#2196F3"
+                android:text="¿Puedo pagar desde la app?" />
+
+            <TextView
+                android:id="@+id/txt_Resultado"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_centerInParent="true" />
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llhorizontallc1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+        <Button
+            android:id="@+id/btn_Volver"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:backgroundTint="#2196F3"
+            android:text="Volver" />
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
