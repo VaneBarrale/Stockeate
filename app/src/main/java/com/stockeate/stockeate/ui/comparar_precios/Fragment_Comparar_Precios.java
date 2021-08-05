@@ -155,7 +155,6 @@ public class Fragment_Comparar_Precios extends Fragment {
                                     break;
                             }
 
-
                             //VER PORQUE EL ID DEL LOCAL ESTA NULL
                             if(id_local=="5"){
                                 LatLng destino = new LatLng(-31.42773493119209, -62.11414910012128);

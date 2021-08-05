@@ -17,14 +17,17 @@
             android:id="@+id/llverticallc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             tools:ignore="MissingConstraints"
             android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/llhorizontallc"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
                 android:orientation="horizontal"
                 tools:ignore="MissingConstraints">
 
@@ -32,8 +35,6 @@
                     android:id="@+id/txtSumaProductos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
                     android:text="Tus listas de compras cargadas!"
                     android:textColor="@android:color/black"
                     android:textSize="17dp"
@@ -45,37 +46,40 @@
                 android:id="@+id/llverticallc1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:orientation="vertical"
-                app:layout_editor_absoluteY="50dp"
                 tools:ignore="MissingConstraints">
 
                 <ListView
                     android:id="@+id/lw_detalle_lista_compras"
                     android:layout_width="wrap_content"
-                    android:layout_height="500dp"
-                    tools:layout_editor_absoluteX="79dp"
-                    tools:layout_editor_absoluteY="445dp" />
+                    android:layout_height="200dp"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/llhorizontallc2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
                 android:orientation="horizontal"
                 tools:ignore="MissingConstraints">
 
                 <Button
                     android:id="@+id/btn_Volver"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
                     app:backgroundTint="#2196F3"
                     android:text="Volver"/>
+
+                <Button
+                    android:id="@+id/btn_Detalle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:backgroundTint="#2196F3"
+                    android:layout_marginLeft="20dp"
+                    android:enabled="true"
+                    android:text="Detalle"/>
 
             </LinearLayout>
 

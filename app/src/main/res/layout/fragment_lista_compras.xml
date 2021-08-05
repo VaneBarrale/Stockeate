@@ -120,8 +120,8 @@
             <ListView
                 android:id="@+id/ListViewResultado"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:hint="Resultado" />
+                android:layout_height="180dp"
+                android:hint="Resultado"/>
 
             <EditText
                 android:id="@+id/etxtCantidad"

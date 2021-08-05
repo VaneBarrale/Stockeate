@@ -4,7 +4,7 @@ public class class_locales {
     private String id, nombre_fantasia, razon_social, domicilio, departamento, piso, localidad, provincia, cuit;
     private int codigo_postal;
 
-    public class_locales(String id, String nombre_fantasia, String razon_social, String domicilio, String departamento, String piso, String localidad, String provincia, String cuit, int codigo_postal) {
+    public class_locales() {
         this.id = id;
         this.nombre_fantasia = nombre_fantasia;
         this.razon_social = razon_social;

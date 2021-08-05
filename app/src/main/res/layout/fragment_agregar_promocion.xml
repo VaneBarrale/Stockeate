@@ -10,12 +10,14 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="728dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/llverticallc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:orientation="vertical"
             tools:ignore="MissingConstraints">
 
@@ -46,8 +48,6 @@
                 android:id="@+id/llverticallc1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
                 android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 app:layout_editor_absoluteY="50dp"
@@ -57,7 +57,6 @@
                     android:id="@+id/etxtCodigoProducto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
                     android:background="#053F51B5"
                     android:hint="Codigo producto" />
 
@@ -76,6 +75,52 @@
                     android:layout_marginTop="25dp"
                     android:background="#053F51B5"
                     android:hint="Presentacion" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llhorizontallc3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
+
+                <Button
+                    android:id="@+id/btn_buscar"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:text="Buscar"
+                    app:backgroundTint="#2196F3" />
+
+                <Button
+                    android:id="@+id/btn_buscar_codigo_barra"
+                    android:layout_width="255dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="20dp"
+                    android:text="Buscar por cod. de barra"
+                    app:backgroundTint="#2196F3" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llverticallc2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                app:layout_editor_absoluteY="50dp"
+                tools:ignore="MissingConstraints">
+
+                <ListView
+                    android:id="@+id/ListViewResultado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:hint="Resultado"/>
 
                 <EditText
                     android:id="@+id/etxtCantidad"
@@ -100,20 +145,12 @@
                     android:background="#053F51B5"
                     android:hint="Tipo promocion" />
 
-                <Button
-                    android:id="@+id/btn_agregar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="100dp"
-                    android:text="AGREGAR"
-                    app:backgroundTint="#2196F3" />
-
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/llhorizontallc2"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -127,11 +164,12 @@
                     app:backgroundTint="#2196F3" />
 
                 <Button
-                    android:id="@+id/btn_como_llegar"
+                    android:id="@+id/btn_agregar_promocion"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:text="Como llegar"
+                    android:text="Agregar"
+                    android:enabled="true"
                     app:backgroundTint="#2196F3" />
 
             </LinearLayout>

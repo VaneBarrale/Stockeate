@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.stockeate.stockeate">
+    package="com.stockeate.stockeate" >
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -10,15 +10,14 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/logo"
         android:label="Stockeate"
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Stockeate"
-        android:hardwareAccelerated="true">
+        android:theme="@style/Theme.Stockeate" >
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -35,18 +34,15 @@
             android:name=".activities.Activity_Menu"
             android:label="@string/title_activity_menu2"
             android:theme="@style/Theme.Stockeate.NoActionBar" />
-
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".activities.Activity_Registrar" />
-
         <activity android:name=".activities.Activity_Recuperar" />
-
     </application>
 
 </manifest>
