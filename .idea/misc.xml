@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/ic_baseline_add_shopping_cart_24.xml" value="0.2203125" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/ic_baseline_exit_to_app_24.xml" value="0.1" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/ic_baseline_help_outline_24.xml" value="0.1" />
@@ -22,9 +21,10 @@
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/informe.xml" value="0.2203125" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/marcas.xml" value="0.2203125" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/side_nav_bar.xml" value="0.1" />
-        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/activity_menu.xml" value="0.1" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/activity_recuperar.xml" value="0.13858695652173914" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/activity_registrar.xml" value="0.22" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_agregar_promocion.xml" value="0.18" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_categorias.xml" value="0.1" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_comparar_precios.xml" value="0.1" />
@@ -44,7 +44,6 @@
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_ranking.xml" value="0.15" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_reportes.xml" value="0.15" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/menu/activity_main_drawer.xml" value="0.33" />
-
       </map>
     </option>
   </component>

@@ -35,17 +35,15 @@
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/logoredondeado" />
 
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:id="@+id/llRegistrarme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="45dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="25dp"
-                android:layout_marginEnd="45dp"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/background"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -59,6 +57,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="50dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -82,12 +83,12 @@
                 <LinearLayout
                     android:id="@+id/llhorizontalcontraseña"
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
-
+                    android:layout_height="50dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center_horizontal"
                     android:layout_marginTop="10dp"
-
                     android:orientation="horizontal">
-
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
@@ -111,20 +112,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="1dp"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal">
 
                     <CheckBox
                         android:id="@+id/chkRecordarme"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_gravity="center_horizontal"
                         android:checked="false"
                         android:text="Recordarme" />
 
                     <TextView
                         android:id="@+id/txtOlvidasteTuContraseña"
-                        android:layout_width="match_parent"
+                        android:layout_width="214dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:gravity="center_horizontal"
                         android:text="¿Olvidaste tu contraseña?"
                         android:textColor="#000000" />
@@ -173,6 +176,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="42dp"
                     android:orientation="horizontal"
+                    android:gravity="center_horizontal"
                     app:layout_constraintTop_toBottomOf="@+id/imvRectanguloRegistrar">
 
                     <ImageView
@@ -180,8 +184,7 @@
                         android:layout_width="41dp"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
-                        android:translationX="128dp"
-                        app:srcCompat="@drawable/iconogmail" />
+                        app:srcCompat="@drawable/google" />
                 </LinearLayout>
 
 
