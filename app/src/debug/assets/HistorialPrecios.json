@@ -1,0 +1,62 @@
+[
+  {
+    "id": "1",
+    "id_producto": "1",
+    "categoria": "gaseosa",
+    "marca": "Coca-Cola",
+    "presentacion": "2.5",
+    "unidad": "Litros",
+    "precio": 120.00,
+    "id_comercio": "1",
+    "comercio": "Careglio Hnos Sarmiento",
+    "codigo_barra": "7790040929609"
+  },
+  {
+    "id": "2",
+    "id_producto": "1",
+    "categoria": "gaseosa",
+    "marca": "Coca-Cola",
+    "presentacion": "2.5",
+    "unidad": "Litros",
+    "precio": 150.00,
+    "id_comercio": "1",
+    "comercio": "Careglio Hnos Sarmiento",
+    "codigo_barra": "7790040929609"
+  },
+  {
+    "id": "3",
+    "id_producto": "1",
+    "categoria": "gaseosa",
+    "marca": "Coca-Cola",
+    "presentacion": "2.5",
+    "unidad": "Litros",
+    "precio": 180.00,
+    "id_comercio": "1",
+    "comercio": "Careglio Hnos Sarmiento",
+    "codigo_barra": "7790040929609"
+  },
+  {
+    "id": "4",
+    "id_producto": "1",
+    "categoria": "gaseosa",
+    "marca": "Coca-Cola",
+    "presentacion": "2.5",
+    "unidad": "Litros",
+    "precio": 160.00,
+    "id_comercio": "2",
+    "comercio": "El norte",
+    "codigo_barra": "7790040929609"
+  },
+  {
+    "id": "5",
+    "id_producto": "1",
+    "categoria": "gaseosa",
+    "marca": "Coca-Cola",
+    "presentacion": "2.5",
+    "unidad": "Litros",
+    "precio": 190.00,
+    "id_comercio": "2",
+    "comercio": "El norte",
+    "codigo_barra": "7790040929609"
+  }
+]

@@ -1,5 +1,6 @@
 package com.stockeate.stockeate.ui.mis_listas_compras;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,10 +18,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.stockeate.stockeate.R;
-import com.stockeate.stockeate.clases.class_detalle_lista_compras;
 import com.stockeate.stockeate.clases.class_lista_compras;
 import com.stockeate.stockeate.ui.detalle_mis_listas_compras.Fragment_Detalle_Mis_Listas_Compras;
 import com.stockeate.stockeate.ui.lista_compras.Fragment_lista_compras;
@@ -32,7 +31,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Fragment_mis_listas_compras extends Fragment {
 
@@ -93,7 +91,7 @@ public class Fragment_mis_listas_compras extends Fragment {
                         Fragment_Detalle_Mis_Listas_Compras detalle_mis_listas_compras = new Fragment_Detalle_Mis_Listas_Compras();
                         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                         try {
-                            detalle_mis_listas_compras.leerDatos(id_lista, getContext());
+                            detalle_mis_listas_compras.leerDatos();
                         } catch (IOException e) {
                             e.printStackTrace();
                         } catch (JSONException e) {

@@ -148,8 +148,6 @@ public class Activity_Registrar extends AppCompatActivity {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             firebaseAuthWithGoogle(account);
-            //por aca no pasa 12/05
-            Log.d("Aca", "Por aca paso - Handle");
         } catch (ApiException e) {
             Log.d("Aca", "Por aca paso - catch");
             // The ApiException status code indicates the detailed failure reason.

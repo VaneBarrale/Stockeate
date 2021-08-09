@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_agregar_promocion"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondo_framework"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.comparar_precios.Fragment_Comparar_Precios">
+    android:id="@+id/fragment_historial_precios"
+    android:background="@drawable/fondo_framework"
+    tools:context=".ui.historial_precios.Fragment_historial_precios">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -31,13 +31,13 @@
                 tools:ignore="MissingConstraints">
 
                 <TextView
-                    android:id="@+id/txtPromociones"
+                    android:id="@+id/txtHistorial"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="20dp"
                     android:layout_marginStart="20dp"
                     android:gravity="center"
-                    android:text="Agrega las promos que conoces!"
+                    android:text="Historial precios por local"
                     android:textColor="@android:color/black"
                     android:textSize="17dp"
                     android:textStyle="bold" />
@@ -75,7 +75,6 @@
                     android:layout_marginTop="25dp"
                     android:background="#053F51B5"
                     android:hint="Presentacion" />
-
 
             </LinearLayout>
 
@@ -117,33 +116,54 @@
                 tools:ignore="MissingConstraints">
 
                 <ListView
-                    android:id="@+id/ListViewResultado"
+                    android:id="@+id/ListaProductos"
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="100dp"
                     android:hint="Resultado"/>
 
-                <EditText
-                    android:id="@+id/etxtCantidad"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:background="#053F51B5"
-                    android:hint="Cantidad" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llverticallc4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                app:layout_editor_absoluteY="50dp"
+                tools:ignore="MissingConstraints">
 
                 <EditText
-                    android:id="@+id/etxtComercio"
+                    android:id="@+id/txtLocales"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
                     android:background="#053F51B5"
-                    android:hint="Comercio" />
+                    android:hint="Local" />
 
-                <Spinner
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llverticallc3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                app:layout_editor_absoluteY="50dp"
+                tools:ignore="MissingConstraints">
+
+                <Button
+                    android:id="@+id/btn_buscar_local"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:background="#053F51B5"
-                    android:hint="Tipo promocion" />
+                    android:text="BUSCAR EN LOCAL"
+                    android:enabled="true"
+                    app:backgroundTint="#2196F3" />
+
+                <ListView
+                    android:id="@+id/listaHistorial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:hint="Resultado"/>
 
             </LinearLayout>
 
@@ -158,18 +178,9 @@
 
                 <Button
                     android:id="@+id/btn_Volver"
-                    android:layout_width="150dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Volver"
-                    app:backgroundTint="#2196F3" />
-
-                <Button
-                    android:id="@+id/btn_agregar_promocion"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="Agregar"
-                    android:enabled="true"
                     app:backgroundTint="#2196F3" />
 
             </LinearLayout>
@@ -178,4 +189,4 @@
 
     </ScrollView>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

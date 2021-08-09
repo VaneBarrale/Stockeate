@@ -18,6 +18,7 @@ public class Activity_Menu extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
