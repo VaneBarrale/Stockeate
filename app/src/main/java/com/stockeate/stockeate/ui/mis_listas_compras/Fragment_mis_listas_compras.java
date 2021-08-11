@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -88,10 +89,14 @@ public class Fragment_mis_listas_compras extends Fragment {
                 btn_detalle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Bundle datosAEnviar = new Bundle();
+                        datosAEnviar.putString("id_lista_compras", id_lista);
                         Fragment_Detalle_Mis_Listas_Compras detalle_mis_listas_compras = new Fragment_Detalle_Mis_Listas_Compras();
+                        detalle_mis_listas_compras.setArguments(datosAEnviar);
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                         try {
-                            detalle_mis_listas_compras.leerDatos();
+                            detalle_mis_listas_compras.leerDatos(getContext());
                         } catch (IOException e) {
                             e.printStackTrace();
                         } catch (JSONException e) {

@@ -101,5 +101,7 @@ public class class_historial_precios {
 
     @Override
     public String toString() {
-        return comercio + ' ' + categoria  + ' ' + marca + ' ' + presentacion + ' ' + unidad + ' ' + precio; }
+        return "Producto: " + categoria  + " " + marca + " " + presentacion + " " + unidad +
+                "\nLocal: " + comercio +
+                "\nPrecio: " +precio; }
 }

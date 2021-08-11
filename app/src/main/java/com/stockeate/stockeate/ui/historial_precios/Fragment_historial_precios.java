@@ -108,10 +108,8 @@ public class Fragment_historial_precios extends Fragment {
         listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                class_historial_precios historial_precios = new class_historial_precios();
+                Boolean guardar = true;
                 mHistorialPrecio = new ArrayList<class_historial_precios>();
-
-                mHistorialPrecio.clear();
 
                 String jsonFileContent = null;
                 try {
@@ -137,32 +135,30 @@ public class Fragment_historial_precios extends Fragment {
                                 &&jsonObj.getString("marca").equals(mProductosList.get(position).getMarca())
                                 &&jsonObj.getString("presentacion").equals(mProductosList.get(position).getPresentacion())
                                 &&jsonObj.getString("unidad").equals(mProductosList.get(position).getUnidad())
-                                &&jsonObj.getString("id_comercio").equals(locales.getText().toString())){
-                                    historial_precios.setCategoria(jsonObj.getString("categoria"));
-                                    historial_precios.setMarca(jsonObj.getString("marca"));
-                                    historial_precios.setPresentacion(jsonObj.getString("presentacion"));
-                                    historial_precios.setUnidad(jsonObj.getString("unidad"));
-                                    historial_precios.setComercio(jsonObj.getString("comercio"));
-                                    historial_precios.setPrecio(Double.parseDouble(jsonObj.getString("precio")));
-                                    mHistorialPrecio.add(historial_precios);
-                                    Log.d("Precio", "Precio " + mHistorialPrecio.toString());
-                                    btn_buscar_local.setEnabled(true);
-                        }else{
-                            Toast.makeText(getContext(), "No hay productos con esos valores", Toast.LENGTH_SHORT).show();
+                                &&jsonObj.getString("id_comercio").equals(locales.getText().toString())) {
+
+                            class_historial_precios historial_precios = new class_historial_precios();
+                            historial_precios.setCategoria(mProductosList.get(position).getCategoria());
+                            historial_precios.setMarca(mProductosList.get(position).getMarca());
+                            historial_precios.setPresentacion(mProductosList.get(position).getPresentacion());
+                            historial_precios.setUnidad(mProductosList.get(position).getUnidad());
+                            historial_precios.setComercio(jsonObj.getString("comercio"));
+                            historial_precios.setPrecio(Float.parseFloat(jsonObj.getString("precio")));
+                            mHistorialPrecio.add(historial_precios);
+                            Log.d("Precio", "Precio " + mHistorialPrecio.toString());
+                            btn_buscar_local.setEnabled(true);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-                    btn_buscar_local.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mHistorialPrecio.removeAll(Collections.singleton(null));
-                            mAdapterHistorialPrecio = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mHistorialPrecio);
-                            productos_historial.setAdapter(mAdapterHistorialPrecio);
-                        }
-                    });
                 }
+                btn_buscar_local.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mAdapterHistorialPrecio = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mHistorialPrecio);
+                        productos_historial.setAdapter(mAdapterHistorialPrecio);
+                    }
+                });
             }
         });
 

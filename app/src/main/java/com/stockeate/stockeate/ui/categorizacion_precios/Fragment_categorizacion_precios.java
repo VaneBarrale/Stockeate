@@ -1,6 +1,7 @@
 package com.stockeate.stockeate.ui.categorizacion_precios;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,6 +87,7 @@ public class Fragment_categorizacion_precios extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Boolean guardar = true;
+                mComparacion = new ArrayList<class_categorizacion_precios>();
 
                 //Asi lee los datos del json estatico
                 String jsonFileContent = null;
@@ -108,11 +110,10 @@ public class Fragment_categorizacion_precios extends Fragment {
                         e.printStackTrace();
                     }
                     try {
-                        if(jsonObj.getString("categoria").equals(mProductosList.get(position).getCategoria())
-                        && jsonObj.getString("marca").equals(mProductosList.get(position).getMarca())
-                        && jsonObj.getString("presentacion").equals(mProductosList.get(position).getPresentacion())
-                        && jsonObj.getString("unidad").equals(mProductosList.get(position).getUnidad())){
-                            mComparacion = new ArrayList<class_categorizacion_precios>();
+                        if (jsonObj.getString("categoria").equals(mProductosList.get(position).getCategoria())
+                                && jsonObj.getString("marca").equals(mProductosList.get(position).getMarca())
+                                && jsonObj.getString("presentacion").equals(mProductosList.get(position).getPresentacion())
+                                && jsonObj.getString("unidad").equals(mProductosList.get(position).getUnidad())) {
 
                             class_categorizacion_precios precios_categoria = new class_categorizacion_precios();
                             precios_categoria.setCategoria(mProductosList.get(position).getCategoria());
@@ -122,12 +123,12 @@ public class Fragment_categorizacion_precios extends Fragment {
                             precios_categoria.setLocal(jsonObj.getString("comercio"));
                             precios_categoria.setPrecio_total(Float.parseFloat(jsonObj.getString("precio")));
                             mComparacion.add(precios_categoria);
+                            Log.d("Precio", "Precio lista" + mComparacion.toString());
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-
                 mArrayAdapterComparacion = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mComparacion);
                 listaPreciosCategoria.setAdapter(mArrayAdapterComparacion);
             }

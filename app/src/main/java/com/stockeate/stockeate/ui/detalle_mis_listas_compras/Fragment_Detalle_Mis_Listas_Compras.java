@@ -67,10 +67,14 @@ public class Fragment_Detalle_Mis_Listas_Compras extends Fragment {
         return root;
     }
 
-    public void leerDatos () throws IOException, JSONException {
+    public void leerDatos(Context context) throws IOException, JSONException {
+
+        Bundle datosRecuperados = getArguments();
+        String id_lista = datosRecuperados.getString("id_lista");
+
         mDetalleLista = new ArrayList<class_detalle_lista_compras>();
 
-        String jsonFileContent = utiles.leerJson(getContext(), "detalle_lista_compras.json");
+        String jsonFileContent = utiles.leerJson(context, "detalle_lista_compras.json");
         JSONArray jsonArray = new JSONArray(jsonFileContent);
         Log.d("Longitud json detalle", String.valueOf(jsonArray.length()));
         Log.d("json ", jsonArray.toString());
@@ -80,7 +84,7 @@ public class Fragment_Detalle_Mis_Listas_Compras extends Fragment {
 
             Log.d("dentro del 2 for ", String.valueOf(i));
             JSONObject jsonObj = jsonArray.getJSONObject(i);
-            if(jsonObj.getString("id_lista_compras").equals("1")){
+            if(jsonObj.getString("id_lista_compras").equals(id_lista)){
                 Log.i("Paso por el if", "if");
                 detalle_lista_compras.setId(jsonObj.getString("id"));
                 detalle_lista_compras.setId_lista_compras(jsonObj.getString("id_lista_compras"));
@@ -92,7 +96,7 @@ public class Fragment_Detalle_Mis_Listas_Compras extends Fragment {
                 mDetalleLista.add(detalle_lista_compras);
             }
         }
-        mArrayAdapterDetalle = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mDetalleLista);
+        mArrayAdapterDetalle = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, mDetalleLista);
         listaDetalle.setAdapter(mArrayAdapterDetalle);
     }
 }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/fondo_framework"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.detalle_mis_listas_compras.Fragment_Detalle_Mis_Listas_Compras">
+    tools:context=".ui.mis_listas_compras.Fragment_mis_listas_compras">
 
     <ScrollView
         android:layout_width="match_parent"
