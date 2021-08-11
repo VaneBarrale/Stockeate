@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.ui.Ranking.Fragment_ranking;
 import com.stockeate.stockeate.ui.categoria.Fragment_categorias;
+import com.stockeate.stockeate.ui.categorizacion_precios.Fragment_categorizacion_precios;
 import com.stockeate.stockeate.ui.historial_precios.Fragment_historial_precios;
 import com.stockeate.stockeate.ui.home.HomeFragment;
 import com.stockeate.stockeate.ui.locales.Fragment_locales;
@@ -30,7 +31,7 @@ import java.io.IOException;
 public class Fragment_reportes extends Fragment {
 
     private ReportesViewModel reportesViewModel;
-    private ImageButton btn_categorias, btn_marcas, btn_locales, btn_usuarios, btn_precios;
+    private ImageButton btn_categorias, btn_marcas, btn_locales, btn_usuarios, btn_precios, btn_precios_categoria;
     private Button btn_volver;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class Fragment_reportes extends Fragment {
         btn_locales = root.findViewById(R.id.btn_locales);
         btn_usuarios = root.findViewById(R.id.btn_Ranking);
         btn_precios = root.findViewById(R.id.btn_precios);
+        btn_precios_categoria = root.findViewById(R.id.btn_precios_categoria);
         btn_volver  = root.findViewById(R.id.btn_Volver);
 
         btn_categorias.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +104,17 @@ public class Fragment_reportes extends Fragment {
                 Fragment_historial_precios historial_precios = new Fragment_historial_precios();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_reportes, historial_precios);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
+        btn_precios_categoria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment_categorizacion_precios categorizacion_precios = new Fragment_categorizacion_precios();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_reportes, categorizacion_precios);
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
