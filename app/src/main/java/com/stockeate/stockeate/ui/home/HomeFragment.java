@@ -72,7 +72,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Fragment_lista_compras fragment_lista_compras = new Fragment_lista_compras();
-
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_home, fragment_lista_compras);
                 transaction.addToBackStack(null);

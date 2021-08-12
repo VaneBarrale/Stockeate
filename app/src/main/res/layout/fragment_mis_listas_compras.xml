@@ -52,7 +52,7 @@
                 <ListView
                     android:id="@+id/lw_detalle_lista_compras"
                     android:layout_width="wrap_content"
-                    android:layout_height="200dp"/>
+                    android:layout_height="150dp"/>
 
             </LinearLayout>
 
@@ -80,6 +80,40 @@
                     android:layout_marginLeft="20dp"
                     android:enabled="true"
                     android:text="Detalle"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llverticallc4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints">
+
+                <TextView
+                    android:id="@+id/txt_lista"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="17dp"
+                    android:gravity="center_horizontal"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llverticallc3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints">
+
+                <ListView
+                    android:id="@+id/lw_resultado_detalle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="500dp"/>
 
             </LinearLayout>
 
