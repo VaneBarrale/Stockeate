@@ -10,7 +10,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:id="@+id/llverticallc"
@@ -115,30 +116,20 @@
                 app:layout_editor_absoluteY="50dp"
                 tools:ignore="MissingConstraints">
 
+                <Spinner
+                    android:id="@+id/sLocales"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/Locales"
+                    android:hint="Local"
+                    android:visibility="invisible" />
+
                 <ListView
                     android:id="@+id/ListaProductos"
                     android:layout_width="wrap_content"
                     android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
                     android:hint="Resultado"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llverticallc4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="vertical"
-                app:layout_editor_absoluteY="50dp"
-                tools:ignore="MissingConstraints">
-
-                <EditText
-                    android:id="@+id/txtLocales"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:background="#053F51B5"
-                    android:hint="Local" />
 
             </LinearLayout>
 
@@ -151,13 +142,15 @@
                 app:layout_editor_absoluteY="50dp"
                 tools:ignore="MissingConstraints">
 
-                <Button
-                    android:id="@+id/btn_buscar_local"
+                <TextView
+                    android:id="@+id/txt_historial"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="BUSCAR EN LOCAL"
-                    android:enabled="true"
-                    app:backgroundTint="#2196F3" />
+                    android:layout_marginTop="10dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="17dp"
+                    android:gravity="center_horizontal"
+                    android:textStyle="bold"/>
 
                 <ListView
                     android:id="@+id/listaHistorial"

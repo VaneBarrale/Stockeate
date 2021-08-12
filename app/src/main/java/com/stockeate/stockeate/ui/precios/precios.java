@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,13 +46,14 @@ import static com.stockeate.stockeate.R.layout.text_view_with_line_height_from_a
 
 public class precios extends Fragment {
 
-    private EditText categoria, marca, presentacion, comercio, precio_nuevo;
+    private EditText categoria, marca, presentacion, precio_nuevo;
+    private Spinner local;
     private Button btn_actualizar, btn_buscar, btn_volver, btn_buscar_cod_barra;
     private PreciosViewModel viewModelPrecios;
     private ArrayAdapter<class_producto> mArrayAdapterProducto;
     private ArrayList<class_producto> mProductosList = null;
     private ListView listaResultado;
-    private TextView txv_precio_actual;
+    private TextView txv_precio_actual, txt_precios;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @NonNull Bundle savedInstanceState) {
         viewModelPrecios = new ViewModelProvider(this).get(PreciosViewModel.class);
@@ -65,7 +67,6 @@ public class precios extends Fragment {
         this.categoria = root.findViewById(R.id.etxtCodigoProducto);
         this.marca = root.findViewById(R.id.etxtMarca);
         this.presentacion = root.findViewById(R.id.etxtPresentacion);
-        this.comercio = root.findViewById(R.id.etxtComercio);
         this.precio_nuevo = root.findViewById(R.id.txvPrecionuevo);
         this.btn_actualizar = root.findViewById(R.id.btn_actualizar);
         this.btn_buscar = root.findViewById(R.id.btn_Buscar);
@@ -73,6 +74,8 @@ public class precios extends Fragment {
         this.btn_buscar_cod_barra = root.findViewById(R.id.btn_BuscarCodigoBarra);
         this.listaResultado = root.findViewById(R.id.ListViewResultado);
         this.txv_precio_actual = root.findViewById(R.id.txvprecio_actual);
+        this.txt_precios = root.findViewById(R.id.txt_precios);
+        this.local = root.findViewById(R.id.sComercios);
 
         btn_buscar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,19 +105,64 @@ public class precios extends Fragment {
         btn_buscar_cod_barra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            escanear();
+                escanear();
             }
         });
-
-        actualizarPrecios();
 
         listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (mArrayAdapterProducto.isEmpty()) {
+                    txv_precio_actual.setText("");
+                    txt_precios.setText("No existen precios para las opciones seleccioadas");
+                } else {
+                    txt_precios.setText("");
 
-                String precio_actual = String.valueOf(mProductosList.get(position).getPrecio());
-                txv_precio_actual.setText(precio_actual);
+                    String jsonFileContent = null;
+                    try {
+                        jsonFileContent = utiles.leerJson(getContext(), "productos.json");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    JSONArray jsonArray = null;
+                    try {
+                        jsonArray = new JSONArray(jsonFileContent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if (local.getSelectedItem().toString().equals("Local")) {
+                        Toast.makeText(getContext(), "Seleccione un local", Toast.LENGTH_SHORT).show();
+                    } else {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObj = null;
+                            try {
+                                jsonObj = jsonArray.getJSONObject(i);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                if (jsonObj.getString("categoria").equals(mProductosList.get(position).getCategoria())
+                                        && jsonObj.getString("marca").equals(mProductosList.get(position).getMarca())
+                                        && jsonObj.getString("presentacion").equals(mProductosList.get(position).getPresentacion())
+                                        && jsonObj.getString("unidad").equals(mProductosList.get(position).getUnidad())
+                                        && jsonObj.getString("comercio").equals(local.getSelectedItem().toString())) {
+                                    class_producto producto = new class_producto();
+                                    producto.setCategoria(mProductosList.get(position).getCategoria());
+                                    producto.setMarca(mProductosList.get(position).getMarca());
+                                    producto.setPresentacion(mProductosList.get(position).getPresentacion());
+                                    producto.setUnidad(mProductosList.get(position).getUnidad());
+                                    producto.setComercio(local.getSelectedItem().toString());
+                                    String precio_actual = String.valueOf(mProductosList.get(position).getPrecio());
+                                    txv_precio_actual.setText(precio_actual);
+                                    actualizarPrecios();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
             }
         });
 
@@ -212,8 +260,8 @@ public class precios extends Fragment {
             if (!categoria.getText().toString().isEmpty() ||
                     !marca.getText().toString().isEmpty() ||
                     !presentacion.getText().toString().isEmpty() ||
-                    !presentacion.getText().toString().isEmpty() ||
-                    !comercio.getText().toString().isEmpty()) {
+                    !presentacion.getText().toString().isEmpty() &&
+                    !local.getSelectedItem().toString().equals("Local")) {
                 if (!categoria.getText().toString().isEmpty()) {
                     if (jsonObj.getString("categoria").equals(categoria.getText().toString())) {
                         if (guardar) {
@@ -250,8 +298,8 @@ public class precios extends Fragment {
                         guardar = false;
                     }
                 }
-                if (!comercio.getText().toString().isEmpty()) {
-                    if (jsonObj.getString("comercio").equals(comercio.getText().toString())) {
+                if (!local.getSelectedItem().toString().equals("Local")) {
+                    if (jsonObj.getString("comercio").equals(local.getSelectedItem().toString())) {
                         if (guardar) {
                             guardar = true;
                         } else {
@@ -277,46 +325,20 @@ public class precios extends Fragment {
         mProductosList.removeAll(Collections.singleton(null));
         mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
         listaResultado.setAdapter(mArrayAdapterProducto);
-
-        /*precio_actual = productos.getPrecio();
-        Log.d("Producto", "Producto " + productos.toString());
-        Log.d("Precio", "Precio " + precio_actual);
-        //txv_precio_actual = productos.getPrecio();*/
+        if(mArrayAdapterProducto.isEmpty()){
+            txt_precios.setText("No existen productos con esas condiciones en el local seleccionado");
+            txv_precio_actual.setText("");
+        } else { txt_precios.setText("");}
     }
 
     private void limpiarDatos() {
         categoria.setText("");
         marca.setText("");
         presentacion.setText("");
-        comercio.setText("");
         mProductosList.clear();
         mArrayAdapterProducto.clear();
         txv_precio_actual.setText("");
         precio_nuevo.setText("");
-    }
-
-    public void recuperarCodigo(String codigo) throws IOException, JSONException {
-        Log.d("Codigo recuperado", "codigo " + codigo);
-
-        //revisar desde aca, da error porque son fragment. Ver desde escanear como lo paso sin que se rompa
-
-        /*String jsonFileContent = utiles.leerJson(getContext(), "productos.json");
-        JSONArray jsonArray = new JSONArray(jsonFileContent);
-        Log.d("Longitud json 1", String.valueOf(jsonArray.length()));
-        Log.d("json ", jsonArray.toString());
-
-        for (int i = 0; i < jsonArray.length(); i++) {
-            Log.d("dentro del for 1", String.valueOf(i));
-            JSONObject jsonObj = jsonArray.getJSONObject(i);
-
-            if (jsonObj.getString("codigo_barra").equals(codigo)) {
-                    Log.d("Codigo de barra", "Existe el codido de barra " + codigo);
-                    //productos.setPrecio(jsonObj.getDouble("precio"));
-                    //actualizarPrecios();
-            } else {
-                Toast.makeText(getContext(), "El producto no existe", Toast.LENGTH_SHORT).show();
-            }
-        }*/
     }
 
     private void actualizarPrecios(){

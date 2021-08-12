@@ -58,5 +58,17 @@
     "id_comercio": "2",
     "comercio": "El norte",
     "codigo_barra": "7790040929609"
+  },
+  {
+    "id": "6",
+    "id_producto": "2",
+    "categoria": "gaseosa",
+    "marca": "Naranpol",
+    "presentacion": "2.5",
+    "unidad": "Litros",
+    "precio": 190.00,
+    "id_comercio": "2",
+    "comercio": "El norte",
+    "codigo_barra": "7790040929609"
   }
 ]

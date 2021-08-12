@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -44,7 +45,8 @@ public class Fragment_Agregar_Promocion extends Fragment {
 
     private ViewModel_agregar_promocion AgregarPromocionViewModel;
     private Button btn_volver, btn_buscar, btn_buscar_codigo_barra, btn_agregar;
-    private EditText categoria, marca, presentacion, cantidad, comercio;
+    private EditText categoria, marca, presentacion, cantidad;
+    private Spinner comercio, promociones;
     private ArrayAdapter<class_producto> mArrayAdapterProducto;
     private ArrayList<class_producto> mProductosList = null;
     private ListView listaResultado;
@@ -67,8 +69,11 @@ public class Fragment_Agregar_Promocion extends Fragment {
         this.marca = root.findViewById(R.id.etxtMarca);
         this.presentacion = root.findViewById(R.id.etxtPresentacion);
         this.cantidad = root.findViewById(R.id.etxtCantidad);
-        this.comercio = root.findViewById(R.id.etxtComercio);
+        this.comercio = root.findViewById(R.id.sComercios);
+        this.promociones = root.findViewById(R.id.sPromociones);
 
+        comercio.setVisibility(View.INVISIBLE);
+        promociones.setVisibility(View.INVISIBLE);
         btn_agregar.setEnabled(false);
 
         btn_volver.setOnClickListener(new View.OnClickListener() {
@@ -113,8 +118,8 @@ public class Fragment_Agregar_Promocion extends Fragment {
                 btn_agregar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if ((cantidad.getText().toString()).equals("") || (comercio.getText().toString()).equals("")) {
-                            cantidad.setError("Complete cantidad y/o comercio");
+                        if ((cantidad.getText().toString()).equals("") || (comercio.getSelectedItem().toString().equals("Local")) || promociones.getSelectedItem().toString().equals("Tipo promocion")) {
+                            Toast.makeText(getContext(), "Complete cantidad, tipo promocion y/o comercio", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getContext(), "Promoción agregada con éxito", Toast.LENGTH_SHORT).show();
                             limpiarDatos();
@@ -198,6 +203,8 @@ public class Fragment_Agregar_Promocion extends Fragment {
         mProductosList.removeAll(Collections.singleton(null));
         mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
         listaResultado.setAdapter(mArrayAdapterProducto);
+        comercio.setVisibility(View.VISIBLE);
+        promociones.setVisibility(View.VISIBLE);
     }
 
     public void escanear(){
@@ -274,7 +281,8 @@ public class Fragment_Agregar_Promocion extends Fragment {
         marca.setText("");
         presentacion.setText("");
         cantidad.setText("");
-        comercio.setText("");
+        comercio.setVisibility(View.INVISIBLE);
+        promociones.setVisibility(View.INVISIBLE);
         mArrayAdapterProducto.clear();
     }
 }

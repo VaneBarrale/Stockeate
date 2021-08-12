@@ -88,15 +88,5 @@
     "precio": 500.20,
     "comercio": "Careglio Hnos Sarmiento",
     "codigo_barra": "7790040929617"
-  },
-  {
-    "id": "10",
-    "categoria": "gaseosa",
-    "marca": "Coca-Cola",
-    "presentacion": "2.5",
-    "unidad": "Litros",
-    "precio": 100.00,
-    "comercio": "Hipermercado Anselmi",
-    "codigo_barra": "7790040929609"
   }
 ]

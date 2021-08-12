@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,8 +44,10 @@ import java.util.Collections;
 public class Fragment_historial_precios extends Fragment {
 
     private HistorialPreciosViewModel historialPreciosViewModel;
-    private Button btn_buscar, btn_buscar_codigo_barra, btn_buscar_local, btn_volver;
-    private EditText categoria, marca, presentacion, locales;
+    private Button btn_buscar, btn_buscar_codigo_barra, btn_volver;
+    private EditText categoria, marca, presentacion;
+    private TextView historial;
+    private Spinner locales;
     private ListView listaResultado;
     private ArrayAdapter<class_producto> mArrayAdapterProducto;
     private ArrayList<class_producto> mProductosList = null;
@@ -62,16 +66,14 @@ public class Fragment_historial_precios extends Fragment {
 
         this.btn_buscar = root.findViewById(R.id.btn_buscar);
         this.btn_buscar_codigo_barra = root.findViewById(R.id.btn_buscar_codigo_barra);
-        this.btn_buscar_local = root.findViewById(R.id.btn_buscar_local);
         this.btn_volver = root.findViewById(R.id.btn_Volver);
         this.categoria = root.findViewById(R.id.etxtCodigoProducto);
         this.marca = root.findViewById(R.id.etxtMarca);
         this.presentacion = root.findViewById(R.id.etxtPresentacion);
-        this.locales = root.findViewById(R.id.txtLocales);
+        this.locales = root.findViewById(R.id.sLocales);
+        this.historial = root.findViewById(R.id.txt_historial);
         this.listaResultado = root.findViewById(R.id.ListaProductos);
         this.productos_historial = root.findViewById(R.id.listaHistorial);
-
-        btn_buscar_local.setEnabled(false);
 
         btn_buscar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +111,6 @@ public class Fragment_historial_precios extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mHistorialPrecio = new ArrayList<class_historial_precios>();
-                btn_buscar_local.setEnabled(true);
 
                 String jsonFileContent = null;
                 try {
@@ -123,46 +124,45 @@ public class Fragment_historial_precios extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObj = null;
-                    try {
-                        jsonObj = jsonArray.getJSONObject(i);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        if (jsonObj.getString("categoria").equals(mProductosList.get(position).getCategoria())
-                                &&jsonObj.getString("marca").equals(mProductosList.get(position).getMarca())
-                                &&jsonObj.getString("presentacion").equals(mProductosList.get(position).getPresentacion())
-                                &&jsonObj.getString("unidad").equals(mProductosList.get(position).getUnidad())
-                                &&jsonObj.getString("id_comercio").equals(locales.getText().toString())) {
-
-                            class_historial_precios historial_precios = new class_historial_precios();
-                            historial_precios.setCategoria(mProductosList.get(position).getCategoria());
-                            historial_precios.setMarca(mProductosList.get(position).getMarca());
-                            historial_precios.setPresentacion(mProductosList.get(position).getPresentacion());
-                            historial_precios.setUnidad(mProductosList.get(position).getUnidad());
-                            historial_precios.setComercio(jsonObj.getString("comercio"));
-                            historial_precios.setPrecio(Float.parseFloat(jsonObj.getString("precio")));
-                            mHistorialPrecio.add(historial_precios);
-                            Log.d("Precio", "Precio " + mHistorialPrecio.toString());
+                if(locales.getSelectedItem().toString().equals("Local")){
+                    Toast.makeText(getContext(), "Seleccione un local", Toast.LENGTH_SHORT).show();
+                } else {
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObj = null;
+                        try {
+                            jsonObj = jsonArray.getJSONObject(i);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        try {
+                                if (jsonObj.getString("categoria").equals(mProductosList.get(position).getCategoria())
+                                    && jsonObj.getString("marca").equals(mProductosList.get(position).getMarca())
+                                    && jsonObj.getString("presentacion").equals(mProductosList.get(position).getPresentacion())
+                                    && jsonObj.getString("unidad").equals(mProductosList.get(position).getUnidad())
+                                    && jsonObj.getString("comercio").equals(locales.getSelectedItem().toString())) {
+                                class_historial_precios historial_precios = new class_historial_precios();
+                                historial_precios.setCategoria(mProductosList.get(position).getCategoria());
+                                historial_precios.setMarca(mProductosList.get(position).getMarca());
+                                historial_precios.setPresentacion(mProductosList.get(position).getPresentacion());
+                                historial_precios.setUnidad(mProductosList.get(position).getUnidad());
+                                historial_precios.setComercio(locales.getSelectedItem().toString());
+                                historial_precios.setPrecio(Float.parseFloat(jsonObj.getString("precio")));
+                                mHistorialPrecio.add(historial_precios);
+                                Log.d("Precio", "Precio " + mHistorialPrecio.toString());
+                            }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
                     }
+                    mAdapterHistorialPrecio = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mHistorialPrecio);
+                    productos_historial.setAdapter(mAdapterHistorialPrecio);
+                    if(mAdapterHistorialPrecio.isEmpty()){
+                        historial.setText("No existe historial de precios para las opciones seleccioadas");
+                    } else { historial.setText("");}
                 }
-                btn_buscar_local.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mAdapterHistorialPrecio = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mHistorialPrecio);
-                        productos_historial.setAdapter(mAdapterHistorialPrecio);
-                    }
-                });
             }
         });
-
         return root;
-
     }
 
     private void listarproductos() throws IOException, JSONException {
@@ -185,8 +185,7 @@ public class Fragment_historial_precios extends Fragment {
             if (!categoria.getText().toString().isEmpty() ||
                     !marca.getText().toString().isEmpty() ||
                     !presentacion.getText().toString().isEmpty() ||
-                    !presentacion.getText().toString().isEmpty() ||
-                    !locales.getText().toString().isEmpty()) {
+                    !presentacion.getText().toString().isEmpty()) {
                 if (!categoria.getText().toString().isEmpty()) {
                     if (jsonObj.getString("categoria").equals(categoria.getText().toString())) {
                         if (guardar) {
@@ -223,19 +222,6 @@ public class Fragment_historial_precios extends Fragment {
                         guardar = false;
                     }
                 }
-                if (!locales.getText().toString().isEmpty()) {
-                    if (jsonObj.getString("id_comercio").equals(locales.getText().toString())) {
-                        if (guardar) {
-                            guardar = true;
-                        } else {
-                            guardar = false;
-                        }
-                        ;
-                    } else {
-                        Toast.makeText(getContext(), "Ingrese un local", Toast.LENGTH_SHORT).show();
-                        guardar = false;
-                    }
-                }
                 if (guardar) {
                     productos.setId(jsonObj.getString("id"));
                     productos.setCategoria(jsonObj.getString("categoria"));
@@ -251,6 +237,10 @@ public class Fragment_historial_precios extends Fragment {
         mProductosList.removeAll(Collections.singleton(null));
         mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
         listaResultado.setAdapter(mArrayAdapterProducto);
+
+        if(!mProductosList.isEmpty()){
+            locales.setVisibility(View.VISIBLE);
+        } else {locales.setVisibility(View.INVISIBLE);}
     }
 
     public void escanear(){

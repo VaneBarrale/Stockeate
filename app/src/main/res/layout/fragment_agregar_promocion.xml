@@ -130,20 +130,19 @@
                     android:background="#053F51B5"
                     android:hint="Cantidad" />
 
-                <EditText
-                    android:id="@+id/etxtComercio"
+                <Spinner
+                    android:id="@+id/sComercios"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
-                    android:background="#053F51B5"
-                    android:hint="Comercio" />
+                    android:entries="@array/Locales"/>
 
                 <Spinner
+                    android:id="@+id/sPromociones"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
-                    android:background="#053F51B5"
-                    android:hint="Tipo promocion" />
+                    android:entries="@array/Tipo_promocion"/>
 
             </LinearLayout>
 
