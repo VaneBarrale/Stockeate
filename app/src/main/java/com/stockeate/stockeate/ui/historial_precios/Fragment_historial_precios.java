@@ -108,8 +108,8 @@ public class Fragment_historial_precios extends Fragment {
         listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Boolean guardar = true;
                 mHistorialPrecio = new ArrayList<class_historial_precios>();
+                btn_buscar_local.setEnabled(true);
 
                 String jsonFileContent = null;
                 try {
@@ -146,7 +146,6 @@ public class Fragment_historial_precios extends Fragment {
                             historial_precios.setPrecio(Float.parseFloat(jsonObj.getString("precio")));
                             mHistorialPrecio.add(historial_precios);
                             Log.d("Precio", "Precio " + mHistorialPrecio.toString());
-                            btn_buscar_local.setEnabled(true);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

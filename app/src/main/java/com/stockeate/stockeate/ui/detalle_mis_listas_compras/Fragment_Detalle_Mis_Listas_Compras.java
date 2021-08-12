@@ -42,6 +42,7 @@ public class Fragment_Detalle_Mis_Listas_Compras extends Fragment {
     private ArrayAdapter<class_detalle_lista_compras> mArrayAdapterDetalle;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         detalle_mis_listas_compras = new ViewModelProvider(this).get(ViewModel_detalle_mis_listas_compras.class);
         View root = inflater.inflate(R.layout.fragment_detalle_mis_listas_compras, container, false);
         detalle_mis_listas_compras.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -51,7 +52,9 @@ public class Fragment_Detalle_Mis_Listas_Compras extends Fragment {
         });
 
         this.btn_volver = root.findViewById(R.id.btn_Volver);
-        this.listaDetalle = root.findViewById(R.id.ListaMisListasCompras);
+        this.listaDetalle = getActivity().findViewById(R.id.ListaMisListasCompras);
+
+        Log.d("Contexto", "Contexto " + getContext());
 
         btn_volver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,23 +70,20 @@ public class Fragment_Detalle_Mis_Listas_Compras extends Fragment {
         return root;
     }
 
-    public void leerDatos(Context context) throws IOException, JSONException {
+    public void leerDatos(Context context, String id_lista) throws IOException, JSONException {
 
-        Bundle datosRecuperados = getArguments();
-        String id_lista = datosRecuperados.getString("id_lista");
+        Log.d("Contexto", "Contexto adentro leerDatos" + context);
+        Log.d("Lista", "Lista adentro fragment detalle " + id_lista);
 
         mDetalleLista = new ArrayList<class_detalle_lista_compras>();
 
         String jsonFileContent = utiles.leerJson(context, "detalle_lista_compras.json");
         JSONArray jsonArray = new JSONArray(jsonFileContent);
-        Log.d("Longitud json detalle", String.valueOf(jsonArray.length()));
-        Log.d("json ", jsonArray.toString());
         for (int i = 0; i < jsonArray.length(); i++) {
 
             class_detalle_lista_compras detalle_lista_compras = new class_detalle_lista_compras();
-
-            Log.d("dentro del 2 for ", String.valueOf(i));
             JSONObject jsonObj = jsonArray.getJSONObject(i);
+            //hasta aca pasa 11/08
             if(jsonObj.getString("id_lista_compras").equals(id_lista)){
                 Log.i("Paso por el if", "if");
                 detalle_lista_compras.setId(jsonObj.getString("id"));

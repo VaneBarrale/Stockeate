@@ -89,14 +89,10 @@ public class Fragment_mis_listas_compras extends Fragment {
                 btn_detalle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Bundle datosAEnviar = new Bundle();
-                        datosAEnviar.putString("id_lista_compras", id_lista);
                         Fragment_Detalle_Mis_Listas_Compras detalle_mis_listas_compras = new Fragment_Detalle_Mis_Listas_Compras();
-                        detalle_mis_listas_compras.setArguments(datosAEnviar);
-                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                         try {
-                            detalle_mis_listas_compras.leerDatos(getContext());
+                            detalle_mis_listas_compras.leerDatos(getContext(), id_lista);
                         } catch (IOException e) {
                             e.printStackTrace();
                         } catch (JSONException e) {

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_detalle_mis_listas_compras"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo_framework"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.mis_listas_compras.Fragment_mis_listas_compras">
+    tools:context=".ui.detalle_mis_listas_compras.Fragment_Detalle_Mis_Listas_Compras">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -86,4 +86,4 @@
 
     </ScrollView>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
