@@ -36,4 +36,17 @@
         <item>3x2</item>
     </string-array>
 
+    <string-array name="Provincias">
+        <item>Provincias</item>
+        <item>Buenos Aires</item>
+        <item>Córdoba</item>
+    </string-array>
+
+    <string-array name="Localidades">
+        <item>Localidades</item>
+        <item>Cordoba</item>
+        <item>Mar del plata</item>
+        <item>San Francisco</item>
+    </string-array>
+
 </resources>

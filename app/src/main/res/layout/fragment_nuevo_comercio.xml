@@ -51,7 +51,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
                     android:layout_marginRight="20dp"
                     android:orientation="vertical"
                     app:layout_editor_absoluteY="50dp"
@@ -82,18 +81,24 @@
                         android:hint="Domicilio" />
 
                     <Spinner
-                        android:id="@+id/Localidad"
+                        android:id="@+id/sProvincias"
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
-                        android:background="#053F51B5"
-                        android:hint="Localidad" />
+                        android:entries="@array/Provincias"/>
+
+                    <Spinner
+                        android:id="@+id/sLocalidad"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:entries="@array/Localidades"/>
 
                     <Button
                         android:id="@+id/btn_validar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="70dp"
+                        android:layout_marginTop="20dp"
                         android:text="Validar"
                         app:backgroundTint="#2196F3" />
 

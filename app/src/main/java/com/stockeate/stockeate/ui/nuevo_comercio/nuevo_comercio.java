@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,7 @@ public class nuevo_comercio extends Fragment {
     private NuevoComercioViewModel viewModelNuevoComercio;
     private Button btn_volver, btn_validar, btn_agregar;
     private EditText txt_cuit, txt_Descripcion, txt_Domicilio;
+    private Spinner localidad, provincia;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewModelNuevoComercio = new ViewModelProvider(this).get(NuevoComercioViewModel.class);
@@ -43,12 +45,14 @@ public class nuevo_comercio extends Fragment {
             public void onChanged(@Nullable String s) {
             }
         });
-        btn_volver = root.findViewById(R.id.btn_Volver);
-        btn_validar = root.findViewById(R.id.btn_validar);
-        btn_agregar = root.findViewById(R.id.btn_agregar);
-        txt_cuit = root.findViewById(R.id.etxtCuit);
-        txt_Descripcion = root.findViewById(R.id.etxtDescripcion);
-        txt_Domicilio = root.findViewById(R.id.etxtDomicilio);
+        this.btn_volver = root.findViewById(R.id.btn_Volver);
+        this.btn_validar = root.findViewById(R.id.btn_validar);
+        this.btn_agregar = root.findViewById(R.id.btn_agregar);
+        this.txt_cuit = root.findViewById(R.id.etxtCuit);
+        this.txt_Descripcion = root.findViewById(R.id.etxtDescripcion);
+        this.txt_Domicilio = root.findViewById(R.id.etxtDomicilio);
+        this.localidad = root.findViewById(R.id.sLocalidad);
+        this.provincia = root.findViewById(R.id.sProvincias);
 
         btn_agregar.setEnabled(false);
 
