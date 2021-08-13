@@ -50,10 +50,10 @@
                 tools:ignore="MissingConstraints"
                 android:orientation="vertical">
 
-                <ListView
-                    android:id="@+id/listaMarcas"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/RecycleMarcas"
                     android:layout_width="match_parent"
-                    android:layout_height="500dp"
+                    android:layout_height="wrap_content"
                     tools:ignore="MissingConstraints"/>
 
             </LinearLayout>

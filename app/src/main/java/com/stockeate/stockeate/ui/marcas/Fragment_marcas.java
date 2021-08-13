@@ -15,7 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.stockeate.stockeate.Adapter.Adapter_Top10Marcas;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_top_10;
 import com.stockeate.stockeate.ui.categoria.CategoriasViewModel;
@@ -33,9 +36,9 @@ public class Fragment_marcas extends Fragment {
 
     private MarcasViewModel marcasViewModel;
     private Button btn_volver;
-    private ListView listaMarcas;
     private ArrayList<class_top_10> mTop10List = null;
     private ArrayAdapter<class_top_10> mArrayAdapterMarcas;
+    RecyclerView recycleMarcas;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         marcasViewModel = new ViewModelProvider(this).get(MarcasViewModel.class);
@@ -46,8 +49,10 @@ public class Fragment_marcas extends Fragment {
             }
         });
 
-        btn_volver = root.findViewById(R.id.btn_Volver);
-        listaMarcas = root.findViewById(R.id.listaMarcas);
+        this.btn_volver = root.findViewById(R.id.btn_Volver);
+        this.recycleMarcas = root.findViewById(R.id.RecycleMarcas);
+
+        recycleMarcas.setLayoutManager(new LinearLayoutManager(getContext()));
 
         try {
             cargarDatosTabla();
@@ -83,12 +88,12 @@ public class Fragment_marcas extends Fragment {
             class_top_10 class_top_10 = new class_top_10();
             JSONObject jsonObj = jsonArray.getJSONObject(i);
             if (jsonObj.getString("id_usuario").equals("5")){
-                class_top_10.setCategoria(jsonObj.getString("marca"));
                 class_top_10.setTop(jsonObj.getString("top"));
+                class_top_10.setMarca(jsonObj.getString("marca"));
                 mTop10List.add(class_top_10);
             }
         }
-        mArrayAdapterMarcas = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mTop10List);
-        listaMarcas.setAdapter(mArrayAdapterMarcas);
+        Adapter_Top10Marcas adapter_top10Marcas = new Adapter_Top10Marcas(mTop10List);
+        recycleMarcas.setAdapter(adapter_top10Marcas);
     }
 }
