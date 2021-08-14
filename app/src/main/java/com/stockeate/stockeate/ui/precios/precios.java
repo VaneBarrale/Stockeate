@@ -239,6 +239,24 @@ public class precios extends Fragment {
         Adapter_productos adapter_productos = new Adapter_productos(mProductosList);
         RecycleProductos.setAdapter(adapter_productos);
 
+        int cantidad = adapter_productos.getItemCount();
+        if(cantidad == 0){
+            txt_precios.setText("No existe historial de precios para las opciones seleccioadas");
+        } else { txt_precios.setText("");}
+
+        adapter_productos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int posicion = RecycleProductos.getChildAdapterPosition(v);
+                try {
+                    buscarProducto(posicion);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void listar_productos() throws IOException, JSONException {
@@ -327,10 +345,54 @@ public class precios extends Fragment {
         mProductosList.removeAll(Collections.singleton(null));
         Adapter_productos adapter_productos = new Adapter_productos(mProductosList);
         RecycleProductos.setAdapter(adapter_productos);
-        /*if(mArrayAdapterProducto.isEmpty()){
-            txt_precios.setText("No existen productos con esas condiciones en el local seleccionado");
-            txv_precio_actual.setText("");
-        } else { txt_precios.setText("");}*/
+        int cantidad = adapter_productos.getItemCount();
+        if(cantidad == 0){
+            txt_precios.setText("No existe historial de precios para las opciones seleccioadas");
+        } else { txt_precios.setText("");}
+
+        adapter_productos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int posicion = RecycleProductos.getChildAdapterPosition(v);
+                try {
+                    buscarProducto(posicion);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void buscarProducto(int posicion) throws IOException, JSONException {
+        String jsonFileContent = null;
+        jsonFileContent = utiles.leerJson(getContext(), "productos.json");
+        JSONArray jsonArray = null;
+        jsonArray = new JSONArray(jsonFileContent);
+        if (local.getSelectedItem().toString().equals("Local")) {
+            Toast.makeText(getContext(), "Seleccione un local", Toast.LENGTH_SHORT).show();
+        } else {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObj = null;
+                jsonObj = jsonArray.getJSONObject(i);
+                if (jsonObj.getString("categoria").equals(mProductosList.get(posicion).getCategoria())
+                        && jsonObj.getString("marca").equals(mProductosList.get(posicion).getMarca())
+                        && jsonObj.getString("presentacion").equals(mProductosList.get(posicion).getPresentacion())
+                        && jsonObj.getString("unidad").equals(mProductosList.get(posicion).getUnidad())
+                        && jsonObj.getString("comercio").equals(local.getSelectedItem().toString())) {
+                    class_producto producto = new class_producto();
+                    producto.setCategoria(mProductosList.get(posicion).getCategoria());
+                    producto.setMarca(mProductosList.get(posicion).getMarca());
+                    producto.setPresentacion(mProductosList.get(posicion).getPresentacion());
+                    producto.setUnidad(mProductosList.get(posicion).getUnidad());
+                    producto.setComercio(local.getSelectedItem().toString());
+                    String precio_actual = String.valueOf(mProductosList.get(posicion).getPrecio());
+                    txv_precio_actual.setText(precio_actual);
+                    actualizarPrecios();
+                }
+            }
+        }
     }
 
     private void limpiarDatos() {

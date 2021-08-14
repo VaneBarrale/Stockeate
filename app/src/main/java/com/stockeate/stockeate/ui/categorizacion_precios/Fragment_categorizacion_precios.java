@@ -88,57 +88,6 @@ public class Fragment_categorizacion_precios extends Fragment {
             }
         });
 
-        /*listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Boolean guardar = true;
-                mComparacion = new ArrayList<class_categorizacion_precios>();
-
-                //Asi lee los datos del json estatico
-                String jsonFileContent = null;
-                try {
-                    jsonFileContent = utiles.leerJson(getContext(), "productos.json");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                JSONArray jsonArray = null;
-                try {
-                    jsonArray = new JSONArray(jsonFileContent);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObj = null;
-                    try {
-                        jsonObj = jsonArray.getJSONObject(i);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        if (jsonObj.getString("categoria").equals(mProductosList.get(position).getCategoria())
-                                && jsonObj.getString("marca").equals(mProductosList.get(position).getMarca())
-                                && jsonObj.getString("presentacion").equals(mProductosList.get(position).getPresentacion())
-                                && jsonObj.getString("unidad").equals(mProductosList.get(position).getUnidad())) {
-
-                            class_categorizacion_precios precios_categoria = new class_categorizacion_precios();
-                            precios_categoria.setCategoria(mProductosList.get(position).getCategoria());
-                            precios_categoria.setMarca(mProductosList.get(position).getMarca());
-                            precios_categoria.setPresentacion(mProductosList.get(position).getPresentacion());
-                            precios_categoria.setUnidad(mProductosList.get(position).getUnidad());
-                            precios_categoria.setLocal(jsonObj.getString("comercio"));
-                            precios_categoria.setPrecio_total(Float.parseFloat(jsonObj.getString("precio")));
-                            mComparacion.add(precios_categoria);
-                            Log.d("Precio", "Precio lista" + mComparacion.toString());
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                mArrayAdapterComparacion = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mComparacion);
-                listaPreciosCategoria.setAdapter(mArrayAdapterComparacion);
-            }
-        });*/
-
         return root;
 
     }
