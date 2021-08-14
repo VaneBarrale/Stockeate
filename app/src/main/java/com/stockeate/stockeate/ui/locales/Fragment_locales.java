@@ -14,7 +14,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.stockeate.stockeate.Adapter.Adapter_Top10Locales;
+import com.stockeate.stockeate.Adapter.Adapter_Top10Marcas;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_top_10;
 import com.stockeate.stockeate.ui.reportes.Fragment_reportes;
@@ -31,7 +35,7 @@ public class Fragment_locales extends Fragment {
 
     private LocalesViewModel localesViewModel;
     private Button btn_volver;
-    private ListView listaLocales;
+    RecyclerView recycleLocales;
     private ArrayList<class_top_10> mTop10List = null;
     private ArrayAdapter<class_top_10> mArrayAdapterLocales;
 
@@ -45,7 +49,9 @@ public class Fragment_locales extends Fragment {
         });
 
         btn_volver = root.findViewById(R.id.btn_Volver);
-        listaLocales = root.findViewById(R.id.listaLocales);
+        recycleLocales = root.findViewById(R.id.RecycleLocales);
+
+        recycleLocales.setLayoutManager(new LinearLayoutManager(getContext()));
 
         try {
             cargarDatosTabla();
@@ -81,12 +87,12 @@ public class Fragment_locales extends Fragment {
             class_top_10 class_top_10 = new class_top_10();
             JSONObject jsonObj = jsonArray.getJSONObject(i);
             if (jsonObj.getString("id_usuario").equals("5")){
-                class_top_10.setCategoria(jsonObj.getString("local"));
                 class_top_10.setTop(jsonObj.getString("top"));
+                class_top_10.setLocal(jsonObj.getString("local"));
                 mTop10List.add(class_top_10);
             }
         }
-        mArrayAdapterLocales = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mTop10List);
-        listaLocales.setAdapter(mArrayAdapterLocales);
+        Adapter_Top10Locales adapter_top10Locales = new Adapter_Top10Locales(mTop10List);
+        recycleLocales.setAdapter(adapter_top10Locales);
     }
 }

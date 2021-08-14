@@ -15,7 +15,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.stockeate.stockeate.Adapter.Adapter_Top10Marcas;
+import com.stockeate.stockeate.Adapter.Adapter_promociones;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_detalle_lista_compras;
 import com.stockeate.stockeate.clases.class_producto;
@@ -38,7 +42,7 @@ public class Fragment_Promocion extends Fragment {
     private Button btn_volver, btn_agregar;
     private ArrayAdapter<class_promociones> mArrayAdapterPromociones;
     private ArrayList<class_promociones> mPromocionesList = null;
-    private ListView listPromocionesExistentes;
+    private RecyclerView RecyclePromociones;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewModelPromocion = new ViewModelProvider(this).get(PromocionViewModel.class);
@@ -51,7 +55,9 @@ public class Fragment_Promocion extends Fragment {
 
         this.btn_volver = root.findViewById(R.id.btn_Volver);
         this.btn_agregar = root.findViewById(R.id.btn_Agregar);
-        this.listPromocionesExistentes = root.findViewById(R.id.listPromocionesExistentes);
+        this.RecyclePromociones = root.findViewById(R.id.RecyclePromocioes);
+
+        RecyclePromociones.setLayoutManager(new LinearLayoutManager(getContext()));
 
         btn_volver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,8 +109,8 @@ public class Fragment_Promocion extends Fragment {
             mPromocionesList.add(promociones);
         }
 
-        mPromocionesList.removeAll(Collections.singleton(null));
-        mArrayAdapterPromociones = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mPromocionesList);
-        listPromocionesExistentes.setAdapter(mArrayAdapterPromociones);
+        Adapter_promociones adapter_promociones = new Adapter_promociones(mPromocionesList);
+        RecyclePromociones.setAdapter(adapter_promociones);
+
     }
 }

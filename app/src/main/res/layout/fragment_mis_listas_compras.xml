@@ -49,10 +49,11 @@
                 android:orientation="vertical"
                 tools:ignore="MissingConstraints">
 
-                <ListView
-                    android:id="@+id/lw_detalle_lista_compras"
-                    android:layout_width="wrap_content"
-                    android:layout_height="150dp"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/RecycleMisListas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:ignore="MissingConstraints"/>
 
             </LinearLayout>
 
@@ -110,10 +111,12 @@
                 android:orientation="vertical"
                 tools:ignore="MissingConstraints">
 
-                <ListView
-                    android:id="@+id/lw_resultado_detalle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="500dp"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/RecycleDetalleMisListas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:ignore="MissingConstraints"/>
+
 
             </LinearLayout>
 

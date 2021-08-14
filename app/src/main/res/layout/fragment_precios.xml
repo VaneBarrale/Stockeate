@@ -115,11 +115,11 @@
                 android:gravity="center_horizontal"
                 android:textStyle="bold"/>
 
-            <ListView
-                android:id="@+id/ListViewResultado"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:hint="Resultado" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RecycleProductos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="MissingConstraints"/>
 
             <LinearLayout
                 android:id="@+id/llhorizontallc2"

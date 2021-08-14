@@ -22,9 +22,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.stockeate.stockeate.Adapter.Adapter_productos;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_producto;
 import com.stockeate.stockeate.ui.escanear_codigos_barra.Fragment_escanear_codigos_barra;
@@ -50,10 +53,9 @@ public class precios extends Fragment {
     private Spinner local;
     private Button btn_actualizar, btn_buscar, btn_volver, btn_buscar_cod_barra;
     private PreciosViewModel viewModelPrecios;
-    private ArrayAdapter<class_producto> mArrayAdapterProducto;
     private ArrayList<class_producto> mProductosList = null;
-    private ListView listaResultado;
     private TextView txv_precio_actual, txt_precios;
+    private RecyclerView RecycleProductos;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @NonNull Bundle savedInstanceState) {
         viewModelPrecios = new ViewModelProvider(this).get(PreciosViewModel.class);
@@ -72,10 +74,12 @@ public class precios extends Fragment {
         this.btn_buscar = root.findViewById(R.id.btn_Buscar);
         this.btn_volver = root.findViewById(R.id.btn_Volver);
         this.btn_buscar_cod_barra = root.findViewById(R.id.btn_BuscarCodigoBarra);
-        this.listaResultado = root.findViewById(R.id.ListViewResultado);
         this.txv_precio_actual = root.findViewById(R.id.txvprecio_actual);
         this.txt_precios = root.findViewById(R.id.txt_precios);
         this.local = root.findViewById(R.id.sComercios);
+        this.RecycleProductos = root.findViewById(R.id.RecycleProductos);
+
+        RecycleProductos.setLayoutManager(new LinearLayoutManager(getContext()));
 
         btn_buscar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +113,7 @@ public class precios extends Fragment {
             }
         });
 
-        listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -164,7 +168,7 @@ public class precios extends Fragment {
                     }
                 }
             }
-        });
+        });*/
 
         return root;
 
@@ -232,10 +236,8 @@ public class precios extends Fragment {
                 e.printStackTrace();
             }
         }
-
-        mProductosList.removeAll(Collections.singleton(null));
-        mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
-        listaResultado.setAdapter(mArrayAdapterProducto);
+        Adapter_productos adapter_productos = new Adapter_productos(mProductosList);
+        RecycleProductos.setAdapter(adapter_productos);
 
     }
 
@@ -323,12 +325,12 @@ public class precios extends Fragment {
             }
         }
         mProductosList.removeAll(Collections.singleton(null));
-        mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
-        listaResultado.setAdapter(mArrayAdapterProducto);
-        if(mArrayAdapterProducto.isEmpty()){
+        Adapter_productos adapter_productos = new Adapter_productos(mProductosList);
+        RecycleProductos.setAdapter(adapter_productos);
+        /*if(mArrayAdapterProducto.isEmpty()){
             txt_precios.setText("No existen productos con esas condiciones en el local seleccionado");
             txv_precio_actual.setText("");
-        } else { txt_precios.setText("");}
+        } else { txt_precios.setText("");}*/
     }
 
     private void limpiarDatos() {
@@ -336,7 +338,6 @@ public class precios extends Fragment {
         marca.setText("");
         presentacion.setText("");
         mProductosList.clear();
-        mArrayAdapterProducto.clear();
         txv_precio_actual.setText("");
         precio_nuevo.setText("");
     }

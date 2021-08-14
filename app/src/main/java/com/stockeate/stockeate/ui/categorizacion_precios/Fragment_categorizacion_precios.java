@@ -17,7 +17,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.stockeate.stockeate.Adapter.Adapter_productos;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_categorizacion_precios;
 import com.stockeate.stockeate.clases.class_producto;
@@ -37,11 +40,12 @@ public class Fragment_categorizacion_precios extends Fragment {
     private CategorizacionPreciosViewModel categorizacionPreciosViewModel;
     private Button btn_buscar, btn_volver;
     private EditText categoria;
-    private ListView listaResultado, listaPreciosCategoria;
+    private ListView listaPreciosCategoria;
     private ArrayAdapter<class_producto> mArrayAdapterProducto;
     private ArrayList<class_producto> mProductosList = null;
     private ArrayAdapter<class_categorizacion_precios> mArrayAdapterComparacion;
     private ArrayList<class_categorizacion_precios> mComparacion = null;
+    private RecyclerView RecycleProductos;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         categorizacionPreciosViewModel = new ViewModelProvider(this).get(CategorizacionPreciosViewModel.class);
@@ -55,8 +59,10 @@ public class Fragment_categorizacion_precios extends Fragment {
         this.btn_buscar = root.findViewById(R.id.btn_Buscar);
         this.btn_volver = root.findViewById(R.id.btn_Volver);
         this.categoria = root.findViewById(R.id.etxtCodigoProducto);
-        this.listaResultado = root.findViewById(R.id.listaCategorias);
+        this.RecycleProductos = root.findViewById(R.id.RecycleProductos);
         this.listaPreciosCategoria = root.findViewById(R.id.listaPreciosCategoria);
+
+        RecycleProductos.setLayoutManager(new LinearLayoutManager(getContext()));
 
         btn_buscar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +89,7 @@ public class Fragment_categorizacion_precios extends Fragment {
             }
         });
 
-        listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Boolean guardar = true;
@@ -132,7 +138,7 @@ public class Fragment_categorizacion_precios extends Fragment {
                 mArrayAdapterComparacion = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mComparacion);
                 listaPreciosCategoria.setAdapter(mArrayAdapterComparacion);
             }
-        });
+        });*/
 
         return root;
 
@@ -169,8 +175,7 @@ public class Fragment_categorizacion_precios extends Fragment {
                 mProductosList.add(productos);
             }
         }
-        mProductosList.removeAll(Collections.singleton(null));
-        mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
-        listaResultado.setAdapter(mArrayAdapterProducto);
+        Adapter_productos adapter_productos = new Adapter_productos(mProductosList);
+        RecycleProductos.setAdapter(adapter_productos);
     }
 }

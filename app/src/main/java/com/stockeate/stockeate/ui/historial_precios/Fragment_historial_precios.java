@@ -21,9 +21,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.stockeate.stockeate.Adapter.Adapter_historial_precios;
+import com.stockeate.stockeate.Adapter.Adapter_productos;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_detalle_lista_compras;
 import com.stockeate.stockeate.clases.class_historial_precios;
@@ -48,12 +52,9 @@ public class Fragment_historial_precios extends Fragment {
     private EditText categoria, marca, presentacion;
     private TextView historial;
     private Spinner locales;
-    private ListView listaResultado;
-    private ArrayAdapter<class_producto> mArrayAdapterProducto;
+    private RecyclerView RecycleProductos, RecycleHistorialPrecios;
     private ArrayList<class_producto> mProductosList = null;
     private ArrayList<class_historial_precios> mHistorialPrecio = null;
-    private ArrayAdapter<class_historial_precios> mAdapterHistorialPrecio;
-    private ListView productos_historial;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         historialPreciosViewModel = new ViewModelProvider(this).get(HistorialPreciosViewModel.class);
@@ -72,8 +73,11 @@ public class Fragment_historial_precios extends Fragment {
         this.presentacion = root.findViewById(R.id.etxtPresentacion);
         this.locales = root.findViewById(R.id.sLocales);
         this.historial = root.findViewById(R.id.txt_historial);
-        this.listaResultado = root.findViewById(R.id.ListaProductos);
-        this.productos_historial = root.findViewById(R.id.listaHistorial);
+        this.RecycleHistorialPrecios = root.findViewById(R.id.RecycleHistorialPrecios);
+        this.RecycleProductos = root.findViewById(R.id.RecycleProductos);
+
+        RecycleProductos.setLayoutManager(new LinearLayoutManager(getContext()));
+        RecycleHistorialPrecios.setLayoutManager(new LinearLayoutManager(getContext()));
 
         btn_buscar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +111,7 @@ public class Fragment_historial_precios extends Fragment {
             }
         });
 
-        listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mHistorialPrecio = new ArrayList<class_historial_precios>();
@@ -161,7 +165,7 @@ public class Fragment_historial_precios extends Fragment {
                     } else { historial.setText("");}
                 }
             }
-        });
+        });*/
         return root;
     }
 
@@ -234,13 +238,75 @@ public class Fragment_historial_precios extends Fragment {
             }
         }
 
-        mProductosList.removeAll(Collections.singleton(null));
-        mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
-        listaResultado.setAdapter(mArrayAdapterProducto);
+        Adapter_productos adapter_productos = new Adapter_productos(mProductosList);
+        RecycleProductos.setAdapter(adapter_productos);
 
         if(!mProductosList.isEmpty()){
             locales.setVisibility(View.VISIBLE);
         } else {locales.setVisibility(View.INVISIBLE);}
+
+        adapter_productos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int posicion = RecycleProductos.getChildAdapterPosition(v);
+                class_historial_precios historial_precios = new class_historial_precios();
+                Log.d("Detalle", "Detalle Seleccionado" + RecycleProductos.getChildAdapterPosition(v));
+                mHistorialPrecio = new ArrayList<class_historial_precios>();
+
+                String jsonFileContent = null;
+                try {
+                    jsonFileContent = utiles.leerJson(getContext(), "HistorialPrecios.json");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                JSONArray jsonArray = null;
+                try {
+                    jsonArray = new JSONArray(jsonFileContent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if(locales.getSelectedItem().toString().equals("Local")){
+                    Toast.makeText(getContext(), "Seleccione un local", Toast.LENGTH_SHORT).show();
+                } else {
+                    for (int f = 0; f < mProductosList.size(); f++) {
+                        Log.d("FOR", "Adentro del primero");
+                        if (f == RecycleProductos.getChildAdapterPosition(v)) {
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                Log.d("FOR", "Adentro del segundo");
+                                JSONObject jsonObj = null;
+                                try {
+                                    jsonObj = jsonArray.getJSONObject(i);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                try {
+                                    if (jsonObj.getString("categoria").equals(mProductosList.get(posicion).getCategoria())
+                                            && jsonObj.getString("marca").equals(mProductosList.get(posicion).getMarca())
+                                            && jsonObj.getString("presentacion").equals(mProductosList.get(posicion).getPresentacion())
+                                            && jsonObj.getString("unidad").equals(mProductosList.get(posicion).getUnidad())
+                                            && jsonObj.getString("comercio").equals(locales.getSelectedItem().toString())) {
+                                        Log.d("IF", "Adentro del if grande");
+                                        historial_precios.setCategoria(mProductosList.get(posicion).getCategoria());
+                                        historial_precios.setMarca(mProductosList.get(posicion).getMarca());
+                                        historial_precios.setPresentacion(mProductosList.get(posicion).getPresentacion());
+                                        historial_precios.setUnidad(mProductosList.get(posicion).getUnidad());
+                                        historial_precios.setComercio(locales.getSelectedItem().toString());
+                                        historial_precios.setPrecio(Float.parseFloat(jsonObj.getString("precio")));
+                                        mHistorialPrecio.add(historial_precios);
+                                        Log.d("Precio", "Precio " + mHistorialPrecio.toString());
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            Adapter_historial_precios adapter_historial_precios = new Adapter_historial_precios(mHistorialPrecio);
+                            RecycleHistorialPrecios.setAdapter(adapter_historial_precios);
+                        }
+                    }
+                }
+            }
+        });
+
     }
 
     public void escanear(){
@@ -306,9 +372,10 @@ public class Fragment_historial_precios extends Fragment {
             }
         }
 
-        mProductosList.removeAll(Collections.singleton(null));
-        mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
-        listaResultado.setAdapter(mArrayAdapterProducto);
-
+        Adapter_productos adapter_productos = new Adapter_productos(mProductosList);
+        RecycleProductos.setAdapter(adapter_productos);
+        if(!mProductosList.isEmpty()){
+            locales.setVisibility(View.VISIBLE);
+        } else {locales.setVisibility(View.INVISIBLE);}
     }
 }

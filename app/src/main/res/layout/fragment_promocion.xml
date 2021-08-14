@@ -58,12 +58,12 @@
                     app:layout_editor_absoluteY="50dp"
                     tools:ignore="MissingConstraints">
 
-                    <ListView
-                        android:id="@+id/listPromocionesExistentes"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/RecyclePromocioes"
                         android:layout_width="match_parent"
-                        android:layout_height="477dp"
-                        tools:layout_editor_absoluteX="68dp"
-                        tools:layout_editor_absoluteY="269dp" />
+                        android:layout_height="wrap_content"
+                        tools:ignore="MissingConstraints"/>
+
 
                 </LinearLayout>
 

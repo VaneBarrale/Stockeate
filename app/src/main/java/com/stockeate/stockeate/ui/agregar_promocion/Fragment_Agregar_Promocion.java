@@ -6,11 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -20,17 +18,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.stockeate.stockeate.Adapter.Adapter_mis_listas;
+import com.stockeate.stockeate.Adapter.Adapter_productos;
+import com.stockeate.stockeate.Adapter.Adapter_promociones;
 import com.stockeate.stockeate.R;
-import com.stockeate.stockeate.clases.class_detalle_lista_compras;
-import com.stockeate.stockeate.clases.class_lista_compras;
 import com.stockeate.stockeate.clases.class_producto;
-import com.stockeate.stockeate.ui.detalle_lista_precios.Fragment_Detalle_Lista_Precios;
-import com.stockeate.stockeate.ui.lista_compras.Fragment_lista_compras;
 import com.stockeate.stockeate.ui.promocion.Fragment_Promocion;
-import com.stockeate.stockeate.ui.ubicacion.ubicacion;
 import com.stockeate.stockeate.utiles.utiles;
 
 import org.json.JSONArray;
@@ -47,9 +45,9 @@ public class Fragment_Agregar_Promocion extends Fragment {
     private Button btn_volver, btn_buscar, btn_buscar_codigo_barra, btn_agregar;
     private EditText categoria, marca, presentacion, cantidad;
     private Spinner comercio, promociones;
-    private ArrayAdapter<class_producto> mArrayAdapterProducto;
     private ArrayList<class_producto> mProductosList = null;
-    private ListView listaResultado;
+    private RecyclerView RecycleProductos;
+    private CheckBox checkbox;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         AgregarPromocionViewModel = new ViewModelProvider(this).get(ViewModel_agregar_promocion.class);
@@ -64,13 +62,16 @@ public class Fragment_Agregar_Promocion extends Fragment {
         this.btn_buscar = root.findViewById(R.id.btn_buscar);
         this.btn_buscar_codigo_barra = root.findViewById(R.id.btn_buscar_codigo_barra);
         this.btn_agregar = root.findViewById(R.id.btn_agregar_promocion);
-        this.listaResultado = root.findViewById(R.id.ListViewResultado);
+        this.RecycleProductos = root.findViewById(R.id.RecycleProductos);
+        this.checkbox = root.findViewById(R.id.checkbox);
         this.categoria = root.findViewById(R.id.etxtCodigoProducto);
         this.marca = root.findViewById(R.id.etxtMarca);
         this.presentacion = root.findViewById(R.id.etxtPresentacion);
         this.cantidad = root.findViewById(R.id.etxtCantidad);
         this.comercio = root.findViewById(R.id.sComercios);
         this.promociones = root.findViewById(R.id.sPromociones);
+
+        RecycleProductos.setLayoutManager(new LinearLayoutManager(getContext()));
 
         comercio.setVisibility(View.INVISIBLE);
         promociones.setVisibility(View.INVISIBLE);
@@ -108,7 +109,7 @@ public class Fragment_Agregar_Promocion extends Fragment {
             }
         });
 
-        listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int i = 0, j = 0;
@@ -127,11 +128,12 @@ public class Fragment_Agregar_Promocion extends Fragment {
                     }
                 });
             }
-        });
+        });*/
 
 
         return root;
     }
+
     private void listarproductos() throws IOException, JSONException {
         mProductosList.clear();
 
@@ -199,12 +201,30 @@ public class Fragment_Agregar_Promocion extends Fragment {
                 }
             }
         }
-
-        mProductosList.removeAll(Collections.singleton(null));
-        mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
-        listaResultado.setAdapter(mArrayAdapterProducto);
+        RecycleProductos.setVisibility(View.VISIBLE);
+        Adapter_productos adapter_productos = new Adapter_productos(mProductosList);
+        RecycleProductos.setAdapter(adapter_productos);
         comercio.setVisibility(View.VISIBLE);
         promociones.setVisibility(View.VISIBLE);
+
+        adapter_productos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_agregar.setEnabled(true);
+
+                btn_agregar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if ((cantidad.getText().toString()).equals("") || (comercio.getSelectedItem().toString().equals("Local")) || promociones.getSelectedItem().toString().equals("Tipo promocion")) {
+                            Toast.makeText(getContext(), "Complete cantidad, tipo promocion y/o comercio", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), "Promoción agregada con éxito", Toast.LENGTH_SHORT).show();
+                            limpiarDatos();
+                        }
+                    }
+                });
+            }
+        });
     }
 
     public void escanear(){
@@ -271,8 +291,8 @@ public class Fragment_Agregar_Promocion extends Fragment {
         }
 
         mProductosList.removeAll(Collections.singleton(null));
-        mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
-        listaResultado.setAdapter(mArrayAdapterProducto);
+        Adapter_productos adapter_productos = new Adapter_productos(mProductosList);
+        RecycleProductos.setAdapter(adapter_productos);
 
     }
 
@@ -283,6 +303,6 @@ public class Fragment_Agregar_Promocion extends Fragment {
         cantidad.setText("");
         comercio.setVisibility(View.INVISIBLE);
         promociones.setVisibility(View.INVISIBLE);
-        mArrayAdapterProducto.clear();
+        RecycleProductos.setVisibility(View.INVISIBLE);
     }
 }

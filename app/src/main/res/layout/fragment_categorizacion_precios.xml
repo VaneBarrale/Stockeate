@@ -69,10 +69,13 @@
                     android:text="Buscar"
                     app:backgroundTint="#2196F3" />
 
-                <ListView
-                    android:id="@+id/listaCategorias"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/RecycleProductos"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    tools:ignore="MissingConstraints"/>
 
                 <TextView
                     android:layout_width="match_parent"

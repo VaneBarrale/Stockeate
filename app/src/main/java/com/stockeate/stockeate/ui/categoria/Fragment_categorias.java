@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +19,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.google.firebase.auth.internal.RecaptchaActivity;
+import com.stockeate.stockeate.Adapter.Adapter_Top10Categorias;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_comparar_precios;
 import com.stockeate.stockeate.clases.class_top_10;
@@ -37,9 +41,8 @@ public class Fragment_categorias extends Fragment {
 
     private CategoriasViewModel categoriasViewModel;
     private Button btn_volver;
-    private ListView listaCategorias;
+    private RecyclerView recycleCategorias;
     private ArrayList<class_top_10> mTop10List = null;
-    private ArrayAdapter<class_top_10> mArrayAdapterComparar;
     private String usuario;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,8 +55,9 @@ public class Fragment_categorias extends Fragment {
         });
 
     btn_volver = root.findViewById(R.id.btn_Volver);
-    listaCategorias = root.findViewById(R.id.listaCategorias);
+    recycleCategorias = root.findViewById(R.id.RecycleCategorias);
 
+    recycleCategorias.setLayoutManager(new LinearLayoutManager(getContext()));
         try {
             cargarDatosTabla();
         } catch (IOException e) {
@@ -90,12 +94,12 @@ public class Fragment_categorias extends Fragment {
             Log.d("Esta leyendo", "entro");
             if (jsonObj.getString("id_usuario").equals("5")){
                 Log.d("Esta leyendo", "entro al if");
-                class_top_10.setCategoria(jsonObj.getString("categoria"));
                 class_top_10.setTop(jsonObj.getString("top"));
+                class_top_10.setCategoria(jsonObj.getString("categoria"));
                 mTop10List.add(class_top_10);
                 }
         }
-        mArrayAdapterComparar = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mTop10List);
-        listaCategorias.setAdapter(mArrayAdapterComparar);
+        Adapter_Top10Categorias adapter_top10Categorias = new Adapter_Top10Categorias(mTop10List);
+        recycleCategorias.setAdapter(adapter_top10Categorias);
     }
 }

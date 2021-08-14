@@ -124,12 +124,11 @@
                     android:hint="Local"
                     android:visibility="invisible" />
 
-                <ListView
-                    android:id="@+id/ListaProductos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="10dp"
-                    android:hint="Resultado"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/RecycleProductos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:ignore="MissingConstraints"/>
 
             </LinearLayout>
 
@@ -152,11 +151,11 @@
                     android:gravity="center_horizontal"
                     android:textStyle="bold"/>
 
-                <ListView
-                    android:id="@+id/listaHistorial"
-                    android:layout_width="wrap_content"
-                    android:layout_height="200dp"
-                    android:hint="Resultado"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/RecycleHistorialPrecios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:ignore="MissingConstraints"/>
 
             </LinearLayout>
 

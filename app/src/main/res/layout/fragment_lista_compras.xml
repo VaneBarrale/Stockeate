@@ -117,35 +117,46 @@
 
             </LinearLayout>
 
-            <ListView
-                android:id="@+id/ListViewResultado"
-                android:layout_width="wrap_content"
-                android:layout_height="180dp"
-                android:hint="Resultado"/>
-
-            <EditText
-                android:id="@+id/etxtCantidad"
+            <LinearLayout
+                android:id="@+id/llverticaldl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="Cantidad"
-                android:background="#053F51B5" />
+                tools:ignore="MissingConstraints"
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btn_Agregar"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/RecycleProductos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    tools:ignore="MissingConstraints"/>
+
+                <EditText
+                    android:id="@+id/etxtCantidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:hint="Cantidad"
+                    android:background="#053F51B5" />
+
+                <Button
+                    android:id="@+id/btn_Agregar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:backgroundTint="#2196F3"
+                    android:text="AGREGAR"/>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RecyclerProductosAgregados"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:backgroundTint="#2196F3"
-                android:text="AGREGAR"/>
-
-
-            <ListView
-                android:id="@+id/lista_productos_agregados"
-                android:layout_width="wrap_content"
-                android:layout_height="400dp"
-                tools:layout_editor_absoluteX="79dp"
-                tools:layout_editor_absoluteY="445dp" />
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                tools:ignore="MissingConstraints"/>
 
             <LinearLayout
                 android:id="@+id/llhorizontallc2"
