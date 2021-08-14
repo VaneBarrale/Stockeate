@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.stockeate.stockeate.Adapter.Adapter_categorizacion_precios;
 import com.stockeate.stockeate.Adapter.Adapter_productos;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_categorizacion_precios;
@@ -40,12 +41,9 @@ public class Fragment_categorizacion_precios extends Fragment {
     private CategorizacionPreciosViewModel categorizacionPreciosViewModel;
     private Button btn_buscar, btn_volver;
     private EditText categoria;
-    private ListView listaPreciosCategoria;
-    private ArrayAdapter<class_producto> mArrayAdapterProducto;
     private ArrayList<class_producto> mProductosList = null;
-    private ArrayAdapter<class_categorizacion_precios> mArrayAdapterComparacion;
     private ArrayList<class_categorizacion_precios> mComparacion = null;
-    private RecyclerView RecycleProductos;
+    private RecyclerView RecycleProductos, RecyclePreciosCategoria;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         categorizacionPreciosViewModel = new ViewModelProvider(this).get(CategorizacionPreciosViewModel.class);
@@ -60,9 +58,10 @@ public class Fragment_categorizacion_precios extends Fragment {
         this.btn_volver = root.findViewById(R.id.btn_Volver);
         this.categoria = root.findViewById(R.id.etxtCodigoProducto);
         this.RecycleProductos = root.findViewById(R.id.RecycleProductos);
-        this.listaPreciosCategoria = root.findViewById(R.id.listaPreciosCategoria);
+        this.RecyclePreciosCategoria = root.findViewById(R.id.RecyclePreciosCategoria);
 
         RecycleProductos.setLayoutManager(new LinearLayoutManager(getContext()));
+        RecyclePreciosCategoria.setLayoutManager(new LinearLayoutManager(getContext()));
 
         btn_buscar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,5 +176,48 @@ public class Fragment_categorizacion_precios extends Fragment {
         }
         Adapter_productos adapter_productos = new Adapter_productos(mProductosList);
         RecycleProductos.setAdapter(adapter_productos);
+
+        adapter_productos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int posicion = RecycleProductos.getChildAdapterPosition(v);
+                try {
+                    buscarProducto(posicion);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void buscarProducto(int posicion) throws IOException, JSONException {
+        mComparacion = new ArrayList<class_categorizacion_precios>();
+        mComparacion.clear();
+
+        String jsonFileContent = utiles.leerJson(getContext(), "productos.json");
+        JSONArray jsonArray = new JSONArray(jsonFileContent);
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonObj = null;
+            jsonObj = jsonArray.getJSONObject(i);
+            if (jsonObj.getString("categoria").equals(mProductosList.get(posicion).getCategoria())
+                    && jsonObj.getString("marca").equals(mProductosList.get(posicion).getMarca())
+                    && jsonObj.getString("presentacion").equals(mProductosList.get(posicion).getPresentacion())
+                    && jsonObj.getString("unidad").equals(mProductosList.get(posicion).getUnidad())) {
+
+                class_categorizacion_precios precios_categoria = new class_categorizacion_precios();
+                precios_categoria.setCategoria(mProductosList.get(posicion).getCategoria());
+                precios_categoria.setMarca(mProductosList.get(posicion).getMarca());
+                precios_categoria.setPresentacion(mProductosList.get(posicion).getPresentacion());
+                precios_categoria.setUnidad(mProductosList.get(posicion).getUnidad());
+                precios_categoria.setLocal(jsonObj.getString("comercio"));
+                precios_categoria.setPrecio_total(Float.parseFloat(jsonObj.getString("precio")));
+                mComparacion.add(precios_categoria);
+                Log.d("Precio", "Precio lista" + mComparacion.toString());
+            }
+        }
+        Adapter_categorizacion_precios adapter_categorizacion_precios = new Adapter_categorizacion_precios(mComparacion);
+        RecyclePreciosCategoria.setAdapter(adapter_categorizacion_precios);
     }
 }

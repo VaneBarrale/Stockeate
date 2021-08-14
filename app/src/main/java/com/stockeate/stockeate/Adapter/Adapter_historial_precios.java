@@ -35,7 +35,6 @@ public class Adapter_historial_precios extends RecyclerView.Adapter<Adapter_hist
         holder.marca.setText(listaHistorialPrecios.get(position).getMarca());
         holder.presentacion.setText(listaHistorialPrecios.get(position).getPresentacion());
         holder.unidad.setText(listaHistorialPrecios.get(position).getUnidad());
-        holder.comercio.setText(listaHistorialPrecios.get(position).getCategoria());
         holder.precio.setText((String.valueOf(listaHistorialPrecios.get(position).getPrecio())));
     }
 
@@ -65,7 +64,6 @@ public class Adapter_historial_precios extends RecyclerView.Adapter<Adapter_hist
             marca=itemView.findViewById(R.id.Marca);
             presentacion=itemView.findViewById(R.id.Presentacion);
             unidad=itemView.findViewById(R.id.Unidad);
-            comercio=itemView.findViewById(R.id.Comercio);
             precio=itemView.findViewById(R.id.Precio);
         }
     }

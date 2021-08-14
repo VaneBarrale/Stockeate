@@ -249,64 +249,53 @@ public class Fragment_historial_precios extends Fragment {
             @Override
             public void onClick(View v) {
                 int posicion = RecycleProductos.getChildAdapterPosition(v);
-                class_historial_precios historial_precios = new class_historial_precios();
-                Log.d("Detalle", "Detalle Seleccionado" + RecycleProductos.getChildAdapterPosition(v));
-                mHistorialPrecio = new ArrayList<class_historial_precios>();
-
-                String jsonFileContent = null;
                 try {
-                    jsonFileContent = utiles.leerJson(getContext(), "HistorialPrecios.json");
+                    buscarProducto(posicion);
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
-                JSONArray jsonArray = null;
-                try {
-                    jsonArray = new JSONArray(jsonFileContent);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                if(locales.getSelectedItem().toString().equals("Local")){
-                    Toast.makeText(getContext(), "Seleccione un local", Toast.LENGTH_SHORT).show();
-                } else {
-                    for (int f = 0; f < mProductosList.size(); f++) {
-                        Log.d("FOR", "Adentro del primero");
-                        if (f == RecycleProductos.getChildAdapterPosition(v)) {
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                Log.d("FOR", "Adentro del segundo");
-                                JSONObject jsonObj = null;
-                                try {
-                                    jsonObj = jsonArray.getJSONObject(i);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                try {
-                                    if (jsonObj.getString("categoria").equals(mProductosList.get(posicion).getCategoria())
-                                            && jsonObj.getString("marca").equals(mProductosList.get(posicion).getMarca())
-                                            && jsonObj.getString("presentacion").equals(mProductosList.get(posicion).getPresentacion())
-                                            && jsonObj.getString("unidad").equals(mProductosList.get(posicion).getUnidad())
-                                            && jsonObj.getString("comercio").equals(locales.getSelectedItem().toString())) {
-                                        Log.d("IF", "Adentro del if grande");
-                                        historial_precios.setCategoria(mProductosList.get(posicion).getCategoria());
-                                        historial_precios.setMarca(mProductosList.get(posicion).getMarca());
-                                        historial_precios.setPresentacion(mProductosList.get(posicion).getPresentacion());
-                                        historial_precios.setUnidad(mProductosList.get(posicion).getUnidad());
-                                        historial_precios.setComercio(locales.getSelectedItem().toString());
-                                        historial_precios.setPrecio(Float.parseFloat(jsonObj.getString("precio")));
-                                        mHistorialPrecio.add(historial_precios);
-                                        Log.d("Precio", "Precio " + mHistorialPrecio.toString());
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            Adapter_historial_precios adapter_historial_precios = new Adapter_historial_precios(mHistorialPrecio);
-                            RecycleHistorialPrecios.setAdapter(adapter_historial_precios);
-                        }
-                    }
-                }
             }
         });
+    }
 
+    public void buscarProducto(int posicion) throws IOException, JSONException {
+        mHistorialPrecio = new ArrayList<class_historial_precios>();
+        mHistorialPrecio.clear();
+
+        String jsonFileContent = utiles.leerJson(getContext(), "HistorialPrecios.json");
+        JSONArray jsonArray = new JSONArray(jsonFileContent);
+        if(locales.getSelectedItem().toString().equals("Local")){
+            Toast.makeText(getContext(), "Seleccione un local", Toast.LENGTH_SHORT).show();
+        } else {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObj = null;
+                jsonObj = jsonArray.getJSONObject(i);
+                if (jsonObj.getString("categoria").equals(mProductosList.get(posicion).getCategoria())
+                        && jsonObj.getString("marca").equals(mProductosList.get(posicion).getMarca())
+                        && jsonObj.getString("presentacion").equals(mProductosList.get(posicion).getPresentacion())
+                        && jsonObj.getString("unidad").equals(mProductosList.get(posicion).getUnidad())
+                        && jsonObj.getString("comercio").equals(locales.getSelectedItem().toString())) {
+
+                    class_historial_precios historial_precios = new class_historial_precios();
+                    historial_precios.setCategoria(mProductosList.get(posicion).getCategoria());
+                    historial_precios.setMarca(mProductosList.get(posicion).getMarca());
+                    historial_precios.setPresentacion(mProductosList.get(posicion).getPresentacion());
+                    historial_precios.setUnidad(mProductosList.get(posicion).getUnidad());
+                    historial_precios.setComercio(locales.getSelectedItem().toString());
+                    historial_precios.setPrecio(Float.parseFloat(jsonObj.getString("precio")));
+                    mHistorialPrecio.add(historial_precios);
+                    Log.d("Precio", "Precio " + mHistorialPrecio.toString());
+                }
+            }
+            Adapter_historial_precios adapter_historial_precios = new Adapter_historial_precios(mHistorialPrecio);
+            RecycleHistorialPrecios.setAdapter(adapter_historial_precios);
+            int cantidad = adapter_historial_precios.getItemCount();
+            if(cantidad == 0){
+                historial.setText("No existe historial de precios para las opciones seleccioadas");
+            } else { historial.setText("");}
+        }
     }
 
     public void escanear(){
@@ -377,5 +366,19 @@ public class Fragment_historial_precios extends Fragment {
         if(!mProductosList.isEmpty()){
             locales.setVisibility(View.VISIBLE);
         } else {locales.setVisibility(View.INVISIBLE);}
+
+        adapter_productos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int posicion = RecycleProductos.getChildAdapterPosition(v);
+                try {
+                    buscarProducto(posicion);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }
