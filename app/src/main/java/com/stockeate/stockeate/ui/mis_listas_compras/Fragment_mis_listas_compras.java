@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.stockeate.stockeate.Adapter.Adapter_categorizacion_precios;
 import com.stockeate.stockeate.Adapter.Adapter_detalle_MIS_lista_compras;
 import com.stockeate.stockeate.Adapter.Adapter_detalle_lista_compras;
 import com.stockeate.stockeate.Adapter.Adapter_mis_listas;
@@ -244,6 +245,8 @@ public class Fragment_mis_listas_compras extends Fragment {
                         e.printStackTrace();
                     }
                 }
+                Adapter_detalle_MIS_lista_compras adapter_detalle_mis_lista_compras = new Adapter_detalle_MIS_lista_compras(mDetalleLista);
+                RecycleDetalleMisListas.setAdapter(adapter_detalle_mis_lista_compras);
             }
         });
     }
