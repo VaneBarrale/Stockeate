@@ -96,7 +96,7 @@ public class nuevo_comercio extends Fragment {
 
     private static boolean isValidCUITCUIL(String cuit) {
 
-        if (cuit.length() != 13) return false;
+        if (cuit.length() != 11) return false;
 
         boolean isValid = false;
         int result = 0;

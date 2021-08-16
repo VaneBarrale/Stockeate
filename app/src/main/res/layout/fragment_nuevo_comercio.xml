@@ -64,7 +64,7 @@
                         android:background="#053F51B5"
                         android:hint="CUIT"
                         android:inputType="number"
-                        android:maxLength="13"
+                        android:maxLength="11"
                         android:numeric="integer" />
 
                     <EditText
