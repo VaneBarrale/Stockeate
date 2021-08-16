@@ -1,5 +1,9 @@
 package com.stockeate.stockeate.ui.comparar_precios;
 
+import android.annotation.SuppressLint;
+import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -17,11 +21,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_comparar_precios;
 import com.stockeate.stockeate.clases.class_detalle_lista_compras;
@@ -46,7 +53,9 @@ public class Fragment_Comparar_Precios extends Fragment {
     private ArrayList<class_comparar_precios> mComparacionList = null;
     private ArrayAdapter<class_comparar_precios> mArrayAdapterComparar;
     private ListView listaComparacion;
+    private MaterialAlertDialogBuilder ratingDialog;
 
+    @SuppressLint("ResourceType")
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         CompararViewModel = new ViewModelProvider(this).get(ViewModel_comparar_precios.class);
         View root = inflater.inflate(R.layout.fragment_comparar_precios, container, false);
@@ -79,6 +88,7 @@ public class Fragment_Comparar_Precios extends Fragment {
         btn_volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ratingDialog.show();
                 Fragment_lista_compras lista_compras = new Fragment_lista_compras();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_comparar_precios, lista_compras);
@@ -171,6 +181,30 @@ public class Fragment_Comparar_Precios extends Fragment {
                 else{
                     Toast.makeText(getContext(), "Seleccione un local de la lista", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        final LinearLayout ratingLayout = new LinearLayout(this.getContext());
+        final RatingBar starsBar = new RatingBar(this.getContext());
+        starsBar.setRating(0);
+        starsBar.setMax(5);
+        starsBar.setStepSize(0.5F);
+        starsBar.setNumStars(5);
+        starsBar.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT));
+        ratingLayout.addView(starsBar);
+        this.ratingDialog = new MaterialAlertDialogBuilder(this.getContext());
+        this.ratingDialog.setTitle("Puntuanos");
+        this.ratingDialog.setMessage("¿Te resultaron útiles las recomendaciones?");
+        this.ratingDialog.setCancelable(false);
+        this.ratingDialog.setView(ratingLayout);
+        this.ratingDialog.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface ratingBar, int id) {
+                ratingBar.cancel(); //ACA FALTARIA AGREGAR DONDE SE GUARDARIA
+            }
+        });
+        this.ratingDialog.setNegativeButton("Salir", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface ratingBar, int id) {
+                ratingBar.cancel();
             }
         });
 
