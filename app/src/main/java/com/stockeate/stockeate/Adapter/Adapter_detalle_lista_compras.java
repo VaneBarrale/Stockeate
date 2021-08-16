@@ -19,6 +19,7 @@ public class Adapter_detalle_lista_compras extends RecyclerView.Adapter<Adapter_
 
     public Adapter_detalle_lista_compras(ArrayList<class_detalle_lista_compras> listaDetalleListaCompras) {
         this.listaDetalleListaCompras = listaDetalleListaCompras;
+
     }
 
     @Override

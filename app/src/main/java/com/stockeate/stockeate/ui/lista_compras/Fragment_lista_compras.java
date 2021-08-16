@@ -148,51 +148,6 @@ public class Fragment_lista_compras extends Fragment {
             }
         });
 
-        /*listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int i = 0, j = 0;
-
-                class_lista_compras lista_compras = new class_lista_compras();
-                class_detalle_lista_compras detalle_lista_compras = new class_detalle_lista_compras();
-
-                lista_compras.setId(String.valueOf(i++));
-                lista_compras.setId_usuario("1");
-
-                detalle_lista_compras.setId(String.valueOf(j++));
-                detalle_lista_compras.setId_lista_compras(String.valueOf(i));
-                detalle_lista_compras.setId_producto(mProductosList.get(position).getId());
-                detalle_lista_compras.setCategoria(mProductosList.get(position).getCategoria());
-                detalle_lista_compras.setMarca(mProductosList.get(position).getMarca());
-                detalle_lista_compras.setPresentacion(mProductosList.get(position).getPresentacion());
-                detalle_lista_compras.setUnidad(mProductosList.get(position).getUnidad());
-                detalle_lista_compras.setCantidad(cantidad.getText().toString());
-
-                btn_agregar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!detalle_lista_compras.getId_producto().isEmpty()) {
-                            String _cantidad = cantidad.getText().toString();
-                            if (_cantidad.equals("")) {
-                                cantidad.setError("Cantidad requerida");
-                            } else {
-                                mDetalleLista.add(detalle_lista_compras);
-                                mAdapterDetalleLista = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mDetalleLista);
-                                productos_agregados.setAdapter(mAdapterDetalleLista);
-                                Log.i("Detalle Lista", mDetalleLista.toString());
-                            }
-                        }
-                        //ESTE MENSAJE NO SALE!
-                        else {
-                            Toast.makeText(getContext(), "Seleccione un producto de la lista", Toast.LENGTH_SHORT).show();
-                        }
-                        btn_comparar.setEnabled(true);
-                        btn_guardar.setEnabled(true);
-                    }
-                });
-            }
-        });*/
-
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
