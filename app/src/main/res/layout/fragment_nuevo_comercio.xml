@@ -62,7 +62,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
                         android:background="#053F51B5"
-                        android:hint="CUIT" />
+                        android:hint="CUIT"
+                        android:inputType="number"
+                        android:maxLength="13"
+                        android:numeric="integer" />
 
                     <EditText
                         android:id="@+id/etxtDescripcion"
