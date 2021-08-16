@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,11 +90,6 @@ public class Fragment_Comparar_Precios extends Fragment {
             @Override
             public void onClick(View v) {
                 ratingDialog.show();
-                Fragment_lista_compras lista_compras = new Fragment_lista_compras();
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_comparar_precios, lista_compras);
-                transaction.addToBackStack(null);
-                transaction.commit();
             }
         });
 
@@ -192,6 +188,7 @@ public class Fragment_Comparar_Precios extends Fragment {
         starsBar.setNumStars(5);
         starsBar.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT));
         ratingLayout.addView(starsBar);
+        ratingLayout.setGravity(Gravity.CENTER);
         this.ratingDialog = new MaterialAlertDialogBuilder(this.getContext());
         this.ratingDialog.setTitle("Puntuanos");
         this.ratingDialog.setMessage("¿Te resultaron útiles las recomendaciones?");
@@ -200,11 +197,23 @@ public class Fragment_Comparar_Precios extends Fragment {
         this.ratingDialog.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface ratingBar, int id) {
                 ratingBar.cancel(); //ACA FALTARIA AGREGAR DONDE SE GUARDARIA
+
+                Fragment_lista_compras lista_compras = new Fragment_lista_compras();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_comparar_precios, lista_compras);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
         this.ratingDialog.setNegativeButton("Salir", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface ratingBar, int id) {
                 ratingBar.cancel();
+
+                Fragment_lista_compras lista_compras = new Fragment_lista_compras();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_comparar_precios, lista_compras);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 
