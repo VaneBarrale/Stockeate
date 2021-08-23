@@ -3,10 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/activity_como_llegar.xml" value="0.1" />
+        <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/activity_menu.xml" value="0.1" />
         <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/activity_registrar.xml" value="0.1" />
+        <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/fragment_agregar_promocion.xml" value="0.1" />
         <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/fragment_comparar_precios.xml" value="0.10382513661202186" />
         <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/fragment_detalle_lista_precios.xml" value="0.10382513661202186" />
         <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/fragment_detalle_mis_listas_compras.xml" value="0.1" />
+        <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/fragment_historial_precios.xml" value="0.1" />
         <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/fragment_locales.xml" value="0.10382513661202186" />
         <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/fragment_mis_listas_compras.xml" value="0.1" />
         <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/fragment_nuevo_comercio.xml" value="0.10382513661202186" />
