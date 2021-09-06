@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,6 +43,8 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private ImageButton btn_faqs, btn_salir, btn_compras, btn_reportes, btn_escanear, btn_precio, btn_promocion, btn_nuevo_comercio;
     private GoogleSignInClient mGoogleSignInClient;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
@@ -60,6 +63,9 @@ public class HomeFragment extends Fragment {
         btn_nuevo_comercio = root.findViewById(R.id.btn_nuevo_comercio);
         btn_faqs = root.findViewById(R.id.btn_FAQS);
         btn_salir = root.findViewById(R.id.btn_Salir);
+
+        preferences = this.getContext().getSharedPreferences("sesiones", Context.MODE_PRIVATE);
+        editor = preferences.edit();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -161,6 +167,9 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mGoogleSignInClient.signOut();
+                        editor.putBoolean("Sesion", false);
+                        editor.putBoolean("SesionGoogle", false);
+                        editor.commit();
                         Toast.makeText(HomeFragment.super.getContext(), "El usuario no se encuentra logueado", Toast.LENGTH_SHORT).show();
                         getActivity().finishAffinity();
                         Intent i = new Intent(getActivity(), MainActivity.class);
