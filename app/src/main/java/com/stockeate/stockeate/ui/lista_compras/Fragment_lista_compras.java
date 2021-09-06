@@ -62,6 +62,7 @@ public class Fragment_lista_compras extends Fragment {
     private ArrayList<class_producto> mProductosList;
     private ArrayList<class_detalle_lista_compras> mDetalleLista = null;
     private RecyclerView RecycleProductos, RecyclerProductosAgregados;
+    private Adapter_detalle_lista_compras adapter_detalle_lista_compras;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -89,6 +90,8 @@ public class Fragment_lista_compras extends Fragment {
         this.RecyclerProductosAgregados = root.findViewById(R.id.RecyclerProductosAgregados);
         this.RecycleProductos = root.findViewById(R.id.RecycleProductos);
 
+
+
         RecycleProductos.setLayoutManager(new LinearLayoutManager(getContext()));
         RecyclerProductosAgregados.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -98,6 +101,18 @@ public class Fragment_lista_compras extends Fragment {
         //todos los metodos que usen firebase deben ir abajo del inicializador
 
         mDetalleLista = new ArrayList<class_detalle_lista_compras>();
+
+        this.adapter_detalle_lista_compras = new Adapter_detalle_lista_compras(mDetalleLista);
+        adapter_detalle_lista_compras.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                mDetalleLista.remove(RecyclerProductosAgregados.getChildAdapterPosition(view));
+                //Adapter_detalle_lista_compras adapter_detalle_lista_compras = new Adapter_detalle_lista_compras(mDetalleLista);
+                RecyclerProductosAgregados.setAdapter(adapter_detalle_lista_compras);
+                Log.d("LONGCLICK", "Entro al LONGCLICK 2");
+                return true;
+            }
+        });
 
         btn_listas.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -287,8 +302,9 @@ public class Fragment_lista_compras extends Fragment {
                                         cantidad.setError("Cantidad requerida");
                                     } else {
                                         mDetalleLista.add(detalle_lista_compras);
-                                        Adapter_detalle_lista_compras adapter_detalle_lista_compras = new Adapter_detalle_lista_compras(mDetalleLista);
+                                        //Adapter_detalle_lista_compras adapter_detalle_lista_compras = new Adapter_detalle_lista_compras(mDetalleLista);
                                         RecyclerProductosAgregados.setAdapter(adapter_detalle_lista_compras);
+
                                         Log.i("Detalle Lista", mDetalleLista.toString());
                                     }
                                 }
@@ -420,18 +436,9 @@ public class Fragment_lista_compras extends Fragment {
                                         cantidad.setError("Cantidad requerida");
                                     } else {
                                         mDetalleLista.add(detalle_lista_compras);
-                                        Adapter_detalle_lista_compras adapter_detalle_lista_compras = new Adapter_detalle_lista_compras(mDetalleLista);
+                                        //Adapter_detalle_lista_compras adapter_detalle_lista_compras = new Adapter_detalle_lista_compras(mDetalleLista);
                                         RecyclerProductosAgregados.setAdapter(adapter_detalle_lista_compras);
-                                        adapter_detalle_lista_compras.setOnLongClickListener(new View.OnLongClickListener() {
-                                            @Override
-                                            public boolean onLongClick(View view) {
-                                                mDetalleLista.remove(RecyclerProductosAgregados.getChildAdapterPosition(view));
-                                                Adapter_detalle_lista_compras adapter_detalle_lista_compras = new Adapter_detalle_lista_compras(mDetalleLista);
-                                                RecyclerProductosAgregados.setAdapter(adapter_detalle_lista_compras);
-                                                Log.d("LONGCLICK", "Entro al LONGCLICK");
-                                                return true;
-                                            }
-                                        });
+
                                         Log.i("Detalle Lista", mDetalleLista.toString());
                                     }
                                 }
@@ -460,7 +467,7 @@ public class Fragment_lista_compras extends Fragment {
         Adapter_productos adapter_productos = new Adapter_productos(mProductosList);
         this.RecycleProductos.setAdapter(adapter_productos);
         this.mDetalleLista.clear();
-        Adapter_detalle_lista_compras adapter_detalle_lista_compras = new Adapter_detalle_lista_compras(this.mDetalleLista);
+        //Adapter_detalle_lista_compras adapter_detalle_lista_compras = new Adapter_detalle_lista_compras(this.mDetalleLista);
         this.RecyclerProductosAgregados.setAdapter(adapter_detalle_lista_compras);
     }
 }
