@@ -61,7 +61,11 @@ public class nuevo_comercio extends Fragment {
             public void onClick(View v) {
                 if (!txt_cuit.getText().toString().isEmpty()){
                     try {
-                        listarlocales(txt_cuit.getText().toString());
+                        if(isValidCUITCUIL(txt_cuit.getText().toString())){
+                            listarlocales(txt_cuit.getText().toString());
+                        }else{
+                            Toast.makeText(getContext(), "Ingrese nro CUIT válido", Toast.LENGTH_SHORT).show();
+                        }
                     }
                     catch (IOException e) {
                         e.printStackTrace();
@@ -90,7 +94,29 @@ public class nuevo_comercio extends Fragment {
         return root;
     }
 
-    private void listarlocales(String cuit) throws IOException, JSONException {
+    private static boolean isValidCUITCUIL(String cuit) {
+
+        if (cuit.length() != 11) return false;
+
+        boolean isValid = false;
+        int result = 0;
+        String cuit_nro = cuit.replace("-", "");
+        String codes = "6789456789";
+        int digitVerif = Character.getNumericValue(cuit_nro.charAt(cuit_nro.length() - 1));
+        int position = 0;
+
+        while (position < 10) {
+            int digitoValidador = Integer.parseInt(codes.substring(position, position + 1));
+            int digito = Integer.parseInt(cuit_nro.substring(position, position + 1));
+            int digitoValidacion = digitoValidador * digito;
+            result += digitoValidacion;
+            position++;
+        }
+        result = result % 11;
+        isValid = (result == digitVerif);
+        return isValid;
+    }
+        private void listarlocales(String cuit) throws IOException, JSONException {
 
         String jsonFileContent = utiles.leerJson(getContext(), "locales.json");
         JSONArray jsonArray = new JSONArray(jsonFileContent);

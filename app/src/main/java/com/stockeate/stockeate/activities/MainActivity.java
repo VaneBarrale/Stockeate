@@ -7,6 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.ConditionVariable;
+import android.os.Parcelable;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -69,9 +73,16 @@ public class MainActivity extends AppCompatActivity{
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         this.account = GoogleSignIn.getLastSignedInAccount(this);
-        //Log.w("account", account.toString());
 
-        if (revisarSesion()){
+        //Log.w("signedInAccountFromIntent", signedInAccountFromIntent.toString());
+        /*
+        if (this.account != null){
+            googleLogin();
+        }
+        */
+
+
+        if (revisarRecordar()){
             et_email.setText(preferences.getString("Email",""));
             et_password.setText(preferences.getString("Pass",""));
             recordarme.setChecked(true);
@@ -79,6 +90,38 @@ public class MainActivity extends AppCompatActivity{
             /*cambiar de lado esto*/
             /*Intent i = new Intent(MainActivity.this, Activity_Menu.class);
             startActivity(i);*/
+        }
+
+        if (revisarSesion()){
+            firebaseAuth = FirebaseAuth.getInstance();
+            if (et_email.getText().toString().isEmpty() || et_password.getText().toString().isEmpty()){
+                Toast.makeText(MainActivity.this, "eMail o Contraseña invalido", Toast.LENGTH_SHORT).show();
+            }else {
+                firebaseAuth.signInWithEmailAndPassword(et_email.getText().toString(), et_password.getText().toString())
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                                    Toast.makeText(MainActivity.this, "Se ha iniciado sesión", Toast.LENGTH_SHORT).show();
+                                    Log.w("Login Success", "signInWithEmail:Success", task.getException());
+
+                                    guardarSesion(recordarme.isChecked());
+                                    Intent login = new Intent(MainActivity.this, Activity_Menu.class);
+                                    startActivity(login);
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w("Login Failed", "signInWithEmail:failure", task.getException());
+                                    Toast.makeText(MainActivity.this, "eMail o Contraseña invalido", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
+        }
+
+
+        if(revisarSesionGoogle()){
+            googleLogin();
         }
 
         tv_registraraqui.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +143,7 @@ public class MainActivity extends AppCompatActivity{
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 firebaseAuth = FirebaseAuth.getInstance();
                 if (et_email.getText().toString().isEmpty() || et_password.getText().toString().isEmpty()){
                     Toast.makeText(MainActivity.this, "eMail o Contraseña invalido", Toast.LENGTH_SHORT).show();
@@ -124,17 +168,6 @@ public class MainActivity extends AppCompatActivity{
                                 }
                             });
                 }
-                /*verificacionInicioSesion();*/
-
-
-                /*if (recordarme.isChecked()){
-                    editor.putString("Email",et_email.getText().toString());
-                    editor.putString("Pass",et_password.getText().toString());
-                    editor.apply();
-                }*/
-                /*guardarSesion(recordarme.isChecked());*/
-
-                //cambiar esto y ponerlo dentro del if de verificacionInicioSesion()
             }
         });
 
@@ -171,7 +204,8 @@ public class MainActivity extends AppCompatActivity{
             this.account = completedTask.getResult(ApiException.class);
             Toast.makeText(MainActivity.this, "Se ha iniciado sesión", Toast.LENGTH_SHORT).show();
             Log.w("Login Success", "signInWithGoogle:Success");
-
+            editor.putBoolean("SesionGoogle", true);
+            editor.commit();
             Intent login = new Intent(MainActivity.this, Activity_Menu.class);
             //login.putExtra("GoogleSignInClient", mGoogleSignInClient.toString());
             startActivity(login);
@@ -200,14 +234,22 @@ public class MainActivity extends AppCompatActivity{
 
             editor.putString("Email",et_email.getText().toString());
             editor.putString("Pass",et_password.getText().toString());
-
+            editor.putBoolean("RememberMe", checked);
         }
         editor.putBoolean("Sesion", checked);
-        editor.apply();
+        editor.commit();
     }
 
     private boolean revisarSesion(){
         return this.preferences.getBoolean("Sesion", false);
+    }
+
+    private boolean revisarRecordar(){
+        return this.preferences.getBoolean("RememberMe", false);
+    }
+
+    private boolean revisarSesionGoogle(){
+        return this.preferences.getBoolean("SesionGoogle", false);
     }
 
 }

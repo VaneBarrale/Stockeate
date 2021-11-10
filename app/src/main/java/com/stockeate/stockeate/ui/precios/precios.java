@@ -402,6 +402,7 @@ public class precios extends Fragment {
         mProductosList.clear();
         txv_precio_actual.setText("");
         precio_nuevo.setText("");
+        local.setSelection(0);
     }
 
     private void actualizarPrecios(){
