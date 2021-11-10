@@ -7,10 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.ConditionVariable;
-import android.os.Parcelable;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -104,7 +100,6 @@ public class MainActivity extends AppCompatActivity{
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 firebaseAuth = FirebaseAuth.getInstance();
                 if (et_email.getText().toString().isEmpty() || et_password.getText().toString().isEmpty()){
                     Toast.makeText(MainActivity.this, "eMail o Contraseña invalido", Toast.LENGTH_SHORT).show();
@@ -214,6 +209,5 @@ public class MainActivity extends AppCompatActivity{
     private boolean revisarSesion(){
         return this.preferences.getBoolean("Sesion", false);
     }
-
 
 }
