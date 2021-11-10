@@ -20,6 +20,33 @@
     <string name="menu_actualizar_precios">Actualizar precios</string>
     <string name="menu_nuevo_local">Nuevo Comercio</string>
     <string name="title_activity_como_llegar">Map</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="Locales">
+        <item>Local</item>
+        <item>Hipermercado Anselmi</item>
+        <item>Careglio Hnos Castelli</item>
+        <item>El norte</item>
+        <item>Careglio Hnos Sarmiento</item>
+        <item>Pingüino</item>
+    </string-array>
+
+    <string-array name="Tipo_promocion">
+        <item>Tipo promocion</item>
+        <item>2x1</item>
+        <item>3x2</item>
+    </string-array>
+
+    <string-array name="Provincias">
+        <item>Provincias</item>
+        <item>Buenos Aires</item>
+        <item>Córdoba</item>
+    </string-array>
+
+    <string-array name="Localidades">
+        <item>Localidades</item>
+        <item>Cordoba</item>
+        <item>Mar del plata</item>
+        <item>San Francisco</item>
+    </string-array>
+
 </resources>

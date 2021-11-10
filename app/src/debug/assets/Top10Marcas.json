@@ -1,0 +1,67 @@
+[
+  { "id": "1",
+    "id_usuario": "5",
+    "top": 1,
+    "id_marca": "1",
+    "marca": "Natura"},
+  {
+    "id": "2",
+    "id_usuario": "5",
+    "top": 2,
+    "id_marca": "2",
+    "marca": "Coca-Cola"},
+  {
+    "id": "3",
+    "id_usuario": "5",
+    "top": 3,
+    "id_marca": "3",
+    "marca": "Bagley"},
+  {
+    "id": "4",
+    "id_usuario": "5",
+    "top": 4,
+    "id_marca": "4",
+    "marca": "Terrabusi"},
+  {
+    "id": "5",
+    "id_usuario": "5",
+    "top": 5,
+    "id_marca": "5",
+    "marca": "Pepsi"},
+  {
+    "id": "6",
+    "id_usuario": "5",
+    "top": 6,
+    "id_marca": "6",
+    "marca": "Savora"},
+  {
+    "id": "7",
+    "id_usuario": "5",
+    "top": 7,
+    "id_marca": "7",
+    "marca": "Andresito"},
+  {
+    "id": "8",
+    "id_usuario": "5",
+    "top": 8,
+    "id_marca": "8",
+    "marca": "Ayudin"},
+  {
+    "id": "9",
+    "id_usuario": "5",
+    "top": 9,
+    "id_marca": "9",
+    "marca": "La campañola"},
+  {
+    "id": "10",
+    "id_usuario": "5",
+    "top": 10,
+    "id_marca": "10",
+    "marca": "Arcor"},
+  {
+    "id": "11",
+    "id_usuario": "1",
+    "top": 1,
+    "id_marca": "10",
+    "marca": "Arcor"}
+]

@@ -19,9 +19,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.stockeate.stockeate.Adapter.Adapter_detalle_lista_compras;
+import com.stockeate.stockeate.Adapter.Adapter_productos;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_detalle_lista_compras;
 import com.stockeate.stockeate.clases.class_lista_compras;
@@ -55,12 +59,10 @@ public class Fragment_lista_compras extends Fragment {
     private ViewModel_lista_compras viewModelListacompras;
     private Button btn_comparar, btn_volver, btn_agregar, btn_buscar, btn_guardar, btn_listas, btn_cod_barra;
     private EditText categoria, marca, presentacion, cantidad, unidad;
-    private ListView productos_agregados;
-    private ArrayAdapter<class_producto> mArrayAdapterProducto;
-    private ArrayList<class_producto> mProductosList = null;
+    private ArrayList<class_producto> mProductosList;
     private ArrayList<class_detalle_lista_compras> mDetalleLista = null;
-    private ArrayAdapter<class_detalle_lista_compras> mAdapterDetalleLista;
-    private ListView listaResultado;
+    private RecyclerView RecycleProductos, RecyclerProductosAgregados;
+    private Adapter_detalle_lista_compras adapter_detalle_lista_compras;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -85,12 +87,32 @@ public class Fragment_lista_compras extends Fragment {
         this.presentacion = root.findViewById(R.id.etxtPresentacion);
         this.cantidad = root.findViewById(R.id.etxtCantidad);
         this.unidad = root.findViewById(R.id.etxtUnidad);
-        this.productos_agregados = root.findViewById(R.id.lista_productos_agregados);
-        this.listaResultado = root.findViewById(R.id.ListViewResultado);
+        this.RecyclerProductosAgregados = root.findViewById(R.id.RecyclerProductosAgregados);
+        this.RecycleProductos = root.findViewById(R.id.RecycleProductos);
+
+
+
+        RecycleProductos.setLayoutManager(new LinearLayoutManager(getContext()));
+        RecyclerProductosAgregados.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        btn_comparar.setEnabled(false);
+        btn_guardar.setEnabled(false);
 
         //todos los metodos que usen firebase deben ir abajo del inicializador
 
         mDetalleLista = new ArrayList<class_detalle_lista_compras>();
+
+        this.adapter_detalle_lista_compras = new Adapter_detalle_lista_compras(mDetalleLista);
+        adapter_detalle_lista_compras.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                mDetalleLista.remove(RecyclerProductosAgregados.getChildAdapterPosition(view));
+                //Adapter_detalle_lista_compras adapter_detalle_lista_compras = new Adapter_detalle_lista_compras(mDetalleLista);
+                RecyclerProductosAgregados.setAdapter(adapter_detalle_lista_compras);
+                Log.d("LONGCLICK", "Entro al LONGCLICK 2");
+                return true;
+            }
+        });
 
         btn_listas.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,7 +153,6 @@ public class Fragment_lista_compras extends Fragment {
         btn_buscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mProductosList = new ArrayList<class_producto>();
                 try {
                     listarproductos();
                 } catch (IOException e) {
@@ -139,49 +160,6 @@ public class Fragment_lista_compras extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }
-        });
-
-        listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int i = 0, j = 0;
-
-                class_lista_compras lista_compras = new class_lista_compras();
-                class_detalle_lista_compras detalle_lista_compras = new class_detalle_lista_compras();
-
-                lista_compras.setId(String.valueOf(i++));
-                lista_compras.setId_usuario("1");
-
-                detalle_lista_compras.setId(String.valueOf(j++));
-                detalle_lista_compras.setId_lista_compras(String.valueOf(i));
-                detalle_lista_compras.setId_producto(mProductosList.get(position).getId());
-                detalle_lista_compras.setCategoria(mProductosList.get(position).getCategoria());
-                detalle_lista_compras.setMarca(mProductosList.get(position).getMarca());
-                detalle_lista_compras.setPresentacion(mProductosList.get(position).getPresentacion());
-                detalle_lista_compras.setUnidad(mProductosList.get(position).getUnidad());
-                detalle_lista_compras.setCantidad(cantidad.getText().toString());
-
-                btn_agregar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!detalle_lista_compras.getId_producto().isEmpty()) {
-                            String _cantidad = cantidad.getText().toString();
-                            if (_cantidad.equals("")) {
-                                cantidad.setError("Cantidad requerida");
-                            } else {
-                                mDetalleLista.add(detalle_lista_compras);
-                                mAdapterDetalleLista = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mDetalleLista);
-                                productos_agregados.setAdapter(mAdapterDetalleLista);
-                                Log.i("Detalle Lista", mDetalleLista.toString());
-                            }
-                        }
-                        //ESTE MENSAJE NO SALE!
-                        else {
-                            Toast.makeText(getContext(), "Seleccione un producto de la lista", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
             }
         });
 
@@ -213,7 +191,7 @@ public class Fragment_lista_compras extends Fragment {
                     }
                     Toast.makeText(getContext(), "Guardado con exito", Toast.LENGTH_SHORT).show();
                     limpiarDatos();
-                    mArrayAdapterProducto.clear();
+                    //mArrayAdapterProducto.clear();
                 } else {
                     Toast.makeText(getContext(), "Agregue productos a la lista", Toast.LENGTH_SHORT).show();
                 }
@@ -224,17 +202,6 @@ public class Fragment_lista_compras extends Fragment {
             @Override
             public void onClick(View v) {
                 escanear();
-            }
-        });
-
-        productos_agregados.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                mDetalleLista.remove(position);
-                mAdapterDetalleLista = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mDetalleLista);
-                productos_agregados.setAdapter(mAdapterDetalleLista);
-                Toast.makeText(getContext(), "Producto eliminado", Toast.LENGTH_SHORT).show();
-                return true;
             }
         });
 
@@ -304,14 +271,59 @@ public class Fragment_lista_compras extends Fragment {
                 e.printStackTrace();
             }
         }
+        RecycleProductos.setVisibility(View.VISIBLE);
+        Adapter_productos adapter_productos = new Adapter_productos(mProductosList);
+        RecycleProductos.setAdapter(adapter_productos);
 
-        mProductosList.removeAll(Collections.singleton(null));
-        mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
-        listaResultado.setAdapter(mArrayAdapterProducto);
+        adapter_productos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                class_detalle_lista_compras detalle_lista_compras = new class_detalle_lista_compras();
 
+                Log.d("Detalle", "Detalle Seleccionado" + RecycleProductos.getChildAdapterPosition(v));
+
+                for (int f = 0; f < mProductosList.size(); f++) {
+                    if (f == RecycleProductos.getChildAdapterPosition(v)) {
+                        detalle_lista_compras.setId_producto(mProductosList.get(f).getId());
+                        detalle_lista_compras.setCategoria(mProductosList.get(f).getCategoria());
+                        detalle_lista_compras.setMarca(mProductosList.get(f).getMarca());
+                        detalle_lista_compras.setPresentacion(mProductosList.get(f).getPresentacion());
+                        detalle_lista_compras.setUnidad(mProductosList.get(f).getUnidad());
+                        detalle_lista_compras.setCantidad(cantidad.getText().toString());
+                        Log.d("Detalle", "Detalle " + detalle_lista_compras);
+                        Log.d("Detalle", "Detalle Size" + mProductosList.size());
+
+                        btn_agregar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (!detalle_lista_compras.getId_producto().isEmpty()) {
+                                    String _cantidad = cantidad.getText().toString();
+                                    if (_cantidad.equals("")) {
+                                        cantidad.setError("Cantidad requerida");
+                                    } else {
+                                        mDetalleLista.add(detalle_lista_compras);
+                                        //Adapter_detalle_lista_compras adapter_detalle_lista_compras = new Adapter_detalle_lista_compras(mDetalleLista);
+                                        RecyclerProductosAgregados.setAdapter(adapter_detalle_lista_compras);
+
+                                        Log.i("Detalle Lista", mDetalleLista.toString());
+                                    }
+                                }
+                                //ESTE MENSAJE NO SALE!
+                                else {
+                                    Toast.makeText(getContext(), "Seleccione un producto de la lista", Toast.LENGTH_SHORT).show();
+                                }
+                                btn_comparar.setEnabled(true);
+                                btn_guardar.setEnabled(true);
+                            }
+                        });
+                    }
+                }
+            }
+        });
     }
 
     private void listarproductos() throws IOException, JSONException {
+        mProductosList = new ArrayList<class_producto>();
         mProductosList.clear();
 
         Boolean guardar;
@@ -389,50 +401,73 @@ public class Fragment_lista_compras extends Fragment {
                     productos.setUnidad(jsonObj.getString("unidad"));
                     productos.setCodigo_barra(jsonObj.getString("codigo_barra"));
                     mProductosList.add(productos);
+                    Log.d("Productos", "Productos" + mProductosList.toString());
                 }
             }
         }
 
-        mProductosList.removeAll(Collections.singleton(null));
-        mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
-        listaResultado.setAdapter(mArrayAdapterProducto);
+        Adapter_productos adapter_productos = new Adapter_productos(mProductosList);
+        RecycleProductos.setAdapter(adapter_productos);
+
+        adapter_productos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                class_detalle_lista_compras detalle_lista_compras = new class_detalle_lista_compras();
+
+                Log.d("Detalle", "Detalle Seleccionado" + RecycleProductos.getChildAdapterPosition(v));
+
+                for (int f = 0; f < mProductosList.size(); f++) {
+                    if (f == RecycleProductos.getChildAdapterPosition(v)) {
+                        detalle_lista_compras.setId_producto(mProductosList.get(f).getId());
+                        detalle_lista_compras.setCategoria(mProductosList.get(f).getCategoria());
+                        detalle_lista_compras.setMarca(mProductosList.get(f).getMarca());
+                        detalle_lista_compras.setPresentacion(mProductosList.get(f).getPresentacion());
+                        detalle_lista_compras.setUnidad(mProductosList.get(f).getUnidad());
+                        detalle_lista_compras.setCantidad(cantidad.getText().toString());
+                        Log.d("Detalle", "Detalle " + detalle_lista_compras);
+                        Log.d("Detalle", "Detalle Size" + mProductosList.size());
+
+                        btn_agregar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (!detalle_lista_compras.getId_producto().isEmpty()) {
+                                    String _cantidad = cantidad.getText().toString();
+                                    if (_cantidad.equals("")) {
+                                        cantidad.setError("Cantidad requerida");
+                                    } else {
+                                        mDetalleLista.add(detalle_lista_compras);
+                                        //Adapter_detalle_lista_compras adapter_detalle_lista_compras = new Adapter_detalle_lista_compras(mDetalleLista);
+                                        RecyclerProductosAgregados.setAdapter(adapter_detalle_lista_compras);
+
+                                        Log.i("Detalle Lista", mDetalleLista.toString());
+                                    }
+                                }
+                                //ESTE MENSAJE NO SALE!
+                                else {
+                                    Toast.makeText(getContext(), "Seleccione un producto de la lista", Toast.LENGTH_SHORT).show();
+                                }
+                                btn_comparar.setEnabled(true);
+                                btn_guardar.setEnabled(true);
+                            }
+                        });
+                    }
+                }
+            }
+        });
+
     }
 
-    /* ESTO SERÍA SI NO LA TUVIERA EN UTILES
-    public void escribir(){
-        BufferedWriter writer = null;
-        try {
-            FileOutputStream fileOutputStream = getContext().openFileOutput("prueba.json", getContext().MODE_WORLD_READABLE);
-            String data = presentacion.getText().toString();
-            writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
-            writer.write(data);
-            writer.flush();
-            presentacion.setText("");
-            Toast.makeText(getContext(), "Escrito ok", Toast.LENGTH_SHORT).show();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (writer!=null){
-                try {
-                    writer.close();
-                } catch (IOException e) {
-                    System.err.println("Error al cerrar");
-                    e.printStackTrace();
-                }
-            }
-        }
-    }*/
-
     private void limpiarDatos() {
-        categoria.setText("");
-        marca.setText("");
-        presentacion.setText("");
-        cantidad.setText("");
-        unidad.setText("");
-        mProductosList.clear();
-        mArrayAdapterProducto.clear();
-        mAdapterDetalleLista.clear();
+        this.categoria.setText("");
+        this.marca.setText("");
+        this.presentacion.setText("");
+        this.cantidad.setText("");
+        this.unidad.setText("");
+        this.mProductosList.clear();
+        Adapter_productos adapter_productos = new Adapter_productos(mProductosList);
+        this.RecycleProductos.setAdapter(adapter_productos);
+        this.mDetalleLista.clear();
+        //Adapter_detalle_lista_compras adapter_detalle_lista_compras = new Adapter_detalle_lista_compras(this.mDetalleLista);
+        this.RecyclerProductosAgregados.setAdapter(adapter_detalle_lista_compras);
     }
 }

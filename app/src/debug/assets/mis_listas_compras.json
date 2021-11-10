@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "id_lista_compras": "1",
+    "id_usuario": "1",
+    "fecha": "01-08-2021"
+  },
+  {
+    "id": "2",
+    "id_lista_compras": "2",
+    "id_usuario": "1",
+    "fecha": "15-05-2021"
+  },
+  {
+    "id": "3",
+    "id_lista_compras": "1",
+    "id_usuario": "2",
+    "fecha": "20-06-2021"
+  }
+]

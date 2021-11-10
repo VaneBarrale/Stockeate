@@ -73,13 +73,12 @@
                 android:background="#053F51B5"
                 android:hint="Presentacion. Ejemplo 2.5" />
 
-            <EditText
-                android:id="@+id/etxtComercio"
+            <Spinner
+                android:id="@+id/sComercios"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:background="#053F51B5"
-                android:hint="Comercio. Ejemplo Hipermercado Anselmi" />
+                android:entries="@array/Locales"/>
 
             <LinearLayout
                 android:id="@+id/llhorizontallc6"
@@ -106,11 +105,21 @@
 
             </LinearLayout>
 
-            <ListView
-                android:id="@+id/ListViewResultado"
-                android:layout_width="wrap_content"
-                android:layout_height="150dp"
-                android:hint="Resultado" />
+            <TextView
+                android:id="@+id/txt_precios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@android:color/black"
+                android:textSize="17dp"
+                android:gravity="center_horizontal"
+                android:textStyle="bold"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RecycleProductos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="MissingConstraints"/>
 
             <LinearLayout
                 android:id="@+id/llhorizontallc2"

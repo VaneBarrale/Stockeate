@@ -5,18 +5,19 @@
     android:id="@+id/fragment_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    android:background="@drawable/fondo_framework">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/fondo_framework"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
-        
+
         <LinearLayout
             android:id="@+id/llhorizontal2"
-            android:layout_width="match_parent"
+            android:layout_width="358dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="70dp"
             android:orientation="horizontal"
@@ -26,19 +27,19 @@
 
             <ImageButton
                 android:id="@+id/btn_compras"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_marginLeft="30dp"
                 android:adjustViewBounds="false"
                 android:background="#053F51B5"
                 android:src="@drawable/ic_baseline_add_shopping_cart_24"
                 tools:layout_editor_absoluteX="39dp"
-                tools:layout_editor_absoluteY="175dp"/>
+                tools:layout_editor_absoluteY="175dp" />
 
             <ImageButton
                 android:id="@+id/btn_escanear"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_marginLeft="30dp"
                 android:background="#053F51B5"
                 android:src="@drawable/ic_outline_qr_code_scanner_24"
@@ -46,12 +47,12 @@
                 tools:layout_editor_absoluteY="178dp" />
 
             <ImageButton
-                android:id="@+id/btn_ubicacion"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:id="@+id/btn_reportes"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_marginLeft="30dp"
                 android:background="#053F51B5"
-                android:src="@drawable/ic_outline_location_on_24"
+                android:src="@drawable/ic_outline_assignment_24"
                 tools:layout_editor_absoluteX="278dp"
                 tools:layout_editor_absoluteY="178dp" />
 
@@ -60,7 +61,7 @@
         <LinearLayout
             android:id="@+id/llhorizontal4"
             android:layout_width="match_parent"
-            android:layout_height="81dp"
+            android:layout_height="66dp"
             android:orientation="horizontal"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="16dp">
@@ -69,7 +70,7 @@
                 android:id="@+id/txt_ListaCompras"
                 android:layout_width="92dp"
                 android:layout_height="56dp"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="25dp"
                 android:gravity="center"
                 android:text="Lista de compras"
                 android:textColor="@android:color/black"
@@ -92,12 +93,12 @@
                 tools:layout_editor_absoluteY="314dp" />
 
             <TextView
-                android:id="@+id/text_ubicacion"
+                android:id="@+id/text_reportes"
                 android:layout_width="98dp"
                 android:layout_height="51dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="25dp"
                 android:gravity="center"
-                android:text="Llegar a destino"
+                android:text="Reportes"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
                 tools:ignore="MissingConstraints"
@@ -110,7 +111,6 @@
             android:id="@+id/llhorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:orientation="horizontal"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="16dp"
@@ -119,8 +119,8 @@
 
             <ImageButton
                 android:id="@+id/btn_precio"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_marginLeft="30dp"
                 android:background="#053F51B5"
                 android:src="@drawable/ic_outline_autorenew_24"
@@ -129,8 +129,8 @@
 
             <ImageButton
                 android:id="@+id/btn_promocion"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_marginLeft="30dp"
                 android:background="#053F51B5"
                 android:src="@drawable/ic_outline_campaign_24"
@@ -139,8 +139,8 @@
 
             <ImageButton
                 android:id="@+id/btn_nuevo_comercio"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_marginLeft="30dp"
                 android:background="#053F51B5"
                 android:src="@drawable/ic_outline_add_business_24"
@@ -149,11 +149,10 @@
 
         </LinearLayout>
 
-
         <LinearLayout
             android:id="@+id/llhorizontal3"
             android:layout_width="match_parent"
-            android:layout_height="112dp"
+            android:layout_height="69dp"
             android:orientation="horizontal"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="16dp"
@@ -163,7 +162,7 @@
                 android:id="@+id/text_precio"
                 android:layout_width="98dp"
                 android:layout_height="51dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="25dp"
                 android:gravity="center"
                 android:text="Actualizar precios"
                 android:textColor="@android:color/black"
@@ -176,7 +175,7 @@
                 android:id="@+id/text_promocion"
                 android:layout_width="98dp"
                 android:layout_height="51dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="20dp"
                 android:gravity="center"
                 android:text="Promociones"
                 android:textColor="@android:color/black"
@@ -189,7 +188,7 @@
                 android:id="@+id/text_comercio"
                 android:layout_width="98dp"
                 android:layout_height="51dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="20dp"
                 android:gravity="center"
                 android:text="Agregar nuevos comercios"
                 android:textColor="@android:color/black"
@@ -200,50 +199,72 @@
 
         </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/llhorizontalsalir"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="100dp">
-
-        <ImageButton
-            android:id="@+id/btn_Salir"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="320dp"
-            android:background="#053F51B5"
-            android:src="@drawable/ic_baseline_exit_to_app_24"
-            tools:layout_editor_absoluteX="278dp"
-            tools:layout_editor_absoluteY="370dp" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llhorizontaltxtsalir"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:orientation="horizontal"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="100dp">
-
-        <TextView
-            android:id="@+id/text_salir"
+        <LinearLayout
+            android:id="@+id/llhorizontal5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="280dp"
-            android:gravity="center_horizontal"
-            android:text="Salir"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            tools:ignore="MissingConstraints"/>
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="100dp">
 
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/btn_FAQS"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginLeft="90dp"
+                android:background="#053F51B5"
+                android:src="@drawable/ic_baseline_help_outline_24"
+                tools:layout_editor_absoluteX="278dp"
+                tools:layout_editor_absoluteY="370dp" />
+
+            <ImageButton
+                android:id="@+id/btn_Salir"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginLeft="30dp"
+                android:background="#053F51B5"
+                android:src="@drawable/ic_baseline_exit_to_app_24"
+                tools:layout_editor_absoluteX="278dp"
+                tools:layout_editor_absoluteY="370dp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llhorizontaltxtsalir"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="100dp">
+
+            <TextView
+                android:id="@+id/text_faqs"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="95dp"
+                android:gravity="center_horizontal"
+                android:text="Preguntas frecuentes"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/text_salir"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="52dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Salir"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_historial_precios"
+    android:background="@drawable/fondo_framework"
+    tools:context=".ui.historial_precios.Fragment_historial_precios">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/llverticallc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <LinearLayout
+                android:id="@+id/llhorizontallc"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
+
+                <TextView
+                    android:id="@+id/txtHistorial"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    android:gravity="center"
+                    android:text="Historial precios por local"
+                    android:textColor="@android:color/black"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llverticallc1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                app:layout_editor_absoluteY="50dp"
+                tools:ignore="MissingConstraints">
+
+                <EditText
+                    android:id="@+id/etxtCodigoProducto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#053F51B5"
+                    android:hint="Codigo producto" />
+
+                <EditText
+                    android:id="@+id/etxtMarca"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:background="#053F51B5"
+                    android:hint="Marca" />
+
+                <EditText
+                    android:id="@+id/etxtPresentacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:background="#053F51B5"
+                    android:hint="Presentacion" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llhorizontallc3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
+
+                <Button
+                    android:id="@+id/btn_buscar"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:text="Buscar"
+                    app:backgroundTint="#2196F3" />
+
+                <Button
+                    android:id="@+id/btn_buscar_codigo_barra"
+                    android:layout_width="255dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="20dp"
+                    android:text="Por cod. de barra"
+                    app:backgroundTint="#2196F3" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llverticallc2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                app:layout_editor_absoluteY="50dp"
+                tools:ignore="MissingConstraints">
+
+                <Spinner
+                    android:id="@+id/sLocales"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/Locales"
+                    android:hint="Local"
+                    android:visibility="invisible" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/RecycleProductos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:ignore="MissingConstraints"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llverticallc3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                app:layout_editor_absoluteY="50dp"
+                tools:ignore="MissingConstraints">
+
+                <TextView
+                    android:id="@+id/txt_historial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="17dp"
+                    android:gravity="center_horizontal"
+                    android:textStyle="bold"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/RecycleHistorialPrecios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:ignore="MissingConstraints"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llhorizontallc2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
+
+                <Button
+                    android:id="@+id/btn_Volver"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Volver"
+                    app:backgroundTint="#2196F3" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

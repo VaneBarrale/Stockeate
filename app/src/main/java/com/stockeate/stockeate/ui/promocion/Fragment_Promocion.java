@@ -1,10 +1,13 @@
 package com.stockeate.stockeate.ui.promocion;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,19 +15,34 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.stockeate.stockeate.Adapter.Adapter_Top10Marcas;
+import com.stockeate.stockeate.Adapter.Adapter_promociones;
 import com.stockeate.stockeate.R;
+import com.stockeate.stockeate.clases.class_detalle_lista_compras;
+import com.stockeate.stockeate.clases.class_producto;
+import com.stockeate.stockeate.clases.class_promociones;
 import com.stockeate.stockeate.ui.agregar_promocion.Fragment_Agregar_Promocion;
-import com.stockeate.stockeate.ui.agregar_promocion.ViewModel_agregar_promocion;
 import com.stockeate.stockeate.ui.home.HomeFragment;
-import com.stockeate.stockeate.ui.ubicacion.ubicacion;
+import com.stockeate.stockeate.utiles.utiles;
 
-import static com.stockeate.stockeate.R.layout.fragment_promocion;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Fragment_Promocion extends Fragment {
 
     private PromocionViewModel viewModelPromocion;
-    private Button btn_volver, btn_como_llegar, btn_agregar;
+    private Button btn_volver, btn_agregar;
+    private ArrayAdapter<class_promociones> mArrayAdapterPromociones;
+    private ArrayList<class_promociones> mPromocionesList = null;
+    private RecyclerView RecyclePromociones;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewModelPromocion = new ViewModelProvider(this).get(PromocionViewModel.class);
@@ -36,8 +54,10 @@ public class Fragment_Promocion extends Fragment {
         });
 
         this.btn_volver = root.findViewById(R.id.btn_Volver);
-        this.btn_como_llegar = root.findViewById(R.id.btn_como_llegar);
         this.btn_agregar = root.findViewById(R.id.btn_Agregar);
+        this.RecyclePromociones = root.findViewById(R.id.RecyclePromocioes);
+
+        RecyclePromociones.setLayoutManager(new LinearLayoutManager(getContext()));
 
         btn_volver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,17 +65,6 @@ public class Fragment_Promocion extends Fragment {
                 HomeFragment home = new HomeFragment();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_promocion, home);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
-
-        btn_como_llegar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ubicacion ubicacion = new ubicacion();
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_promocion, ubicacion);
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
@@ -72,6 +81,36 @@ public class Fragment_Promocion extends Fragment {
             }
         });
 
+        try {
+            listarproductos();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         return root;
+    }
+
+    private void listarproductos() throws IOException, JSONException {
+
+        mPromocionesList = new ArrayList<class_promociones>();
+
+        String jsonFileContent = utiles.leerJson(getContext(), "promociones.json");
+        JSONArray jsonArray = new JSONArray(jsonFileContent);
+        for (int i = 0; i < jsonArray.length(); i++) {
+            class_promociones promociones = new class_promociones();
+            JSONObject jsonObj = jsonArray.getJSONObject(i);
+            promociones.setId(jsonObj.getString("id"));
+            promociones.setTipo_promocion(jsonObj.getString("tipo_promocion"));
+            promociones.setDesc_tipo_producto(jsonObj.getString("desc_tipo_producto"));
+            promociones.setDesc_producto(jsonObj.getString("desc_producto"));
+            promociones.setLocal(jsonObj.getString("local"));
+            mPromocionesList.add(promociones);
+        }
+
+        Adapter_promociones adapter_promociones = new Adapter_promociones(mPromocionesList);
+        RecyclePromociones.setAdapter(adapter_promociones);
+
     }
 }

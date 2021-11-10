@@ -1,0 +1,30 @@
+[
+  {
+    "id": "1",
+    "tipo_promocion": "2x1",
+    "desc_tipo_producto": "aceite",
+    "desc_producto": "Patito 2L",
+    "local": "Hipermercado Anselmi"
+  },
+  {
+    "id": "2",
+    "tipo_promocion": "2x1",
+    "desc_tipo_producto": "lavandina",
+    "desc_producto": "Ayudin 2L",
+    "local": "Hipermercado Anselmi"
+  },
+  {
+    "id": "3",
+    "tipo_promocion": "3x2",
+    "desc_tipo_producto": "lavandina",
+    "desc_producto": "Ayudin 2L",
+    "local": "Careglio Hnos Castelli"
+  },
+  {
+    "id": "4",
+    "tipo_promocion": "2x1",
+    "desc_tipo_producto": "gaseosa",
+    "desc_producto": "Manaos 3L",
+    "local": "El norte"
+  }
+]

@@ -53,7 +53,7 @@
             <ListView
                 android:id="@+id/ListViewComparacion"
                 android:layout_width="wrap_content"
-                android:layout_height="500dp"
+                android:layout_height="300dp"
                 android:hint="Resultado" />
 
         </LinearLayout>
@@ -79,6 +79,7 @@
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="20dp"
+                    android:enabled="true"
                     android:text="Como llegar"
                     app:backgroundTint="#2196F3" />
 

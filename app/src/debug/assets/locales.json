@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "id_local": "5",
+    "local": "Hipermercado Anselmi",
+    "cuit": "23366802584"
+  },
+  {
+    "id": "2",
+    "id_local": "1",
+    "local": "Careglio Hnos Castelli",
+    "cuit": "25369875241"
+  },
+  {
+    "id": "3",
+    "id_local": "2",
+    "local": "El norte",
+    "cuit": "23658745125"
+  },
+  {
+    "id": "4",
+    "id_local": "3",
+    "local": "Careglio Hnos Sarmiento",
+    "cuit": "21356841253"
+  },
+  {
+    "id": "5",
+    "id_local": "4",
+    "local": "Pingüino",
+    "cuit": "20368547582"
+  }
+]

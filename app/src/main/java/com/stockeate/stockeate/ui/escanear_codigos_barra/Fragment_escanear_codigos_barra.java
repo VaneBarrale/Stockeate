@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static com.stockeate.stockeate.R.layout.fragment_comparar_precios;
 import static com.stockeate.stockeate.R.layout.fragment_escanear_codigos_barra;
 
 public class Fragment_escanear_codigos_barra extends Fragment {
@@ -57,6 +58,8 @@ public class Fragment_escanear_codigos_barra extends Fragment {
         this.resultadoEscaneo = root.findViewById(R.id.txtResultadoEscaneo);
         this.listaResultado = root.findViewById(R.id.ListViewResultado);
         this.comprar_precios = root.findViewById(R.id.btnCompararPreciosLista);
+
+        comprar_precios.setEnabled(false);
 
         escanear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,6 +161,7 @@ public class Fragment_escanear_codigos_barra extends Fragment {
                 mProductosList.removeAll(Collections.singleton(null));
                 mArrayAdapterProducto = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mProductosList);
                 listaResultado.setAdapter(mArrayAdapterProducto);
+                comprar_precios.setEnabled(true);
             }
         }else{
             super.onActivityResult(requestCode, resultCode, data);

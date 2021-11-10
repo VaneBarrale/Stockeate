@@ -7,12 +7,11 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
@@ -43,7 +42,7 @@ public class Activity_Registrar extends AppCompatActivity {
     private class_usuarios userRegistered;
     private EditText et_email, et_password;
     private Button btn_registrar, btn_volver;
-    private ImageButton btn_gmail;
+    private ImageView btn_gmail;
     AwesomeValidation awesomeValidation;
     FirebaseAuth firebaseAuth;
     private GoogleSignInClient googleSignInClient;
@@ -59,11 +58,12 @@ public class Activity_Registrar extends AppCompatActivity {
         awesomeValidation.addValidation(this, R.id.editTextTextEmailAddress, Patterns.EMAIL_ADDRESS, R.string.invalid_mail);
         awesomeValidation.addValidation(this, R.id.login_password_editText, ".{6,}", R.string.invalid_password);
 
+
+        this.btn_gmail = findViewById(R.id.btn_Login_gmail);
         this.btn_volver = findViewById(R.id.btnVolver);
         this.et_email = findViewById(R.id.editTextTextEmailAddress);
         this.et_password = findViewById(R.id.etxtpassword);
         this.btn_registrar = findViewById(R.id.btnRegistrar);
-        this.btn_gmail = findViewById(R.id.imbGmail);
 
         setUpGoogleLogin();
 
@@ -148,8 +148,6 @@ public class Activity_Registrar extends AppCompatActivity {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             firebaseAuthWithGoogle(account);
-            //por aca no pasa 12/05
-            Log.d("Aca", "Por aca paso - Handle");
         } catch (ApiException e) {
             Log.d("Aca", "Por aca paso - catch");
             // The ApiException status code indicates the detailed failure reason.

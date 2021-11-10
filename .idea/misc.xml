@@ -1,5 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/activity_como_llegar.xml" value="0.1" />
+        <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/activity_menu.xml" value="0.1" />
+        <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/activity_registrar.xml" value="0.1" />
+        <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/fragment_agregar_promocion.xml" value="0.1" />
+        <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/fragment_comparar_precios.xml" value="0.10382513661202186" />
+        <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/fragment_detalle_lista_precios.xml" value="0.10382513661202186" />
+        <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/fragment_detalle_mis_listas_compras.xml" value="0.1" />
+        <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/fragment_historial_precios.xml" value="0.1" />
+        <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/fragment_lista_compras.xml" value="0.12568306010928962" />
+        <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/fragment_locales.xml" value="0.10382513661202186" />
+        <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/fragment_mis_listas_compras.xml" value="0.1" />
+        <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/fragment_nuevo_comercio.xml" value="0.10382513661202186" />
+        <entry key="..\:/Users/HP/Documents/Repo/Stockeate/app/src/main/res/layout/fragment_precios.xml" value="0.10382513661202186" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/ic_baseline_add_shopping_cart_24.xml" value="0.2203125" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/ic_baseline_exit_to_app_24.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/ic_baseline_help_outline_24.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.2203125" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2203125" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/ic_outline_add_24.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/ic_outline_add_business_24.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/ic_outline_assignment_24.xml" value="0.2169230769230769" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/ic_outline_campaign_24.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/ic_outline_connect_without_contact_24.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/ic_outline_format_list_numbered_24.xml" value="0.2203125" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/ic_outline_location_on_24.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/ic_outline_qr_code_scanner_24.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/ic_outline_save_24.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/ic_outline_search_24.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/informe.xml" value="0.2203125" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/marcas.xml" value="0.2203125" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/side_nav_bar.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/activity_menu.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/activity_recuperar.xml" value="0.13858695652173914" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_agregar_promocion.xml" value="0.18" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_categorias.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_comparar_precios.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_detalle_lista_precios.xml" value="0.18" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_detalle_mis_lista_compras.xml" value="0.15" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_detalle_mis_listas_compras.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_escanear_codigos_barra.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_faqs.xml" value="0.11" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_lista_compras.xml" value="0.11413043478260869" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_locales.xml" value="0.13768115942028986" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_marcas.xml" value="0.13768115942028986" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_mis_listas_compras.xml" value="0.15" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_nuevo_comercio.xml" value="0.17" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_precios.xml" value="0.13858695652173914" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_promocion.xml" value="0.13858695652173914" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_ranking.xml" value="0.15" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_reportes.xml" value="0.15" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/menu/activity_main_drawer.xml" value="0.33" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
