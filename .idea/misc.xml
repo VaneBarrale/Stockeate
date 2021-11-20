@@ -35,9 +35,10 @@
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/informe.xml" value="0.2203125" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/marcas.xml" value="0.2203125" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/drawable/side_nav_bar.xml" value="0.1" />
-        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/activity_main.xml" value="0.29541864139020535" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/activity_menu.xml" value="0.1" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/activity_recuperar.xml" value="0.13858695652173914" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/activity_registrar.xml" value="0.25" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_agregar_promocion.xml" value="0.18" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_categorias.xml" value="0.1" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_comparar_precios.xml" value="0.1" />
@@ -47,6 +48,7 @@
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_escanear_codigos_barra.xml" value="0.1" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_faqs.xml" value="0.11" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_item_top10locales.xml" value="0.1" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_lista_compras.xml" value="0.11413043478260869" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_locales.xml" value="0.13768115942028986" />
         <entry key="..\:/Users/vbarrale/AndroidStudioProjects/Stockeate/app/src/main/res/layout/fragment_marcas.xml" value="0.13768115942028986" />
