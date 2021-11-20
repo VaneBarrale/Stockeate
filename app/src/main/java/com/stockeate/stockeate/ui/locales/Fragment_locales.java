@@ -1,15 +1,11 @@
 package com.stockeate.stockeate.ui.locales;
 
-import android.media.session.MediaSession;
 import android.os.Bundle;
-import android.util.JsonToken;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,8 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -28,20 +22,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.stockeate.stockeate.Adapter.Adapter_Top10Locales;
 import com.stockeate.stockeate.R;
-import com.stockeate.stockeate.clases.class_locales;
 import com.stockeate.stockeate.ui.reportes.Fragment_reportes;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
 
 public class Fragment_locales extends Fragment {
@@ -120,29 +109,4 @@ public class Fragment_locales extends Fragment {
         };
         requestQueue.add(jsonArrayRequest);
     }
-
-
-    /*StringRequest request = new StringRequest(
-            Request.Method.GET,
-            URL_SERVIDOR,
-            new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    mTop10List = new ArrayList<class_locales>();
-                    class_locales class_locales = new class_locales();
-                    class_locales.setName(response);
-                    mTop10List.add(class_locales);
-                    Adapter_Top10Locales adapter_top10Locales = new Adapter_Top10Locales(mTop10List);
-                    recycleLocales.setAdapter(adapter_top10Locales);
-                }
-            },
-            new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getContext(), "ERROR AL CARGAR LOCALES", Toast.LENGTH_LONG).show();
-                    Log.d("Error response", "Error response " + error);
-                }
-            }
-        );
-        requestQueue.add(request);*/
 }

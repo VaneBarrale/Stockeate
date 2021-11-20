@@ -8,43 +8,37 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.firebase.auth.internal.RecaptchaActivity;
-import com.stockeate.stockeate.Adapter.Adapter_Top10Categorias;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.stockeate.stockeate.R;
-import com.stockeate.stockeate.clases.class_comparar_precios;
-import com.stockeate.stockeate.clases.class_top_10;
-import com.stockeate.stockeate.ui.comparar_precios.Fragment_Comparar_Precios;
 import com.stockeate.stockeate.ui.reportes.Fragment_reportes;
-import com.stockeate.stockeate.ui.reportes.ReportesViewModel;
-import com.stockeate.stockeate.utiles.utiles;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Fragment_categorias extends Fragment {
 
     private CategoriasViewModel categoriasViewModel;
     private Button btn_volver;
-    private RecyclerView recycleCategorias;
-    private ArrayList<class_top_10> mTop10List = null;
-    private String usuario;
+    private TextView txvCategorias;
+    RequestQueue requestQueue;
+    String URL_SERVIDOR = "https://stockeateapp.com.ar/api/categories";
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         categoriasViewModel = new ViewModelProvider(this).get(CategoriasViewModel.class);
@@ -56,16 +50,11 @@ public class Fragment_categorias extends Fragment {
         });
 
     btn_volver = root.findViewById(R.id.btn_Volver);
-    recycleCategorias = root.findViewById(R.id.RecycleCategorias);
+    txvCategorias = root.findViewById(R.id.txvCategorias);
 
-    recycleCategorias.setLayoutManager(new LinearLayoutManager(getContext()));
-        try {
-            cargarDatosTabla();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    requestQueue = Volley.newRequestQueue(getContext());
+
+    cargarDatosTabla();
 
         btn_volver.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -82,25 +71,40 @@ public class Fragment_categorias extends Fragment {
 
     }
 
-    public void cargarDatosTabla() throws IOException, JSONException {
-
-        String jsonFileContent = utiles.leerJson(getContext(), "Top10Categorias.json");
-        JSONArray jsonArray = new JSONArray(jsonFileContent);
-
-        mTop10List = new ArrayList<class_top_10>();
-
-        for (int i = 0; i < jsonArray.length(); i++) {
-            class_top_10 class_top_10 = new class_top_10();
-            JSONObject jsonObj = jsonArray.getJSONObject(i);
-            Log.d("Esta leyendo", "entro");
-            if (jsonObj.getString("id_usuario").equals("5")){
-                Log.d("Esta leyendo", "entro al if");
-                class_top_10.setTop(jsonObj.getString("top"));
-                class_top_10.setCategoria(jsonObj.getString("categoria"));
-                mTop10List.add(class_top_10);
+    public void cargarDatosTabla() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                URL_SERVIDOR,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        int size = response.length();
+                        for(int i=0; i<size; i++){
+                            try {
+                                JSONObject jsonObject = new JSONObject(response.get(i).toString());
+                                String categorias = jsonObject.getString("description");
+                                txvCategorias.append(categorias + "\n");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(), "ERROR AL CARGAR CATEGORIAS", Toast.LENGTH_LONG).show();
+                    }
                 }
-        }
-        Adapter_Top10Categorias adapter_top10Categorias = new Adapter_Top10Categorias(mTop10List);
-        recycleCategorias.setAdapter(adapter_top10Categorias);
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + "10|QzbPyRDIRDNT5dQkI5rqDV7p7WYRdOL0M8if8jcu");
+                return params;
+            }
+        };
+        requestQueue.add(jsonArrayRequest);
     }
 }
