@@ -49,11 +49,14 @@
                 android:orientation="vertical"
                 tools:ignore="MissingConstraints">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/RecycleMisListas"
+                <TextView
+                    android:id="@+id/txvPedidos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:ignore="MissingConstraints"/>
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"/>
 
             </LinearLayout>
 

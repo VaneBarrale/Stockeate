@@ -22,7 +22,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.stockeate.stockeate.Adapter.Adapter_categorizacion_precios;
 import com.stockeate.stockeate.Adapter.Adapter_detalle_MIS_lista_compras;
 import com.stockeate.stockeate.Adapter.Adapter_detalle_lista_compras;
@@ -39,15 +47,18 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Fragment_mis_listas_compras extends Fragment {
 
     private ViewModel_mis_listas_compras viewModel_mis_listas_compras;
     private Button btn_volver, btn_detalle;
-    private TextView txt_lista;
-    private ArrayList<class_lista_compras> mMisListas = null;
+    private TextView txt_lista, txvPedidos;
     private ArrayList<class_detalle_lista_compras> mDetalleLista = null;
-    private RecyclerView RecycleMisListas, RecycleDetalleMisListas;
+    private RecyclerView RecycleDetalleMisListas;
+    RequestQueue requestQueue;
+    String URL_SERVIDOR = "https://stockeateapp.com.ar/api/orders";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -61,25 +72,19 @@ public class Fragment_mis_listas_compras extends Fragment {
         });
 
         this.txt_lista = root.findViewById(R.id.txt_lista);
+        this.txvPedidos = root.findViewById(R.id.txvPedidos);
         this.btn_volver = root.findViewById(R.id.btn_Volver);
         this.btn_detalle = root.findViewById(R.id.btn_Detalle);
         this.RecycleDetalleMisListas = root.findViewById(R.id.RecycleDetalleMisListas);
-        this.RecycleMisListas = root.findViewById(R.id.RecycleMisListas);
 
-        RecycleMisListas.setLayoutManager(new LinearLayoutManager(getContext()));
+        requestQueue = Volley.newRequestQueue(getContext());
         RecycleDetalleMisListas.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mDetalleLista = new ArrayList<class_detalle_lista_compras>();
 
         btn_detalle.setEnabled(false);
 
-        try {
-            mostrarLista();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        mostrarLista();
 
         btn_volver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,46 +100,44 @@ public class Fragment_mis_listas_compras extends Fragment {
         return root;
     }
 
-    private void mostrarLista() throws IOException, JSONException {
-
-        mMisListas = new ArrayList<class_lista_compras>();
-
-        String jsonFileContent = utiles.leerJson(getContext(), "mis_listas_compras.json");
-        JSONArray jsonArray = new JSONArray(jsonFileContent);
-        Log.d("Longitud json detalle", String.valueOf(jsonArray.length()));
-        Log.d("json ", jsonArray.toString());
-        for (int i = 0; i < jsonArray.length(); i++) {
-
-            class_lista_compras class_lista_compras = new class_lista_compras();
-
-            JSONObject jsonObj = jsonArray.getJSONObject(i);
-            if (jsonObj.getString("id_usuario").equals("1")) {
-                class_lista_compras.setId(jsonObj.getString("id"));
-                class_lista_compras.setId_lista_compras(jsonObj.getString("id_lista_compras"));
-                class_lista_compras.setFecha(jsonObj.getString("fecha"));
-                mMisListas.add(class_lista_compras);
-            }
-        }
-        Adapter_mis_listas adapter_mis_listas = new Adapter_mis_listas(mMisListas);
-        RecycleMisListas.setAdapter(adapter_mis_listas);
-        btn_detalle.setEnabled(true);
-
-        adapter_mis_listas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int posicion = RecycleMisListas.getChildAdapterPosition(v);
-                try {
-                    buscarProducto(posicion);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+    private void mostrarLista() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                URL_SERVIDOR,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        int size = response.length();
+                        for(int i=0; i<size; i++){
+                            try {
+                                JSONObject jsonObject = new JSONObject(response.get(i).toString());
+                                String ordenes = jsonObject.getString("id");
+                                txvPedidos.append(ordenes + "\n");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(), "ERROR AL CARGAR MIS LISTAS", Toast.LENGTH_LONG).show();
+                    }
                 }
+        ) {//Cambiar Token usuario por uno que si tenga listas cargadas.
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + "8|jlGuCx8rjpZeh369qpWM9EDcZn1R9W5yizNWnIoe");
+                return params;
             }
-        });
+        };
+        requestQueue.add(jsonArrayRequest);
     }
 
-    public void buscarProducto(int posicion) throws IOException, JSONException {
+/*    public void buscarProducto(int posicion) throws IOException, JSONException {
         mDetalleLista = new ArrayList<class_detalle_lista_compras>();
         mDetalleLista.clear();
 
@@ -187,5 +190,5 @@ public class Fragment_mis_listas_compras extends Fragment {
                 RecycleDetalleMisListas.setAdapter(adapter_detalle_mis_lista_compras);
             }
         });
-    }
+    }*/
 }
