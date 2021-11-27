@@ -2,19 +2,28 @@ package com.stockeate.stockeate.clases;
 
 public class class_categorizacion_precios {
 
-    private String categoria, marca, presentacion, unidad, local;
+    private String categoria, marca, presentacion, unidad, local, codigoBarra;
     private float precio_total;
 
     public class_categorizacion_precios() {
     }
 
-    public class_categorizacion_precios(String categoria, String marca, String presentacion, String unidad, String local, float precio_total) {
+    public class_categorizacion_precios(String categoria, String marca, String presentacion, String unidad, String local, String codigoBarra, float precio_total) {
         this.categoria = categoria;
         this.marca = marca;
         this.presentacion = presentacion;
         this.unidad = unidad;
         this.local = local;
+        this.codigoBarra = codigoBarra;
         this.precio_total = precio_total;
+    }
+
+    public String getCodigoBarra() {
+        return codigoBarra;
+    }
+
+    public void setCodigoBarra(String codigoBarra) {
+        this.codigoBarra = codigoBarra;
     }
 
     public String getCategoria() {
@@ -67,7 +76,7 @@ public class class_categorizacion_precios {
 
     public String toString() {
         return "Categoria: " + categoria
-                + "\nDatos producto : " + marca + " " + presentacion + " " + unidad
+                + "\nDatos producto : " + marca + " " + presentacion + " " + codigoBarra
                 + "\nLocal : " + local
                 + "\nPrecio total: " + precio_total;
     }

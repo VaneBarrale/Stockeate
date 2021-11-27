@@ -73,5 +73,5 @@ public class class_producto {
 
     @Override
     public String toString() {
-        return categoria  + ' ' + marca + ' ' + presentacion + ' ' + unidad; }
+        return categoria  + ' ' + marca + ' ' + presentacion + ' ' + codigo_barra; }
 }

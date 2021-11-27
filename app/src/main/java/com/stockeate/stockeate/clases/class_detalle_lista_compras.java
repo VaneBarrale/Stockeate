@@ -4,13 +4,13 @@ import android.text.Editable;
 
 public class class_detalle_lista_compras {
 
-    private String id, id_lista_compras, id_producto, marca, presentacion, unidad, cantidad, categoria;
+    private String id, id_lista_compras, id_producto, marca, presentacion, unidad, cantidad, categoria, codigoBarra;
     private float precio;
 
     public class_detalle_lista_compras() {
     }
 
-    public class_detalle_lista_compras(String id, String id_lista_compras, String id_producto, String marca, String presentacion, String unidad, String cantidad, String categoria, float precio) {
+    public class_detalle_lista_compras(String id, String id_lista_compras, String id_producto, String marca, String presentacion, String unidad, String cantidad, String categoria, String codigoBarra, float precio) {
         this.id = id;
         this.id_lista_compras = id_lista_compras;
         this.id_producto = id_producto;
@@ -20,6 +20,15 @@ public class class_detalle_lista_compras {
         this.precio = precio;
         this.marca = marca;
         this.presentacion = presentacion;
+        this.codigoBarra = codigoBarra;
+    }
+
+    public String getCodigoBarra() {
+        return codigoBarra;
+    }
+
+    public void setCodigoBarra(String codigoBarra) {
+        this.codigoBarra = codigoBarra;
     }
 
     public String getId() {
@@ -91,6 +100,6 @@ public class class_detalle_lista_compras {
     }
 
     public String toString() {
-        return categoria  + ' ' + marca + ' ' + presentacion + ' ' + unidad + ' ' + cantidad; }
+        return categoria  + ' ' + marca + ' ' + presentacion + ' ' + codigoBarra + ' ' + cantidad; }
 
 }

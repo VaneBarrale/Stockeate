@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +20,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.stockeate.stockeate.Adapter.Adapter_Top10Marcas;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_top_10;
@@ -31,14 +40,16 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Fragment_marcas extends Fragment {
 
     private MarcasViewModel marcasViewModel;
     private Button btn_volver;
-    private ArrayList<class_top_10> mTop10List = null;
-    private ArrayAdapter<class_top_10> mArrayAdapterMarcas;
-    RecyclerView recycleMarcas;
+    TextView txvMarcas;
+    RequestQueue requestQueue;
+    String URL_SERVIDOR = "https://stockeateapp.com.ar/api/brands";
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         marcasViewModel = new ViewModelProvider(this).get(MarcasViewModel.class);
@@ -50,17 +61,11 @@ public class Fragment_marcas extends Fragment {
         });
 
         this.btn_volver = root.findViewById(R.id.btn_Volver);
-        this.recycleMarcas = root.findViewById(R.id.RecycleMarcas);
+        this.txvMarcas = root.findViewById(R.id.txvMarcas);
 
-        recycleMarcas.setLayoutManager(new LinearLayoutManager(getContext()));
+        requestQueue = Volley.newRequestQueue(getContext());
 
-        try {
-            cargarDatosTabla();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        cargarDatosTabla();
 
         btn_volver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,23 +82,41 @@ public class Fragment_marcas extends Fragment {
 
     }
 
-    public void cargarDatosTabla() throws IOException, JSONException {
+    public void cargarDatosTabla() {
 
-        String jsonFileContent = utiles.leerJson(getContext(), "Top10Marcas.json");
-        JSONArray jsonArray = new JSONArray(jsonFileContent);
-
-        mTop10List = new ArrayList<class_top_10>();
-
-        for (int i = 0; i < jsonArray.length(); i++) {
-            class_top_10 class_top_10 = new class_top_10();
-            JSONObject jsonObj = jsonArray.getJSONObject(i);
-            if (jsonObj.getString("id_usuario").equals("5")){
-                class_top_10.setTop(jsonObj.getString("top"));
-                class_top_10.setMarca(jsonObj.getString("marca"));
-                mTop10List.add(class_top_10);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                URL_SERVIDOR,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        int size = response.length();
+                        for(int i=0; i<size; i++){
+                            try {
+                                JSONObject jsonObject = new JSONObject(response.get(i).toString());
+                                String marcas = jsonObject.getString("description");
+                                txvMarcas.append(marcas + "\n");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(), "ERROR AL CARGAR MARCAS", Toast.LENGTH_LONG).show();
+                        Log.d("Error response", "Error response " + error);
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                return params;
             }
-        }
-        Adapter_Top10Marcas adapter_top10Marcas = new Adapter_Top10Marcas(mTop10List);
-        recycleMarcas.setAdapter(adapter_top10Marcas);
+        };
+        requestQueue.add(jsonArrayRequest);
     }
 }

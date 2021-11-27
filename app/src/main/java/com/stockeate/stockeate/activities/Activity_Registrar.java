@@ -11,8 +11,16 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -37,16 +45,20 @@ import com.stockeate.stockeate.clases.class_usuarios;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Hashtable;
+import java.util.Map;
+
 public class Activity_Registrar extends AppCompatActivity {
 
     private class_usuarios userRegistered;
-    private EditText et_email, et_password;
+    private EditText et_email, et_password, et_nombre, et_confirm_password;
     private Button btn_registrar, btn_volver;
     private ImageView btn_gmail;
     AwesomeValidation awesomeValidation;
     FirebaseAuth firebaseAuth;
     private GoogleSignInClient googleSignInClient;
     private static int RC_SIGN_IN = 1;
+    String URL_SERVIDOR = "https://stockeateapp.com.ar/api/register";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +75,8 @@ public class Activity_Registrar extends AppCompatActivity {
         this.btn_volver = findViewById(R.id.btnVolver);
         this.et_email = findViewById(R.id.editTextTextEmailAddress);
         this.et_password = findViewById(R.id.etxtpassword);
+        this.et_confirm_password = findViewById(R.id.etxtconfirmpassword);
+        this.et_nombre = findViewById(R.id.et_Nombre);
         this.btn_registrar = findViewById(R.id.btnRegistrar);
 
         setUpGoogleLogin();
@@ -85,10 +99,49 @@ public class Activity_Registrar extends AppCompatActivity {
         btn_registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                registrar();
 
+                /*comentado el 17/11
+                Log.d("Entro al registrar", "Entro al registrar");
+
+                String nombre = et_nombre.getText().toString();
                 String email = et_email.getText().toString();
-                String pass = et_password.getText().toString();
+                String password = et_password.getText().toString();
+                String password_confirmation = et_confirm_password.getText().toString();
 
+                Response.Listener<String> respuesta = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.d("Entro al reg Response", "Entro al registrar Response" + response);
+
+
+                        try {
+                            JSONObject jsonRespuesta = new JSONObject(response);
+                            boolean ok = jsonRespuesta.getBoolean("success");
+
+                            Log.d("Entro al try", "Entro al registrar Response" + ok);
+
+                            if (ok == true) {
+                                Intent login = new Intent(Activity_Registrar.this, MainActivity.class);
+                                startActivity(login);
+                                Activity_Registrar.this.finish();
+                            } else{
+                                AlertDialog.Builder alerta = new AlertDialog.Builder(Activity_Registrar.this);
+                                alerta.setMessage("Fallo el registro").setNegativeButton("Reintentar", null).create().show();
+                            }
+                        }catch (JSONException e){
+                            e.getMessage();
+                            Log.d("Entro al reg catch", "Entro al registrar Response" + e);
+                        }
+                    }
+                };
+
+                class_registrar registrar = new class_registrar(nombre, email, password, password_confirmation, respuesta);
+                RequestQueue cola = Volley.newRequestQueue(Activity_Registrar.this);
+                cola.add(registrar); */
+
+                /*Para firebase
                 if (awesomeValidation.validate()) {
                     firebaseAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -104,7 +157,7 @@ public class Activity_Registrar extends AppCompatActivity {
                     });
                 } else {
                     Toast.makeText(Activity_Registrar.this, "Completa todos los datos!", Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
         });
 
@@ -295,5 +348,54 @@ public class Activity_Registrar extends AppCompatActivity {
                 et_password.requestFocus();
                 break;
         }
+    }
+
+    public void registrar() {
+
+        Log.d("Entro al registrar", "Entro al Registrar");
+        StringRequest stringRequest;
+        stringRequest = new StringRequest(Request.Method.POST, URL_SERVIDOR,
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.d("Entro al registrar", "Entro al Registrar RESPONSE" + response);
+                        // En este apartado se programa lo que deseamos hacer en caso de no haber errores
+
+                        if(et_email.getText().toString().isEmpty() || et_password.getText().toString().isEmpty() || et_confirm_password.getText().toString().isEmpty() || et_nombre.getText().toString().isEmpty()) {
+                            Toast.makeText(Activity_Registrar.this, "Se deben de llenar todos los campos.", Toast.LENGTH_SHORT).show();
+                        } /*else if(et_password.getText().toString() != et_confirm_password.getText().toString()) {
+                            Toast.makeText(Activity_Registrar.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+                        } */else {
+                            Toast.makeText(Activity_Registrar.this, "Registro exitoso.", Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // En caso de tener algun error en la obtencion de los datos
+                Toast.makeText(Activity_Registrar.this, "ERROR CON LA CONEXION", Toast.LENGTH_LONG).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                // En este metodo se hace el envio de valores de la aplicacion al servidor
+                Map<String, String> parametros = new Hashtable<String, String>();
+                parametros.put("name", et_nombre.getText().toString().trim());
+                parametros.put("email", et_email.getText().toString().trim());
+                parametros.put("password", et_password.getText().toString().trim());
+                parametros.put("password_confirmation", et_confirm_password.getText().toString().trim());
+                parametros.put("device_name", "mobile");
+
+                return parametros;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(Activity_Registrar.this);
+        requestQueue.add(stringRequest);
     }
 }
