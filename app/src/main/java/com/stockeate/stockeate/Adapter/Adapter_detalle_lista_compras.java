@@ -35,7 +35,7 @@ public class Adapter_detalle_lista_compras extends RecyclerView.Adapter<Adapter_
         holder.categoria.setText(listaDetalleListaCompras.get(position).getCategoria());
         holder.marca.setText(listaDetalleListaCompras.get(position).getMarca());
         holder.presentacion.setText(listaDetalleListaCompras.get(position).getPresentacion());
-        holder.unidad.setText(listaDetalleListaCompras.get(position).getUnidad());
+        holder.codigoBarra.setText(listaDetalleListaCompras.get(position).getCodigoBarra());
         holder.cantidad.setText(listaDetalleListaCompras.get(position).getCantidad());
     }
 
@@ -61,14 +61,14 @@ public class Adapter_detalle_lista_compras extends RecyclerView.Adapter<Adapter_
 
     public class ViewHolderDetalleLista extends RecyclerView.ViewHolder {
 
-        TextView categoria, marca, presentacion, unidad, cantidad;
+        TextView categoria, marca, presentacion, codigoBarra, cantidad;
 
         public ViewHolderDetalleLista(@NonNull View itemView) {
             super(itemView);
             categoria=itemView.findViewById(R.id.Categoria);
             marca=itemView.findViewById(R.id.Marca);
             presentacion=itemView.findViewById(R.id.Presentacion);
-            unidad=itemView.findViewById(R.id.Unidad);
+            codigoBarra=itemView.findViewById(R.id.Codigo);
             cantidad=itemView.findViewById(R.id.Cantidad);
         }
     }

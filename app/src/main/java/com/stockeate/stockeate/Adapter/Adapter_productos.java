@@ -34,7 +34,7 @@ public class Adapter_productos extends RecyclerView.Adapter<Adapter_productos.Vi
         holder.categoria.setText(listaProductos.get(position).getCategoria());
         holder.marca.setText(listaProductos.get(position).getMarca());
         holder.presentacion.setText(listaProductos.get(position).getPresentacion());
-        holder.unidad.setText(listaProductos.get(position).getUnidad());
+        holder.codigoBarra.setText(listaProductos.get(position).getCodigo_barra());
     }
 
     @Override
@@ -55,14 +55,14 @@ public class Adapter_productos extends RecyclerView.Adapter<Adapter_productos.Vi
 
     public class ViewHolderProductos extends RecyclerView.ViewHolder {
 
-        TextView categoria, marca, presentacion, unidad;
+        TextView categoria, marca, presentacion, codigoBarra;
 
         public ViewHolderProductos(@NonNull View itemView) {
             super(itemView);
             categoria=itemView.findViewById(R.id.Categoria);
             marca=itemView.findViewById(R.id.Marca);
             presentacion=itemView.findViewById(R.id.Presentacion);
-            unidad=itemView.findViewById(R.id.Unidad);
+            codigoBarra=itemView.findViewById(R.id.Codigo);
         }
     }
 }

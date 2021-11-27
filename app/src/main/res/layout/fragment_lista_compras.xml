@@ -14,188 +14,180 @@
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
 
-    <LinearLayout
-        android:id="@+id/llverticallc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        android:orientation="vertical">
-
         <LinearLayout
-            android:id="@+id/llhorizontallc"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            tools:ignore="MissingConstraints">
-
-            <TextView
-                android:id="@+id/txtSumaProductos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:text="Tu lista de compras!"
-                android:textColor="@android:color/black"
-                android:textSize="17dp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btn_MisListas"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                app:backgroundTint="#2196F3"
-                android:text="MIS LISTAS"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llverticallc1"
+            android:id="@+id/llverticallc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:orientation="vertical"
-            app:layout_editor_absoluteY="50dp"
-            tools:ignore="MissingConstraints">
-
-            <EditText
-                android:id="@+id/etxCategoria"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Categoria. Ejemplo gaseosa"
-                android:background="#053F51B5" />
-
-            <EditText
-                android:id="@+id/etxtMarca"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:hint="Marca. Ejemplo Coca-Cola"
-                android:background="#053F51B5" />
-
-            <EditText
-                android:id="@+id/etxtPresentacion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:hint="Presentacion. Ejemplo 2.5"
-                android:background="#053F51B5" />
-
-            <EditText
-                android:id="@+id/etxtUnidad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:hint="Unidad. Ejemplo Litros"
-                android:background="#053F51B5" />
+            tools:ignore="MissingConstraints"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/llhorizontallc3"
+                android:id="@+id/llhorizontallc"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal"
                 tools:ignore="MissingConstraints">
 
-                <Button
-                    android:id="@+id/btn_BuscarCodigoBarra"
-                    android:layout_width="180dp"
+                <TextView
+                    android:id="@+id/txtSumaProductos"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="POR COD. BARRA"
-                    app:backgroundTint="#2196F3" />
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:text="Tu lista de compras!"
+                    android:textColor="@android:color/black"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
 
                 <Button
-                    android:id="@+id/btn_Buscar"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/btn_MisListas"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     app:backgroundTint="#2196F3"
-                    android:text="BUSCAR"/>
+                    android:text="MIS LISTAS"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/llverticaldl"
+                android:id="@+id/llverticallc1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:ignore="MissingConstraints"
-                android:orientation="vertical">
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical"
+                app:layout_editor_absoluteY="50dp"
+                tools:ignore="MissingConstraints">
+
+                <EditText
+                    android:id="@+id/etxCategoria"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Categoria. Ejemplo gaseosa"
+                    android:background="#053F51B5" />
+
+                <EditText
+                    android:id="@+id/etxtMarca"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:hint="Marca. Ejemplo Coca-Cola"
+                    android:background="#053F51B5" />
+
+                <EditText
+                    android:id="@+id/etxtPresentacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:hint="Presentacion. Ejemplo 2.5"
+                    android:background="#053F51B5" />
+
+                <LinearLayout
+                    android:id="@+id/llhorizontallc3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    tools:ignore="MissingConstraints">
+
+                    <Button
+                        android:id="@+id/btn_BuscarCodigoBarra"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:text="POR COD. BARRA"
+                        app:backgroundTint="#2196F3" />
+
+                    <Button
+                        android:id="@+id/btn_Buscar"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        app:backgroundTint="#2196F3"
+                        android:text="BUSCAR"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llverticaldl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:ignore="MissingConstraints"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/RecycleProductos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginStart="20dp"
+                        tools:ignore="MissingConstraints"/>
+
+                    <EditText
+                        android:id="@+id/etxtCantidad"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:hint="Cantidad"
+                        android:background="#053F51B5" />
+
+                    <Button
+                        android:id="@+id/btn_Agregar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        app:backgroundTint="#2196F3"
+                        android:text="AGREGAR"/>
+
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/RecycleProductos"
+                    android:id="@+id/RecyclerProductosAgregados"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
                     android:layout_marginStart="20dp"
                     tools:ignore="MissingConstraints"/>
 
-                <EditText
-                    android:id="@+id/etxtCantidad"
+                <LinearLayout
+                    android:id="@+id/llhorizontallc2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginTop="20dp"
-                    android:hint="Cantidad"
-                    android:background="#053F51B5" />
+                    android:orientation="horizontal"
+                    tools:ignore="MissingConstraints">
 
-                <Button
-                    android:id="@+id/btn_Agregar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    app:backgroundTint="#2196F3"
-                    android:text="AGREGAR"/>
+                    <Button
+                        android:id="@+id/btn_Volver"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        app:backgroundTint="#2196F3"
+                        android:text="Volver"/>
 
-            </LinearLayout>
+                    <Button
+                        android:id="@+id/btn_Guardar"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:enabled="true"
+                        app:backgroundTint="#2196F3"
+                        android:text="Guardar"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/RecyclerProductosAgregados"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
-                tools:ignore="MissingConstraints"/>
+                    <Button
+                        android:id="@+id/btn_Comparar"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:enabled="true"
+                        app:backgroundTint="#2196F3"
+                        android:text="Comparar"/>
 
-            <LinearLayout
-                android:id="@+id/llhorizontallc2"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"
-                tools:ignore="MissingConstraints">
-
-                <Button
-                    android:id="@+id/btn_Volver"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:backgroundTint="#2196F3"
-                    android:text="Volver"/>
-
-                <Button
-                    android:id="@+id/btn_Guardar"
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:enabled="true"
-                    app:backgroundTint="#2196F3"
-                    android:text="Guardar"/>
-
-                <Button
-                    android:id="@+id/btn_Comparar"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:enabled="true"
-                    app:backgroundTint="#2196F3"
-                    android:text="Comparar"/>
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
 
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

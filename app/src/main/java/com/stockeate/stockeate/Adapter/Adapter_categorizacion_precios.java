@@ -33,7 +33,7 @@ public class Adapter_categorizacion_precios extends RecyclerView.Adapter<Adapter
         holder.categoria.setText(listaCategorizacionPrecios.get(position).getCategoria());
         holder.marca.setText(listaCategorizacionPrecios.get(position).getMarca());
         holder.presentacion.setText(listaCategorizacionPrecios.get(position).getPresentacion());
-        holder.unidad.setText(listaCategorizacionPrecios.get(position).getUnidad());
+        holder.codigoBarra.setText(listaCategorizacionPrecios.get(position).getCodigoBarra());
         holder.local.setText(listaCategorizacionPrecios.get(position).getLocal());
         holder.precio.setText((String.valueOf(listaCategorizacionPrecios.get(position).getPrecio_total())));
     }
@@ -56,14 +56,14 @@ public class Adapter_categorizacion_precios extends RecyclerView.Adapter<Adapter
 
     public class ViewHolderCategorizacionPrecios extends RecyclerView.ViewHolder {
 
-        TextView categoria, marca, presentacion, unidad, local, precio;
+        TextView categoria, marca, presentacion, codigoBarra, local, precio;
 
         public ViewHolderCategorizacionPrecios(@NonNull View itemView) {
             super(itemView);
             categoria=itemView.findViewById(R.id.Categoria);
             marca=itemView.findViewById(R.id.Marca);
             presentacion=itemView.findViewById(R.id.Presentacion);
-            unidad=itemView.findViewById(R.id.Unidad);
+            codigoBarra=itemView.findViewById(R.id.Codigo);
             local=itemView.findViewById(R.id.Local);
             precio=itemView.findViewById(R.id.Precio);
         }
