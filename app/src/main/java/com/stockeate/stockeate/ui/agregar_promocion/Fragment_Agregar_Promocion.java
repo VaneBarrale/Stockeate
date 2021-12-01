@@ -21,6 +21,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.stockeate.stockeate.Adapter.Adapter_mis_listas;
@@ -40,6 +47,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Fragment_Agregar_Promocion extends Fragment {
 
@@ -47,9 +56,10 @@ public class Fragment_Agregar_Promocion extends Fragment {
     private Button btn_volver, btn_buscar, btn_buscar_codigo_barra, btn_agregar;
     private EditText categoria, marca, presentacion, cantidad;
     private Spinner comercio, promociones;
-    private ArrayList<class_producto> mProductosList = null;
+    private ArrayList<class_producto> mProductosList;
     private RecyclerView RecycleProductos;
-    private CheckBox checkbox;
+    RequestQueue requestQueue;
+    String URL_SERVIDOR = "https://stockeateapp.com.ar/api/products";
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         AgregarPromocionViewModel = new ViewModelProvider(this).get(ViewModel_agregar_promocion.class);
@@ -65,7 +75,6 @@ public class Fragment_Agregar_Promocion extends Fragment {
         this.btn_buscar_codigo_barra = root.findViewById(R.id.btn_buscar_codigo_barra);
         this.btn_agregar = root.findViewById(R.id.btn_agregar_promocion);
         this.RecycleProductos = root.findViewById(R.id.RecycleProductos);
-        this.checkbox = root.findViewById(R.id.checkbox);
         this.categoria = root.findViewById(R.id.etxtCodigoProducto);
         this.marca = root.findViewById(R.id.etxtMarca);
         this.presentacion = root.findViewById(R.id.etxtPresentacion);
@@ -73,7 +82,9 @@ public class Fragment_Agregar_Promocion extends Fragment {
         this.comercio = root.findViewById(R.id.sComercios);
         this.promociones = root.findViewById(R.id.sPromociones);
 
+        mProductosList = new ArrayList<class_producto>();
         RecycleProductos.setLayoutManager(new LinearLayoutManager(getContext()));
+        requestQueue = Volley.newRequestQueue(getContext());
 
         comercio.setVisibility(View.INVISIBLE);
         promociones.setVisibility(View.INVISIBLE);
@@ -93,7 +104,6 @@ public class Fragment_Agregar_Promocion extends Fragment {
         btn_buscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mProductosList = new ArrayList<class_producto>();
                 try {
                     listarproductos();
                 } catch (IOException e) {
@@ -138,95 +148,100 @@ public class Fragment_Agregar_Promocion extends Fragment {
 
     private void listarproductos() throws IOException, JSONException {
         mProductosList.clear();
-
-        Boolean guardar;
-
-        //Asi lee los datos del json estatico
-        String jsonFileContent = utiles.leerJson(getContext(), "productos.json");
-        JSONArray jsonArray = new JSONArray(jsonFileContent);
-        Log.d("Longitud json ", String.valueOf(jsonArray.length()));
-        Log.d("json ", jsonArray.toString());
-        for (int i = 0; i < jsonArray.length(); i++) {
-            class_producto productos = new class_producto();
-            Log.d("dentro del for ", String.valueOf(i));
-            JSONObject jsonObj = jsonArray.getJSONObject(i);
-
-            guardar = true;
-
-            if (!categoria.getText().toString().isEmpty() ||
-                    !marca.getText().toString().isEmpty() ||
-                    !presentacion.getText().toString().isEmpty()){
-                if (!categoria.getText().toString().isEmpty()) {
-                    if (jsonObj.getString("categoria").equals(categoria.getText().toString())) {
-                        if (guardar) {
-                            guardar = true;
-                        } else {
-                            guardar = false;
-                        }
-                        ;
-                    } else {
-                        guardar = false;
-                    }
-                }
-                if (!marca.getText().toString().isEmpty()) {
-                    if (jsonObj.getString("marca").equals(marca.getText().toString())) {
-                        if (guardar) {
-                            guardar = true;
-                        } else {
-                            guardar = false;
-                        }
-                        ;
-                    } else {
-                        guardar = false;
-                    }
-                }
-                if (!presentacion.getText().toString().isEmpty()) {
-                    if (jsonObj.getString("presentacion").equals(presentacion.getText().toString())) {
-                        if (guardar) {
-                            guardar = true;
-                        } else {
-                            guardar = false;
-                        }
-                        ;
-                    } else {
-                        guardar = false;
-                    }
-                }
-                if (guardar) {
-                    productos.setId(jsonObj.getString("id"));
-                    productos.setCategoria(jsonObj.getString("categoria"));
-                    productos.setMarca(jsonObj.getString("marca"));
-                    productos.setPresentacion(jsonObj.getString("presentacion"));
-                    productos.setUnidad(jsonObj.getString("unidad"));
-                    productos.setCodigo_barra(jsonObj.getString("codigo_barra"));
-                    mProductosList.add(productos);
-                }
-            }
-        }
-        RecycleProductos.setVisibility(View.VISIBLE);
-        Adapter_productos adapter_productos = new Adapter_productos(mProductosList);
-        RecycleProductos.setAdapter(adapter_productos);
-        comercio.setVisibility(View.VISIBLE);
-        promociones.setVisibility(View.VISIBLE);
-
-        adapter_productos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btn_agregar.setEnabled(true);
-
-                btn_agregar.setOnClickListener(new View.OnClickListener() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                URL_SERVIDOR,
+                null,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onClick(View v) {
-                        if ((cantidad.getText().toString()).equals("") || (comercio.getSelectedItem().toString().equals("Local")) || promociones.getSelectedItem().toString().equals("Tipo promocion")) {
-                            Toast.makeText(getContext(), "Complete cantidad, tipo promocion y/o comercio", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getContext(), "Promoción agregada con éxito", Toast.LENGTH_SHORT).show();
-                            limpiarDatos();
+                    public void onResponse(JSONArray response) {
+                        class_producto productos = new class_producto();
+                        int size = response.length();
+                        for(int i=0; i<size; i++){
+                            try {
+                                JSONObject jsonObject = new JSONObject(response.get(i).toString());
+                                String category = jsonObject.getString("name");
+                                String brand = jsonObject.getString("brand");
+                                String presentation = jsonObject.getString("presentation");
+                                String code = jsonObject.getString("code");
+                                if (!categoria.getText().toString().isEmpty() ||
+                                        !marca.getText().toString().isEmpty() ||
+                                        !presentacion.getText().toString().isEmpty()) {
+                                    if (!categoria.getText().toString().isEmpty()) {
+                                        if (category.equals(categoria.getText().toString())) {
+                                            productos.setCategoria(category);
+                                            productos.setMarca(brand);
+                                            productos.setPresentacion(presentation);
+                                            productos.setCodigo_barra(code);
+                                            mProductosList.add(productos);
+                                        }
+                                    }
+                                    if (!marca.getText().toString().isEmpty()) {
+                                        if (brand.equals(marca.getText().toString())) {
+                                            productos.setCategoria(category);
+                                            productos.setMarca(brand);
+                                            productos.setPresentacion(presentation);
+                                            productos.setCodigo_barra(code);
+                                            mProductosList.add(productos);
+                                        }
+                                    }
+                                    if (!presentacion.getText().toString().isEmpty()) {
+                                        if (presentation.equals(presentacion.getText().toString())) {
+                                            productos.setCategoria(category);
+                                            productos.setMarca(brand);
+                                            productos.setPresentacion(presentation);
+                                            productos.setCodigo_barra(code);
+                                            mProductosList.add(productos);
+                                        }
+                                    }
+                                }
+                            }
+                            catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
+
+                        Adapter_productos adapter_productos = new Adapter_productos(mProductosList);
+                        RecycleProductos.setAdapter(adapter_productos);
+                        RecycleProductos.setVisibility(View.VISIBLE);
+                        comercio.setVisibility(View.VISIBLE);
+                        promociones.setVisibility(View.VISIBLE);
+
+                        adapter_productos.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                btn_agregar.setEnabled(true);
+
+                                btn_agregar.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        if ((cantidad.getText().toString()).equals("") || (comercio.getSelectedItem().toString().equals("Local")) || promociones.getSelectedItem().toString().equals("Tipo promocion")) {
+                                            Toast.makeText(getContext(), "Complete cantidad, tipo promocion y/o comercio", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(getContext(), "Promoción agregada con éxito", Toast.LENGTH_SHORT).show();
+                                            limpiarDatos();
+                                        }
+                                    }
+                                });
+                            }
+                        });
                     }
-                });
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(), "ERROR AL CARGAR PRODUCTOS", Toast.LENGTH_LONG).show();
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + "10|QzbPyRDIRDNT5dQkI5rqDV7p7WYRdOL0M8if8jcu");
+                return params;
             }
-        });
+        };
+        requestQueue.add(jsonArrayRequest);
     }
 
     public void escanear(){
@@ -241,60 +256,57 @@ public class Fragment_Agregar_Promocion extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
-        String resultadoEscaneo = null;
-        boolean guardar;
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         Toast.makeText(getContext(), result.getContents(), Toast.LENGTH_SHORT).show();
-        resultadoEscaneo = (result.getContents());
 
-        Log.d("Resultado escaneo ", "Resultado " + resultadoEscaneo);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                URL_SERVIDOR,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        class_producto productos = new class_producto();
+                        int size = response.length();
+                        for(int i=0; i<size; i++){
+                            try {
+                                JSONObject jsonObject = new JSONObject(response.get(i).toString());
+                                String code = jsonObject.getString("code");
+                                if (code.equals((result.getContents()))) {
+                                    productos.setCategoria(jsonObject.getString("name"));
+                                    productos.setMarca(jsonObject.getString("brand"));
+                                    productos.setPresentacion(jsonObject.getString("presentation"));
+                                    productos.setCodigo_barra(code);
+                                    mProductosList.add(productos);
+                                }
+                            } catch (JSONException e) { e.printStackTrace(); }
+                        }
+                        if (!mProductosList.isEmpty()) {
+                            RecycleProductos.setVisibility(View.VISIBLE);
+                            Adapter_productos adapter_productos = new Adapter_productos(mProductosList);
+                            RecycleProductos.setAdapter(adapter_productos);
+                        } else {
+                            Toast.makeText(getContext(), "No existen productos con ese cod. de barra", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    },
 
-        String jsonFileContent = null;
-        try {
-            jsonFileContent = utiles.leerJson(getContext(), "productos.json");
-        } catch (IOException e) {
-            e.printStackTrace(); }
-
-        JSONArray jsonArray = null;
-        try {
-            jsonArray = new JSONArray(jsonFileContent);
-        } catch (JSONException e) {
-            e.printStackTrace(); }
-
-        for (int i = 0; i < jsonArray.length(); i++) {
-            class_producto productos = new class_producto();
-            try {
-                JSONObject jsonObj = jsonArray.getJSONObject(i);
-                guardar = true;
-                if (jsonObj.getString("codigo_barra").equals(resultadoEscaneo)) {
-                    if (guardar) {
-                        guardar = true;
-                    } else {
-                        guardar = false;
-                    };
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getContext(), "ERROR AL CARGAR PRODUCTOS", Toast.LENGTH_LONG).show();
+                        }
+                    }
+            ) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String>  params = new HashMap<String, String>();
+                    params.put("Authorization", "Bearer " + "10|QzbPyRDIRDNT5dQkI5rqDV7p7WYRdOL0M8if8jcu");
+                    return params;
                 }
-                else {
-                    guardar = false;
-                }
-                if (guardar) {
-                    mProductosList = new ArrayList<class_producto>();
-                    productos.setId(jsonObj.getString("id"));
-                    productos.setCategoria(jsonObj.getString("categoria"));
-                    productos.setMarca(jsonObj.getString("marca"));
-                    productos.setPresentacion(jsonObj.getString("presentacion"));
-                    productos.setUnidad(jsonObj.getString("unidad"));
-                    productos.setId(jsonObj.getString("codigo_barra"));
-                    productos.setPrecio(jsonObj.getDouble("precio"));
-                    mProductosList.add(productos);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+            };
 
-        mProductosList.removeAll(Collections.singleton(null));
-        Adapter_productos adapter_productos = new Adapter_productos(mProductosList);
-        RecycleProductos.setAdapter(adapter_productos);
+        requestQueue.add(jsonArrayRequest);
 
     }
 
