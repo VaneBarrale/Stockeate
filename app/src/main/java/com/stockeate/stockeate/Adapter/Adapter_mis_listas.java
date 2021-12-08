@@ -15,11 +15,11 @@ import java.util.ArrayList;
 
 public class Adapter_mis_listas extends RecyclerView.Adapter<Adapter_mis_listas.ViewHolderMisListas> implements View.OnClickListener {
 
-    ArrayList<class_lista_compras> listaMisListas;
+    ArrayList<class_lista_compras> mMisListas;
     private View.OnClickListener listener;
 
-    public Adapter_mis_listas(ArrayList<class_lista_compras> listaMisListas) {
-        this.listaMisListas = listaMisListas;
+    public Adapter_mis_listas(ArrayList<class_lista_compras> mMisListas) {
+        this.mMisListas = mMisListas;
     }
 
     @Override
@@ -31,13 +31,12 @@ public class Adapter_mis_listas extends RecyclerView.Adapter<Adapter_mis_listas.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderMisListas holder, int position) {
-        holder.idLista.setText(listaMisListas.get(position).getId_lista_compras());
-        holder.fecha.setText(listaMisListas.get(position).getFecha());
+        holder.id.setText(mMisListas.get(position).getId());
     }
 
     @Override
     public int getItemCount() {
-        return listaMisListas.size();
+        return mMisListas.size();
     }
 
     public void setOnClickListener(View.OnClickListener listener){
@@ -53,12 +52,11 @@ public class Adapter_mis_listas extends RecyclerView.Adapter<Adapter_mis_listas.
 
     public class ViewHolderMisListas extends RecyclerView.ViewHolder {
 
-        TextView idLista, fecha;
+        TextView id;
 
         public ViewHolderMisListas(@NonNull View itemView) {
             super(itemView);
-            idLista=itemView.findViewById(R.id.idLista);
-            fecha=itemView.findViewById(R.id.Fecha);
+            id=itemView.findViewById(R.id.id);
         }
     }
 }

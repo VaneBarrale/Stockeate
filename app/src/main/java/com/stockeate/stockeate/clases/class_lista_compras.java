@@ -47,5 +47,5 @@ public class class_lista_compras {
 
     @Override
     public String toString() {
-        return id_lista_compras  + " Fecha: " + fecha; }
+        return id; }
 }

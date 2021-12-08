@@ -87,7 +87,6 @@ public class Fragment_lista_compras extends Fragment {
         this.RecycleProductos = root.findViewById(R.id.RecycleProductos);
         this.adapter_detalle_lista_compras = new Adapter_detalle_lista_compras(mDetalleLista);
 
-        mProductosList = new ArrayList<class_producto>();
         mDetalleLista = new ArrayList<class_detalle_lista_compras>();
         requestQueue = Volley.newRequestQueue(getContext());
         RecycleProductos.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -215,14 +214,14 @@ public class Fragment_lista_compras extends Fragment {
             new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    class_producto productos = new class_producto();
+                    mProductosList = new ArrayList<class_producto>();
                     int size = response.length();
                     for(int i=0; i<size; i++){
                         try {
                             JSONObject jsonObject = new JSONObject(response.get(i).toString());
+                            class_producto productos = new class_producto();
                             String code = jsonObject.getString("code");
                             if (code.equals((result.getContents()))) {
-                                mProductosList = new ArrayList<class_producto>();
                                 productos.setCategoria(jsonObject.getString("name"));
                                 productos.setMarca(jsonObject.getString("brand"));
                                 productos.setPresentacion(jsonObject.getString("presentation"));
@@ -301,11 +300,12 @@ public class Fragment_lista_compras extends Fragment {
             new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    class_producto productos = new class_producto();
+                    mProductosList = new ArrayList<class_producto>();
                     int size = response.length();
                     for(int i=0; i<size; i++){
                         try {
                             JSONObject jsonObject = new JSONObject(response.get(i).toString());
+                            class_producto productos = new class_producto();
                             String category = jsonObject.getString("name");
                             String brand = jsonObject.getString("brand");
                             String presentation = jsonObject.getString("presentation");
