@@ -33,6 +33,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.stockeate.stockeate.Adapter.Adapter_detalle_MIS_lista_compras;
+import com.stockeate.stockeate.Adapter.Adapter_detalle_lista_compras;
 import com.stockeate.stockeate.Adapter.Adapter_mis_listas;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_detalle_lista_compras;
@@ -162,12 +163,13 @@ public class Fragment_mis_listas_compras extends Fragment {
 
         if(!id_lista.isEmpty()){
             btn_detalle.setEnabled(true);
+            txt_lista.setText("Lista de compras " + id_lista);
         }
 
         btn_detalle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                txt_lista.setText("Lista de compras " + id_lista);
+                limpiarDatos();
                 String URL_LISTA = URL_SERVIDOR+"/"+id_lista;
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                             Request.Method.GET,
@@ -209,5 +211,11 @@ public class Fragment_mis_listas_compras extends Fragment {
                 requestQueue.add(jsonObjectRequest);
             }
         });
+    }
+
+    private void limpiarDatos() {
+        this.mDetalleLista.clear();
+        Adapter_detalle_MIS_lista_compras adapter_detalle_mis_lista_compras = new Adapter_detalle_MIS_lista_compras(mDetalleLista);
+        this.RecycleDetalleMisListas.setAdapter(adapter_detalle_mis_lista_compras);
     }
 }
