@@ -17,8 +17,16 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_locales;
+import com.stockeate.stockeate.clases.class_producto;
 import com.stockeate.stockeate.ui.home.HomeFragment;
 import com.stockeate.stockeate.utiles.utiles;
 
@@ -29,13 +37,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class nuevo_comercio extends Fragment {
 
     private NuevoComercioViewModel viewModelNuevoComercio;
     private Button btn_volver, btn_validar, btn_agregar;
-    private EditText txt_cuit, txt_Descripcion, txt_Domicilio;
-    private Spinner localidad, provincia;
+    private EditText txt_cuit, txt_Descripcion, txt_Latitud, txt_Longitud;
+    RequestQueue requestQueue;
+    String URL_SERVIDOR = "https://stockeateapp.com.ar/api/markets";
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewModelNuevoComercio = new ViewModelProvider(this).get(NuevoComercioViewModel.class);
@@ -50,28 +62,21 @@ public class nuevo_comercio extends Fragment {
         this.btn_agregar = root.findViewById(R.id.btn_agregar);
         this.txt_cuit = root.findViewById(R.id.etxtCuit);
         this.txt_Descripcion = root.findViewById(R.id.etxtDescripcion);
-        this.txt_Domicilio = root.findViewById(R.id.etxtDomicilio);
-        this.localidad = root.findViewById(R.id.sLocalidad);
-        this.provincia = root.findViewById(R.id.sProvincias);
+        this.txt_Latitud = root.findViewById(R.id.etxtLatitud);
+        this.txt_Longitud = root.findViewById(R.id.etxtLongitud);
 
+        requestQueue = Volley.newRequestQueue(getContext());
         btn_agregar.setEnabled(false);
 
         btn_validar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!txt_cuit.getText().toString().isEmpty()){
-                    try {
-                        if(isValidCUITCUIL(txt_cuit.getText().toString())){
-                            listarlocales(txt_cuit.getText().toString());
-                        }else{
-                            Toast.makeText(getContext(), "Ingrese nro CUIT válido", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    catch (JSONException e) {
-                        e.printStackTrace();
+                    if(isValidCUITCUIL(txt_cuit.getText().toString())){
+                        Toast.makeText(getContext(), "CUIT válido, no existe comercio", Toast.LENGTH_SHORT).show();
+                        validarCuitExistente(txt_cuit.getText().toString());
+                    }else{
+                        Toast.makeText(getContext(), "Ingrese nro CUIT válido", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else{
@@ -88,6 +93,17 @@ public class nuevo_comercio extends Fragment {
                 transaction.replace(R.id.fragment_nuevo_comercio, homeFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
+            }
+        });
+
+        btn_agregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ((!txt_Descripcion.getText().toString().isEmpty()) && (!txt_Latitud.getText().toString().isEmpty()) && (!txt_Longitud.getText().toString().isEmpty())) {
+                    guardarNuevoComercio();
+                } else {
+                    Toast.makeText(getContext(), "Complete todos los datos", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -116,37 +132,91 @@ public class nuevo_comercio extends Fragment {
         isValid = (result == digitVerif);
         return isValid;
     }
-        private void listarlocales(String cuit) throws IOException, JSONException {
 
-        String jsonFileContent = utiles.leerJson(getContext(), "locales.json");
-        JSONArray jsonArray = new JSONArray(jsonFileContent);
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject jsonObj = jsonArray.getJSONObject(i);
-            if (!jsonObj.getString("cuit").equals(cuit)) {
-                btn_agregar.setEnabled(true);
-                btn_agregar.setOnClickListener(new View.OnClickListener() {
+    private void validarCuitExistente(String cuit) {
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                URL_SERVIDOR,
+                null,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onClick(View v) {
-                        Log.d("Adentro del primer if", "cuit " + cuit);
-                        if ((!txt_Descripcion.getText().toString().isEmpty()) && (!txt_Domicilio.getText().toString().isEmpty())) {
-                            Toast.makeText(getContext(), "Guardado con exito", Toast.LENGTH_SHORT).show();
-                            limpiarDatos();
-                        } else {
-                            Toast.makeText(getContext(), "Complete todos los datos", Toast.LENGTH_SHORT).show();
+                    public void onResponse(JSONArray response) {
+                        int size = response.length();
+                        for(int i=0; i<size; i++){
+                            try {
+                                JSONObject jsonObject = new JSONObject(response.get(i).toString());
+                                class_locales locales = new class_locales();
+                                if (!jsonObject.getString("cuit").equals(cuit)) {
+                                    btn_agregar.setEnabled(true);
+                                }else {
+                                    btn_agregar.setEnabled(false);
+                                    Toast.makeText(getContext(), "Ya existe un local con ese CUIT", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
-                });
-            }else {
-                btn_agregar.setEnabled(false);
-                Toast.makeText(getContext(), "Ya existe un local con ese CUIT", Toast.LENGTH_SHORT).show();
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(), "ERROR AL CARGAR PRODUCTOS", Toast.LENGTH_LONG).show();
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + "11|QMuCyTS9qdS2SgEc3IlGpEQDeTzbgPVkk5E82WBZ");
+                return params;
             }
-        }
+        };
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    private void guardarNuevoComercio(){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                URL_SERVIDOR,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Toast.makeText(getContext(), "Registro exitoso.", Toast.LENGTH_LONG).show();
+                        limpiarDatos();
+                        }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(), "ERROR AL GUARDAR", Toast.LENGTH_LONG).show();
+                    }
+                })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params1 = new HashMap<String, String>();
+                params1.put("name", txt_Descripcion.getText().toString().trim());
+                params1.put("latitude", txt_Latitud.getText().toString().trim());
+                params1.put("longitude", txt_Longitud.getText().toString().trim());
+                params1.put("cuit", txt_cuit.getText().toString().trim());
+                params1.put("Authorization", "Bearer " + "11|QMuCyTS9qdS2SgEc3IlGpEQDeTzbgPVkk5E82WBZ");
+                return params1;
+            }
+        };
+        requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(jsonArrayRequest);
+
     }
 
     private void limpiarDatos() {
         txt_cuit.setText("");
         txt_Descripcion.setText("");
-        txt_Domicilio.setText("");
+        txt_Latitud.setText("");
+        txt_Longitud.setText("");
         btn_agregar.setEnabled(false);
     }
 }
