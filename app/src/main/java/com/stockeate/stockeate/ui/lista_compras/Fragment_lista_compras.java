@@ -26,12 +26,17 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.stockeate.stockeate.Adapter.Adapter_detalle_lista_compras;
 import com.stockeate.stockeate.Adapter.Adapter_productos;
 import com.stockeate.stockeate.R;
+import com.stockeate.stockeate.activities.Activity_Registrar;
 import com.stockeate.stockeate.clases.class_detalle_lista_compras;
 import com.stockeate.stockeate.clases.class_producto;
 import com.stockeate.stockeate.ui.mis_listas_compras.Fragment_mis_listas_compras;
@@ -47,6 +52,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 public class Fragment_lista_compras extends Fragment {
@@ -60,6 +66,7 @@ public class Fragment_lista_compras extends Fragment {
     private Adapter_detalle_lista_compras adapter_detalle_lista_compras;
     RequestQueue requestQueue;
     String URL_SERVIDOR = "https://stockeateapp.com.ar/api/products";
+    String URL_GUARDAR = "https://stockeateapp.com.ar/api/orders";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -87,7 +94,6 @@ public class Fragment_lista_compras extends Fragment {
         this.RecycleProductos = root.findViewById(R.id.RecycleProductos);
         this.adapter_detalle_lista_compras = new Adapter_detalle_lista_compras(mDetalleLista);
 
-        mProductosList = new ArrayList<class_producto>();
         mDetalleLista = new ArrayList<class_detalle_lista_compras>();
         requestQueue = Volley.newRequestQueue(getContext());
         RecycleProductos.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -151,31 +157,7 @@ public class Fragment_lista_compras extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!mDetalleLista.isEmpty()) {
-                    int i = 0;
-
-                    class_detalle_lista_compras detalle_lista_compras = new class_detalle_lista_compras();
-
-                    try {
-                        JSONObject json = new JSONObject();
-                        InputStream is = Fragment_lista_compras.this.getClass().getClassLoader().getResourceAsStream("assets/" + "detalle_lista_compras.json");
-
-                        json.put("id", i++);
-                        json.put("id_lista_compras", detalle_lista_compras.getId_lista_compras());
-                        json.put("id_producto", detalle_lista_compras.getId_producto());
-                        json.put("id_usuario", "1");
-                        json.put("categoria", detalle_lista_compras.getCategoria());
-                        json.put("marca", detalle_lista_compras.getMarca());
-                        json.put("presentacion", detalle_lista_compras.getPresentacion());
-                        json.put("unidad", detalle_lista_compras.getUnidad());
-                        json.put("cantidad", cantidad);
-                        Log.i("Json", json.toString());
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    Toast.makeText(getContext(), "Guardado con exito", Toast.LENGTH_SHORT).show();
-                    limpiarDatos();
-                    //mArrayAdapterProducto.clear();
+                    guardarOrdenCompra();
                 } else {
                     Toast.makeText(getContext(), "Agregue productos a la lista", Toast.LENGTH_SHORT).show();
                 }
@@ -215,14 +197,14 @@ public class Fragment_lista_compras extends Fragment {
             new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    class_producto productos = new class_producto();
+                    mProductosList = new ArrayList<class_producto>();
                     int size = response.length();
                     for(int i=0; i<size; i++){
                         try {
                             JSONObject jsonObject = new JSONObject(response.get(i).toString());
+                            class_producto productos = new class_producto();
                             String code = jsonObject.getString("code");
                             if (code.equals((result.getContents()))) {
-                                mProductosList = new ArrayList<class_producto>();
                                 productos.setCategoria(jsonObject.getString("name"));
                                 productos.setMarca(jsonObject.getString("brand"));
                                 productos.setPresentacion(jsonObject.getString("presentation"));
@@ -239,7 +221,6 @@ public class Fragment_lista_compras extends Fragment {
                         @Override
                         public void onClick(View v) {
                             class_detalle_lista_compras detalle_lista_compras = new class_detalle_lista_compras();
-
                             for (int f = 0; f < mProductosList.size(); f++) {
                                 if (f == RecycleProductos.getChildAdapterPosition(v)) {
                                     detalle_lista_compras.setId_producto(mProductosList.get(f).getId());
@@ -301,11 +282,12 @@ public class Fragment_lista_compras extends Fragment {
             new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    class_producto productos = new class_producto();
+                    mProductosList = new ArrayList<class_producto>();
                     int size = response.length();
                     for(int i=0; i<size; i++){
                         try {
                             JSONObject jsonObject = new JSONObject(response.get(i).toString());
+                            class_producto productos = new class_producto();
                             String category = jsonObject.getString("name");
                             String brand = jsonObject.getString("brand");
                             String presentation = jsonObject.getString("presentation");
@@ -354,7 +336,6 @@ public class Fragment_lista_compras extends Fragment {
                         @Override
                         public void onClick(View v) {
                             class_detalle_lista_compras detalle_lista_compras = new class_detalle_lista_compras();
-
                             for (int f = 0; f < mProductosList.size(); f++) {
                                 if (f == RecycleProductos.getChildAdapterPosition(v)) {
                                     detalle_lista_compras.setId_producto(mProductosList.get(f).getId());
@@ -400,10 +381,46 @@ public class Fragment_lista_compras extends Fragment {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String>  params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer " + "10|QzbPyRDIRDNT5dQkI5rqDV7p7WYRdOL0M8if8jcu");
+                params.put("Authorization", "Bearer " + "11|QMuCyTS9qdS2SgEc3IlGpEQDeTzbgPVkk5E82WBZ");
                 return params;
             }
         };
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    private void guardarOrdenCompra(){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+            Request.Method.GET,
+            URL_SERVIDOR,
+            null,
+            new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    if (!mDetalleLista.isEmpty() || !cantidad.getText().toString().isEmpty()) {
+                        Toast.makeText(getContext(), "Registro exitoso.", Toast.LENGTH_LONG).show();
+                        limpiarDatos();
+                    } else {
+                        Toast.makeText(getContext(), "No es posible guardar, ingrese productos y/o cantidad", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getContext(), "ERROR AL GUARDAR", Toast.LENGTH_LONG).show();
+                }
+            })
+            {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String>  params1 = new HashMap<String, String>();
+                    params1.put("quantity", String.valueOf(cantidad));
+                    params1.put("product_code", "HvEUWWqYDC");
+                    params1.put("Authorization", "Bearer " + "11|QMuCyTS9qdS2SgEc3IlGpEQDeTzbgPVkk5E82WBZ");
+                    return params1;
+                }
+            };
+        requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(jsonArrayRequest);
     }
 
@@ -416,7 +433,7 @@ public class Fragment_lista_compras extends Fragment {
         Adapter_productos adapter_productos = new Adapter_productos(mProductosList);
         this.RecycleProductos.setAdapter(adapter_productos);
         this.mDetalleLista.clear();
-        //Adapter_detalle_lista_compras adapter_detalle_lista_compras = new Adapter_detalle_lista_compras(this.mDetalleLista);
+        Adapter_detalle_lista_compras adapter_detalle_lista_compras = new Adapter_detalle_lista_compras(mDetalleLista);
         this.RecyclerProductosAgregados.setAdapter(adapter_detalle_lista_compras);
     }
 }

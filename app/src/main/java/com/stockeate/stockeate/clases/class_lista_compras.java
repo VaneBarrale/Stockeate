@@ -1,16 +1,17 @@
 package com.stockeate.stockeate.clases;
 
 public class class_lista_compras {
-    private String id, id_usuario, id_lista_compras, fecha;
+    private String id, id_usuario, id_lista_compras, fecha, id_producto;
 
     public class_lista_compras() {
     }
 
-    public class_lista_compras(String id, String id_usuario, String id_lista_compras, String fecha) {
+    public class_lista_compras(String id, String id_usuario, String id_lista_compras, String fecha, String id_producto) {
         this.id = id;
         this.id_usuario = id_usuario;
         this.id_lista_compras = id_lista_compras;
         this.fecha = fecha;
+        this.id_producto = id_producto;
     }
 
     public String getId() {
@@ -37,6 +38,14 @@ public class class_lista_compras {
         this.id_lista_compras = id_lista_compras;
     }
 
+    public String getId_producto() {
+        return id_producto;
+    }
+
+    public void setId_producto(String id_producto) {
+        this.id_producto = id_producto;
+    }
+
     public String getFecha() {
         return fecha;
     }
@@ -47,5 +56,5 @@ public class class_lista_compras {
 
     @Override
     public String toString() {
-        return id_lista_compras  + " Fecha: " + fecha; }
+        return id; }
 }

@@ -46,17 +46,16 @@
                 android:id="@+id/llverticallc1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:orientation="vertical"
                 tools:ignore="MissingConstraints">
 
-                <TextView
-                    android:id="@+id/txvPedidos"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/RecycleMisListas"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:textColor="@color/black"
-                    android:textSize="15dp"/>
+                    tools:ignore="MissingConstraints"/>
 
             </LinearLayout>
 

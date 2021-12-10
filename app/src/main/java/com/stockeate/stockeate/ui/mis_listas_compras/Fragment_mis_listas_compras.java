@@ -30,16 +30,16 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.stockeate.stockeate.Adapter.Adapter_categorizacion_precios;
 import com.stockeate.stockeate.Adapter.Adapter_detalle_MIS_lista_compras;
 import com.stockeate.stockeate.Adapter.Adapter_detalle_lista_compras;
 import com.stockeate.stockeate.Adapter.Adapter_mis_listas;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_detalle_lista_compras;
 import com.stockeate.stockeate.clases.class_lista_compras;
+import com.stockeate.stockeate.clases.class_producto;
 import com.stockeate.stockeate.ui.lista_compras.Fragment_lista_compras;
-import com.stockeate.stockeate.utiles.utiles;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,9 +54,10 @@ public class Fragment_mis_listas_compras extends Fragment {
 
     private ViewModel_mis_listas_compras viewModel_mis_listas_compras;
     private Button btn_volver, btn_detalle;
-    private TextView txt_lista, txvPedidos;
-    private ArrayList<class_detalle_lista_compras> mDetalleLista = null;
-    private RecyclerView RecycleDetalleMisListas;
+    private TextView txt_lista;
+    private ArrayList<class_detalle_lista_compras> mDetalleLista;
+    private ArrayList<class_lista_compras> mMisListas;
+    private RecyclerView RecycleDetalleMisListas, RecycleMisListas;
     RequestQueue requestQueue;
     String URL_SERVIDOR = "https://stockeateapp.com.ar/api/orders";
 
@@ -72,13 +73,14 @@ public class Fragment_mis_listas_compras extends Fragment {
         });
 
         this.txt_lista = root.findViewById(R.id.txt_lista);
-        this.txvPedidos = root.findViewById(R.id.txvPedidos);
         this.btn_volver = root.findViewById(R.id.btn_Volver);
         this.btn_detalle = root.findViewById(R.id.btn_Detalle);
         this.RecycleDetalleMisListas = root.findViewById(R.id.RecycleDetalleMisListas);
+        this.RecycleMisListas = root.findViewById(R.id.RecycleMisListas);
 
         requestQueue = Volley.newRequestQueue(getContext());
         RecycleDetalleMisListas.setLayoutManager(new LinearLayoutManager(getContext()));
+        RecycleMisListas.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mDetalleLista = new ArrayList<class_detalle_lista_compras>();
 
@@ -109,15 +111,31 @@ public class Fragment_mis_listas_compras extends Fragment {
                     @Override
                     public void onResponse(JSONArray response) {
                         int size = response.length();
-                        for(int i=0; i<size; i++){
+                        mMisListas = new ArrayList<class_lista_compras>();
+                        for(int i=0; i<size; i++) {
                             try {
+                                class_lista_compras lista_compras = new class_lista_compras();
                                 JSONObject jsonObject = new JSONObject(response.get(i).toString());
-                                String ordenes = jsonObject.getString("id");
-                                txvPedidos.append(ordenes + "\n");
+                                lista_compras.setId(jsonObject.getString("id"));
+                                mMisListas.add(lista_compras);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
+                        Adapter_mis_listas adapter_mis_listas = new Adapter_mis_listas(mMisListas);
+                        RecycleMisListas.setAdapter(adapter_mis_listas);
+
+                        adapter_mis_listas.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                int posicion = RecycleMisListas.getChildAdapterPosition(view);
+                                try {
+                                    buscarProducto(posicion);
+                                } catch (IOException | JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
                     }
                 },
                 new Response.ErrorListener() {
@@ -126,69 +144,78 @@ public class Fragment_mis_listas_compras extends Fragment {
                         Toast.makeText(getContext(), "ERROR AL CARGAR MIS LISTAS", Toast.LENGTH_LONG).show();
                     }
                 }
-        ) {//Cambiar Token usuario por uno que si tenga listas cargadas.
+        ) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String>  params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer " + "8|jlGuCx8rjpZeh369qpWM9EDcZn1R9W5yizNWnIoe");
+                params.put("Authorization", "Bearer " + "11|QMuCyTS9qdS2SgEc3IlGpEQDeTzbgPVkk5E82WBZ");
                 return params;
             }
         };
         requestQueue.add(jsonArrayRequest);
     }
 
-/*    public void buscarProducto(int posicion) throws IOException, JSONException {
+    public void buscarProducto(int posicion) throws IOException, JSONException {
         mDetalleLista = new ArrayList<class_detalle_lista_compras>();
         mDetalleLista.clear();
 
-        String id_lista = mMisListas.get(posicion).getId_lista_compras();
-        Log.d("Lista de compras", "La lista de compras es " + id_lista);
+        String id_lista = mMisListas.get(posicion).getId();
+
+        if(!id_lista.isEmpty()){
+            btn_detalle.setEnabled(true);
+            txt_lista.setText("Lista de compras " + id_lista);
+        }
+
         btn_detalle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                txt_lista.setText("Lista de compras " + id_lista);
-
-                String jsonFileContent = null;
-                try {
-                    jsonFileContent = utiles.leerJson(getContext(), "detalle_lista_compras.json");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                JSONArray jsonArray = null;
-                try {
-                    jsonArray = new JSONArray(jsonFileContent);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    class_detalle_lista_compras detalle_lista_compras = new class_detalle_lista_compras();
-                    JSONObject jsonObj = null;
-                    try {
-                        jsonObj = jsonArray.getJSONObject(i);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        if (jsonObj.getString("id_lista_compras").equals(id_lista)) {
-                            Log.i("Paso por el if", "if");
-                            detalle_lista_compras.setId(jsonObj.getString("id"));
-                            detalle_lista_compras.setId_lista_compras(jsonObj.getString("id_lista_compras"));
-                            detalle_lista_compras.setCategoria(jsonObj.getString("categoria"));
-                            detalle_lista_compras.setMarca(jsonObj.getString("marca"));
-                            detalle_lista_compras.setPresentacion(jsonObj.getString("presentacion"));
-                            detalle_lista_compras.setUnidad(jsonObj.getString("unidad"));
-                            detalle_lista_compras.setCantidad(jsonObj.getString("cantidad"));
-                            mDetalleLista.add(detalle_lista_compras);
+                limpiarDatos();
+                String URL_LISTA = URL_SERVIDOR+"/"+id_lista;
+                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                            Request.Method.GET,
+                            URL_LISTA,
+                            null,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        JSONArray jsonArray = response.getJSONArray("order_lines");
+                                        int size = response.length();
+                                        for(int i=0; i<size; i++) {
+                                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                            class_detalle_lista_compras detalle_lista_compras = new class_detalle_lista_compras();
+                                            detalle_lista_compras.setCategoria(jsonObject.getString("description"));
+                                            detalle_lista_compras.setCantidad(jsonObject.getString("quantity"));
+                                            mDetalleLista.add(detalle_lista_compras);
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                Adapter_detalle_MIS_lista_compras adapter_detalle_mis_lista_compras = new Adapter_detalle_MIS_lista_compras(mDetalleLista);
+                                RecycleDetalleMisListas.setAdapter(adapter_detalle_mis_lista_compras);
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(getContext(), "ERROR AL CARGAR PRODUCTOS", Toast.LENGTH_LONG).show(); }
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                ) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String>  params = new HashMap<String, String>();
+                        params.put("Authorization", "Bearer " + "11|QMuCyTS9qdS2SgEc3IlGpEQDeTzbgPVkk5E82WBZ");
+                        return params;
                     }
-                }
-                Adapter_detalle_MIS_lista_compras adapter_detalle_mis_lista_compras = new Adapter_detalle_MIS_lista_compras(mDetalleLista);
-                RecycleDetalleMisListas.setAdapter(adapter_detalle_mis_lista_compras);
+                };
+                requestQueue.add(jsonObjectRequest);
             }
         });
-    }*/
+    }
+
+    private void limpiarDatos() {
+        this.mDetalleLista.clear();
+        Adapter_detalle_MIS_lista_compras adapter_detalle_mis_lista_compras = new Adapter_detalle_MIS_lista_compras(mDetalleLista);
+        this.RecycleDetalleMisListas.setAdapter(adapter_detalle_mis_lista_compras);
+    }
 }
