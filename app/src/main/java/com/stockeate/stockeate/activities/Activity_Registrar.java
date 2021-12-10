@@ -351,16 +351,12 @@ public class Activity_Registrar extends AppCompatActivity {
     }
 
     public void registrar() {
-
-        Log.d("Entro al registrar", "Entro al Registrar");
         StringRequest stringRequest;
         stringRequest = new StringRequest(Request.Method.POST, URL_SERVIDOR,
                 new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String response) {
-
-                        Log.d("Entro al registrar", "Entro al Registrar RESPONSE" + response);
                         // En este apartado se programa lo que deseamos hacer en caso de no haber errores
 
                         if(et_email.getText().toString().isEmpty() || et_password.getText().toString().isEmpty() || et_confirm_password.getText().toString().isEmpty() || et_nombre.getText().toString().isEmpty()) {
