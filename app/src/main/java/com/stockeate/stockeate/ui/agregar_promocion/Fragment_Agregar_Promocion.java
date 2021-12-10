@@ -155,11 +155,12 @@ public class Fragment_Agregar_Promocion extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        class_producto productos = new class_producto();
+                        mProductosList = new ArrayList<class_producto>();
                         int size = response.length();
                         for(int i=0; i<size; i++){
                             try {
                                 JSONObject jsonObject = new JSONObject(response.get(i).toString());
+                                class_producto productos = new class_producto();
                                 String category = jsonObject.getString("name");
                                 String brand = jsonObject.getString("brand");
                                 String presentation = jsonObject.getString("presentation");
@@ -266,10 +267,11 @@ public class Fragment_Agregar_Promocion extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        class_producto productos = new class_producto();
+                        mProductosList = new ArrayList<class_producto>();
                         int size = response.length();
                         for(int i=0; i<size; i++){
                             try {
+                                class_producto productos = new class_producto();
                                 JSONObject jsonObject = new JSONObject(response.get(i).toString());
                                 String code = jsonObject.getString("code");
                                 if (code.equals((result.getContents()))) {

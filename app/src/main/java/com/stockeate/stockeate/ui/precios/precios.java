@@ -208,11 +208,12 @@ public class precios extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        class_producto productos = new class_producto();
+                        mProductosList = new ArrayList<class_producto>();
                         int size = response.length();
                         for (int i = 0; i < size; i++) {
                             try {
                                 JSONObject jsonObject = new JSONObject(response.get(i).toString());
+                                class_producto productos = new class_producto();
                                 String code = jsonObject.getString("code");
                                 if (code.equals((result.getContents()))) {
                                     mProductosList = new ArrayList<class_producto>();
@@ -268,10 +269,7 @@ public class precios extends Fragment {
     }
 
     private void listar_productos() throws IOException, JSONException {
-
-
         mProductosList.clear();
-
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
                 URL_SERVIDOR,
@@ -279,11 +277,12 @@ public class precios extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        class_producto productos = new class_producto();
+                        mProductosList = new ArrayList<class_producto>();
                         int size = response.length();
                         for(int i=0; i<size; i++){
                             try {
                                 JSONObject jsonObject = new JSONObject(response.get(i).toString());
+                                class_producto productos = new class_producto();
                                 String category = jsonObject.getString("name");
                                 String brand = jsonObject.getString("brand");
                                 String presentation = jsonObject.getString("presentation");
