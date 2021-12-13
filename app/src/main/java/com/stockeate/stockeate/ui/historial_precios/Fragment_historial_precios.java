@@ -66,6 +66,7 @@ public class Fragment_historial_precios extends Fragment {
     private ArrayList<class_historial_precios> mHistorialPrecio;
     RequestQueue requestQueue;
     String URL_SERVIDOR = "https://stockeateapp.com.ar/api/products";
+    String URL_PRECIOS = "https://stockeateapp.com.ar/api/price_history";
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         historialPreciosViewModel = new ViewModelProvider(this).get(HistorialPreciosViewModel.class);
@@ -218,7 +219,7 @@ public class Fragment_historial_precios extends Fragment {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String>  params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer " + "10|QzbPyRDIRDNT5dQkI5rqDV7p7WYRdOL0M8if8jcu");
+                params.put("Authorization", "Bearer " + "11|QMuCyTS9qdS2SgEc3IlGpEQDeTzbgPVkk5E82WBZ");
                 return params;
             }
         };
@@ -229,38 +230,63 @@ public class Fragment_historial_precios extends Fragment {
         mHistorialPrecio = new ArrayList<class_historial_precios>();
         mHistorialPrecio.clear();
 
-        String jsonFileContent = utiles.leerJson(getContext(), "HistorialPrecios.json");
-        JSONArray jsonArray = new JSONArray(jsonFileContent);
-        if(locales.getSelectedItem().toString().equals("Local")){
-            Toast.makeText(getContext(), "Seleccione un local", Toast.LENGTH_SHORT).show();
-        } else {
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObj = null;
-                jsonObj = jsonArray.getJSONObject(i);
-                if (jsonObj.getString("categoria").equals(mProductosList.get(posicion).getCategoria())
-                        && jsonObj.getString("marca").equals(mProductosList.get(posicion).getMarca())
-                        && jsonObj.getString("presentacion").equals(mProductosList.get(posicion).getPresentacion())
-                        && jsonObj.getString("unidad").equals(mProductosList.get(posicion).getUnidad())
-                        && jsonObj.getString("comercio").equals(locales.getSelectedItem().toString())) {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                URL_PRECIOS,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        if(!locales.getSelectedItem().toString().equals("Local")){
+                            int size = response.length();
+                            for(int i=0; i<size; i++) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response.get(i).toString());
+                                    if (jsonObject.getString("name").equals(mProductosList.get(posicion).getCategoria())
+                                            && jsonObject.getString("brand").equals(mProductosList.get(posicion).getMarca())
+                                            && jsonObject.getString("presentation").equals(mProductosList.get(posicion).getPresentacion())
+                                            && jsonObject.getString("market").equals(locales.getSelectedItem().toString())) {
+                                        class_historial_precios historial_precios = new class_historial_precios();
+                                        historial_precios.setCategoria(mProductosList.get(posicion).getCategoria());
+                                        historial_precios.setMarca(mProductosList.get(posicion).getMarca());
+                                        historial_precios.setPresentacion(mProductosList.get(posicion).getPresentacion());
+                                        historial_precios.setUnidad(mProductosList.get(posicion).getUnidad());
+                                        historial_precios.setComercio(locales.getSelectedItem().toString());
+                                        historial_precios.setPrecio(Float.parseFloat(jsonObject.getString("precio")));
+                                        mHistorialPrecio.add(historial_precios);
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
 
-                    class_historial_precios historial_precios = new class_historial_precios();
-                    historial_precios.setCategoria(mProductosList.get(posicion).getCategoria());
-                    historial_precios.setMarca(mProductosList.get(posicion).getMarca());
-                    historial_precios.setPresentacion(mProductosList.get(posicion).getPresentacion());
-                    historial_precios.setUnidad(mProductosList.get(posicion).getUnidad());
-                    historial_precios.setComercio(locales.getSelectedItem().toString());
-                    historial_precios.setPrecio(Float.parseFloat(jsonObj.getString("precio")));
-                    mHistorialPrecio.add(historial_precios);
-                    Log.d("Precio", "Precio " + mHistorialPrecio.toString());
+                            Adapter_historial_precios adapter_historial_precios = new Adapter_historial_precios(mHistorialPrecio);
+                            RecycleHistorialPrecios.setAdapter(adapter_historial_precios);
+                            int cantidad = adapter_historial_precios.getItemCount();
+                            if(cantidad == 0){
+                                historial.setText("No existe historial de precios para las opciones seleccioadas");
+                            } else { historial.setText("");}
+
+                        } else{
+                            Toast.makeText(getContext(), "Seleccione un local", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(), "ERROR AL CARGAR PRECIOS", Toast.LENGTH_LONG).show();
+                    }
                 }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + "11|QMuCyTS9qdS2SgEc3IlGpEQDeTzbgPVkk5E82WBZ");
+                return params;
             }
-            Adapter_historial_precios adapter_historial_precios = new Adapter_historial_precios(mHistorialPrecio);
-            RecycleHistorialPrecios.setAdapter(adapter_historial_precios);
-            int cantidad = adapter_historial_precios.getItemCount();
-            if(cantidad == 0){
-                historial.setText("No existe historial de precios para las opciones seleccioadas");
-            } else { historial.setText("");}
-        }
+        };
+        requestQueue.add(jsonArrayRequest);
     }
 
     public void escanear(){
@@ -336,7 +362,7 @@ public class Fragment_historial_precios extends Fragment {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String>  params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer " + "10|QzbPyRDIRDNT5dQkI5rqDV7p7WYRdOL0M8if8jcu");
+                params.put("Authorization", "Bearer " + "11|QMuCyTS9qdS2SgEc3IlGpEQDeTzbgPVkk5E82WBZ");
                 return params;
             }
         };
