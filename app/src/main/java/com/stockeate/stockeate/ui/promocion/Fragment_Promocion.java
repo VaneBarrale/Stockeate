@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +19,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.stockeate.stockeate.Adapter.Adapter_Top10Marcas;
 import com.stockeate.stockeate.Adapter.Adapter_promociones;
 import com.stockeate.stockeate.R;
@@ -35,6 +43,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Fragment_Promocion extends Fragment {
 
@@ -43,6 +53,8 @@ public class Fragment_Promocion extends Fragment {
     private ArrayAdapter<class_promociones> mArrayAdapterPromociones;
     private ArrayList<class_promociones> mPromocionesList = null;
     private RecyclerView RecyclePromociones;
+    RequestQueue requestQueue;
+    String URL_SERVIDOR = "https://stockeateapp.com.ar/api/promotions";
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewModelPromocion = new ViewModelProvider(this).get(PromocionViewModel.class);
@@ -58,6 +70,7 @@ public class Fragment_Promocion extends Fragment {
         this.RecyclePromociones = root.findViewById(R.id.RecyclePromocioes);
 
         RecyclePromociones.setLayoutManager(new LinearLayoutManager(getContext()));
+        requestQueue = Volley.newRequestQueue(getContext());
 
         btn_volver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,36 +94,54 @@ public class Fragment_Promocion extends Fragment {
             }
         });
 
-        try {
-            listarproductos();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        listarproductos();
 
         return root;
     }
 
-    private void listarproductos() throws IOException, JSONException {
+    private void listarproductos() {
 
-        mPromocionesList = new ArrayList<class_promociones>();
-
-        String jsonFileContent = utiles.leerJson(getContext(), "promociones.json");
-        JSONArray jsonArray = new JSONArray(jsonFileContent);
-        for (int i = 0; i < jsonArray.length(); i++) {
-            class_promociones promociones = new class_promociones();
-            JSONObject jsonObj = jsonArray.getJSONObject(i);
-            promociones.setId(jsonObj.getString("id"));
-            promociones.setTipo_promocion(jsonObj.getString("tipo_promocion"));
-            promociones.setDesc_tipo_producto(jsonObj.getString("desc_tipo_producto"));
-            promociones.setDesc_producto(jsonObj.getString("desc_producto"));
-            promociones.setLocal(jsonObj.getString("local"));
-            mPromocionesList.add(promociones);
-        }
-
-        Adapter_promociones adapter_promociones = new Adapter_promociones(mPromocionesList);
-        RecyclePromociones.setAdapter(adapter_promociones);
-
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                URL_SERVIDOR,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        mPromocionesList = new ArrayList<class_promociones>();
+                        int size = response.length();
+                        for (int i = 0; i < size; i++) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response.get(i).toString());
+                                class_promociones promociones = new class_promociones();
+                                promociones.setTipo_promocion(jsonObject.getString("type_promotion"));
+                                promociones.setCategoria(jsonObject.getString("category"));
+                                promociones.setMarca(jsonObject.getString("brand"));
+                                promociones.setPresentacion(jsonObject.getString("presentation"));
+                                promociones.setLocal(jsonObject.getString("local"));
+                                mPromocionesList.add(promociones);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        Adapter_promociones adapter_promociones = new Adapter_promociones(mPromocionesList);
+                        RecyclePromociones.setAdapter(adapter_promociones);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(), "ERROR AL CARGAR PROMOCIONES", Toast.LENGTH_LONG).show();
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + "11|QMuCyTS9qdS2SgEc3IlGpEQDeTzbgPVkk5E82WBZ");
+                return params;
+            }
+        };
+        requestQueue.add(jsonArrayRequest);
     }
 }

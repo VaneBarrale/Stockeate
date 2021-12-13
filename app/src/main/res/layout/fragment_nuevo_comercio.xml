@@ -76,26 +76,20 @@
                         android:hint="Descripcion" />
 
                     <EditText
-                        android:id="@+id/etxtDomicilio"
+                        android:id="@+id/etxtLatitud"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
                         android:background="#053F51B5"
-                        android:hint="Domicilio" />
+                        android:hint="Latitud" />
 
-                    <Spinner
-                        android:id="@+id/sProvincias"
+                    <EditText
+                        android:id="@+id/etxtLongitud"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
-                        android:entries="@array/Provincias"/>
-
-                    <Spinner
-                        android:id="@+id/sLocalidad"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="25dp"
-                        android:entries="@array/Localidades"/>
+                        android:background="#053F51B5"
+                        android:hint="Longitud" />
 
                     <Button
                         android:id="@+id/btn_validar"

@@ -104,13 +104,7 @@ public class Fragment_Agregar_Promocion extends Fragment {
         btn_buscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    listarproductos();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                listarproductos();
             }
         });
 
@@ -121,32 +115,10 @@ public class Fragment_Agregar_Promocion extends Fragment {
             }
         });
 
-        /*listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int i = 0, j = 0;
-
-                btn_agregar.setEnabled(true);
-
-                btn_agregar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if ((cantidad.getText().toString()).equals("") || (comercio.getSelectedItem().toString().equals("Local")) || promociones.getSelectedItem().toString().equals("Tipo promocion")) {
-                            Toast.makeText(getContext(), "Complete cantidad, tipo promocion y/o comercio", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getContext(), "Promoción agregada con éxito", Toast.LENGTH_SHORT).show();
-                            limpiarDatos();
-                        }
-                    }
-                });
-            }
-        });*/
-
-
         return root;
     }
 
-    private void listarproductos() throws IOException, JSONException {
+    private void listarproductos(){
         mProductosList.clear();
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
@@ -155,11 +127,12 @@ public class Fragment_Agregar_Promocion extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        class_producto productos = new class_producto();
+                        mProductosList = new ArrayList<class_producto>();
                         int size = response.length();
                         for(int i=0; i<size; i++){
                             try {
                                 JSONObject jsonObject = new JSONObject(response.get(i).toString());
+                                class_producto productos = new class_producto();
                                 String category = jsonObject.getString("name");
                                 String brand = jsonObject.getString("brand");
                                 String presentation = jsonObject.getString("presentation");
@@ -169,6 +142,7 @@ public class Fragment_Agregar_Promocion extends Fragment {
                                         !presentacion.getText().toString().isEmpty()) {
                                     if (!categoria.getText().toString().isEmpty()) {
                                         if (category.equals(categoria.getText().toString())) {
+                                            productos.setId(jsonObject.getString("id"));
                                             productos.setCategoria(category);
                                             productos.setMarca(brand);
                                             productos.setPresentacion(presentation);
@@ -178,6 +152,7 @@ public class Fragment_Agregar_Promocion extends Fragment {
                                     }
                                     if (!marca.getText().toString().isEmpty()) {
                                         if (brand.equals(marca.getText().toString())) {
+                                            productos.setId(jsonObject.getString("id"));
                                             productos.setCategoria(category);
                                             productos.setMarca(brand);
                                             productos.setPresentacion(presentation);
@@ -187,6 +162,7 @@ public class Fragment_Agregar_Promocion extends Fragment {
                                     }
                                     if (!presentacion.getText().toString().isEmpty()) {
                                         if (presentation.equals(presentacion.getText().toString())) {
+                                            productos.setId(jsonObject.getString("id"));
                                             productos.setCategoria(category);
                                             productos.setMarca(brand);
                                             productos.setPresentacion(presentation);
@@ -218,8 +194,7 @@ public class Fragment_Agregar_Promocion extends Fragment {
                                         if ((cantidad.getText().toString()).equals("") || (comercio.getSelectedItem().toString().equals("Local")) || promociones.getSelectedItem().toString().equals("Tipo promocion")) {
                                             Toast.makeText(getContext(), "Complete cantidad, tipo promocion y/o comercio", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            Toast.makeText(getContext(), "Promoción agregada con éxito", Toast.LENGTH_SHORT).show();
-                                            limpiarDatos();
+                                            guardarPromocion();
                                         }
                                     }
                                 });
@@ -266,10 +241,11 @@ public class Fragment_Agregar_Promocion extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        class_producto productos = new class_producto();
+                        mProductosList = new ArrayList<class_producto>();
                         int size = response.length();
                         for(int i=0; i<size; i++){
                             try {
+                                class_producto productos = new class_producto();
                                 JSONObject jsonObject = new JSONObject(response.get(i).toString());
                                 String code = jsonObject.getString("code");
                                 if (code.equals((result.getContents()))) {
@@ -308,6 +284,44 @@ public class Fragment_Agregar_Promocion extends Fragment {
 
         requestQueue.add(jsonArrayRequest);
 
+    }
+
+    private void guardarPromocion(){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                URL_SERVIDOR,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Toast.makeText(getContext(), "Registro exitoso.", Toast.LENGTH_LONG).show();
+                        limpiarDatos();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(), "ERROR AL GUARDAR", Toast.LENGTH_LONG).show();
+                    }
+                })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params1 = new HashMap<String, String>();
+
+                int product_id = (int)(Math.random()*10+1);
+                int market_id = (int)(Math.random()*10+1);
+
+                params1.put("type", "3X2");
+                params1.put("product_id", String.valueOf(product_id));
+                params1.put("market_id", String.valueOf(market_id));
+                params1.put("quantity", String.valueOf(3));
+                params1.put("Authorization", "Bearer " + "11|QMuCyTS9qdS2SgEc3IlGpEQDeTzbgPVkk5E82WBZ");
+                return params1;
+            }
+        };
+        requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(jsonArrayRequest);
     }
 
     private void limpiarDatos() {

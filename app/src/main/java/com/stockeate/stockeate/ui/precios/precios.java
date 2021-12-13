@@ -67,6 +67,7 @@ public class precios extends Fragment {
     private RecyclerView RecycleProductos;
     RequestQueue requestQueue;
     String URL_SERVIDOR = "https://stockeateapp.com.ar/api/products";
+    String URL_PRECIO = "https://stockeateapp.com.ar/api/products/prices";
 
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @NonNull Bundle savedInstanceState) {
         viewModelPrecios = new ViewModelProvider(this).get(PreciosViewModel.class);
@@ -125,63 +126,6 @@ public class precios extends Fragment {
             }
         });
 
-        /*listaResultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (mArrayAdapterProducto.isEmpty()) {
-                    txv_precio_actual.setText("");
-                    txt_precios.setText("No existen precios para las opciones seleccioadas");
-                } else {
-                    txt_precios.setText("");
-
-                    String jsonFileContent = null;
-                    try {
-                        jsonFileContent = utiles.leerJson(getContext(), "productos.json");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    JSONArray jsonArray = null;
-                    try {
-                        jsonArray = new JSONArray(jsonFileContent);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    if (local.getSelectedItem().toString().equals("Local")) {
-                        Toast.makeText(getContext(), "Seleccione un local", Toast.LENGTH_SHORT).show();
-                    } else {
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObj = null;
-                            try {
-                                jsonObj = jsonArray.getJSONObject(i);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            try {
-                                if (jsonObj.getString("categoria").equals(mProductosList.get(position).getCategoria())
-                                        && jsonObj.getString("marca").equals(mProductosList.get(position).getMarca())
-                                        && jsonObj.getString("presentacion").equals(mProductosList.get(position).getPresentacion())
-                                        && jsonObj.getString("unidad").equals(mProductosList.get(position).getUnidad())
-                                        && jsonObj.getString("comercio").equals(local.getSelectedItem().toString())) {
-                                    class_producto producto = new class_producto();
-                                    producto.setCategoria(mProductosList.get(position).getCategoria());
-                                    producto.setMarca(mProductosList.get(position).getMarca());
-                                    producto.setPresentacion(mProductosList.get(position).getPresentacion());
-                                    producto.setUnidad(mProductosList.get(position).getUnidad());
-                                    producto.setComercio(local.getSelectedItem().toString());
-                                    String precio_actual = String.valueOf(mProductosList.get(position).getPrecio());
-                                    txv_precio_actual.setText(precio_actual);
-                                    actualizarPrecios();
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
-            }
-        });*/
-
         return root;
 
     }
@@ -208,11 +152,12 @@ public class precios extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        class_producto productos = new class_producto();
+                        mProductosList = new ArrayList<class_producto>();
                         int size = response.length();
                         for (int i = 0; i < size; i++) {
                             try {
                                 JSONObject jsonObject = new JSONObject(response.get(i).toString());
+                                class_producto productos = new class_producto();
                                 String code = jsonObject.getString("code");
                                 if (code.equals((result.getContents()))) {
                                     mProductosList = new ArrayList<class_producto>();
@@ -268,10 +213,7 @@ public class precios extends Fragment {
     }
 
     private void listar_productos() throws IOException, JSONException {
-
-
         mProductosList.clear();
-
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
                 URL_SERVIDOR,
@@ -279,11 +221,12 @@ public class precios extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        class_producto productos = new class_producto();
+                        mProductosList = new ArrayList<class_producto>();
                         int size = response.length();
                         for(int i=0; i<size; i++){
                             try {
                                 JSONObject jsonObject = new JSONObject(response.get(i).toString());
+                                class_producto productos = new class_producto();
                                 String category = jsonObject.getString("name");
                                 String brand = jsonObject.getString("brand");
                                 String presentation = jsonObject.getString("presentation");
@@ -366,9 +309,11 @@ public class precios extends Fragment {
     }
 
     public void buscarProducto(int posicion) throws IOException, JSONException {
+        String id_producto = mProductosList.get(posicion).getId();
+        String URL_PRECIO=URL_SERVIDOR+"/"+id_producto+"/prices";
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
-                URL_SERVIDOR,
+                URL_PRECIO,
                 null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -380,13 +325,10 @@ public class precios extends Fragment {
                             for (int i = 0; i < size; i++) {
                                 try {
                                     JSONObject jsonObject = new JSONObject(response.get(i).toString());
-                                    String category = jsonObject.getString("name");
-                                    String brand = jsonObject.getString("brand");
-                                    String presentation = jsonObject.getString("presentation");
+                                    String product_id = jsonObject.getString("product_id");
+                                    String market_ = jsonObject.getString("market_id");
                                     String market = "Careglio Hnos Castelli";
-                                    if (category.equals(mProductosList.get(posicion).getCategoria())
-                                            && brand.equals(mProductosList.get(posicion).getMarca())
-                                            && presentation.equals(mProductosList.get(posicion).getPresentacion())
+                                    if (product_id.equals(mProductosList.get(posicion).getId())
                                             && market.equals(local.getSelectedItem().toString())) {
                                         class_producto producto = new class_producto();
                                         producto.setCategoria(mProductosList.get(posicion).getCategoria());
@@ -396,7 +338,21 @@ public class precios extends Fragment {
                                         producto.setComercio(local.getSelectedItem().toString());
                                         String precio_actual = String.valueOf(mProductosList.get(posicion).getPrecio());
                                         txv_precio_actual.setText(precio_actual);
-                                        actualizarPrecios();
+
+                                        btn_actualizar.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                if (!txv_precio_actual.getText().toString().isEmpty()) {
+                                                    if (!precio_nuevo.getText().toString().isEmpty()) {
+                                                        actualizarPrecios(posicion);
+                                                    }else {
+                                                        Toast.makeText(getContext(), "Coloque un precio para actualizar", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                } else {
+                                                    Toast.makeText(getContext(), "Seleccione un producto para actualizar", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
                                     } else{
                                         Toast.makeText(getContext(), "No existen precios cargados para ese producto", Toast.LENGTH_LONG).show();
                                     }
@@ -410,14 +366,50 @@ public class precios extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), "ERROR AL CARGAR PRODUCTOS", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "ERROR AL CARGAR PRECIO", Toast.LENGTH_LONG).show();
                     }
                 }
         ) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String>  params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer " + "10|QzbPyRDIRDNT5dQkI5rqDV7p7WYRdOL0M8if8jcu");
+                params.put("Authorization", "Bearer " + "11|QMuCyTS9qdS2SgEc3IlGpEQDeTzbgPVkk5E82WBZ");
+                return params;
+            }
+        };
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    private void actualizarPrecios(int posicion){
+        String id_producto = mProductosList.get(posicion).getId();
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.POST,
+                URL_PRECIO,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        if (id_producto.equals(mProductosList.get(posicion).getId())){
+                            Toast.makeText(getContext(), "Precio actualizado OK", Toast.LENGTH_SHORT).show();
+                            Log.d("Response", "Response " + response);
+                            limpiarDatos();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(), "ERROR AL ACTUALIZAR PRECIO", Toast.LENGTH_LONG).show();
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("product_id", mProductosList.get(posicion).getId());
+                params.put("market_id", mProductosList.get(posicion).getComercio());
+                params.put("price", precio_nuevo.getText().toString());
+                params.put("Authorization", "Bearer " + "11|QMuCyTS9qdS2SgEc3IlGpEQDeTzbgPVkk5E82WBZ");
                 return params;
             }
         };
@@ -432,23 +424,5 @@ public class precios extends Fragment {
         txv_precio_actual.setText("");
         precio_nuevo.setText("");
         local.setSelection(0);
-    }
-
-    private void actualizarPrecios(){
-        btn_actualizar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!txv_precio_actual.getText().toString().isEmpty()) {
-                    if (!precio_nuevo.getText().toString().isEmpty()) {
-                        limpiarDatos();
-                        Toast.makeText(getContext(), "Actualizado con exito", Toast.LENGTH_SHORT).show();
-                    }else {
-                        Toast.makeText(getContext(), "Coloque un precio para actualizar", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getContext(), "Seleccione un producto para actualizar", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 }
