@@ -48,7 +48,7 @@ public class Fragment_Promocion extends Fragment {
     private PromocionViewModel viewModelPromocion;
     private Button btn_volver, btn_agregar;
     private ArrayAdapter<class_promociones> mArrayAdapterPromociones;
-    private ArrayList<class_promociones> mPromocionesList = null;
+    private ArrayList<class_promociones> mPromocionesList;
     private RecyclerView RecyclePromociones;
     RequestQueue requestQueue;
     String URL_SERVIDOR = "https://stockeateapp.com.ar/api/promotions";
@@ -68,8 +68,6 @@ public class Fragment_Promocion extends Fragment {
 
         RecyclePromociones.setLayoutManager(new LinearLayoutManager(getContext()));
         requestQueue = Volley.newRequestQueue(getContext());
-
-        mPromocionesList = new ArrayList<class_promociones>();
 
         btn_volver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,15 +105,23 @@ public class Fragment_Promocion extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+                        mPromocionesList = new ArrayList<class_promociones>();
+
                         int size = response.length();
                         Log.d("Longitud", "Longitud arreglo " + size);
+
                         for (int i = 0; i < size; i++) {
                             try {
                                 class_promociones promociones = new class_promociones();
 
                                 JSONObject jsonObject = new JSONObject(response.get(i).toString());
                                 JSONArray detalle = jsonObject.getJSONArray("details");
+
+                                Log.d("1 JSONObject", "1 JSONObject " + jsonObject);
+
                                 JSONObject detalleProducto = detalle.getJSONObject(i);
+
+                                Log.d("2 JSONObject", "2 JSONObject " + jsonObject);
 
                                 JSONObject productos = detalleProducto.getJSONObject("product");
                                 JSONObject locales = detalleProducto.getJSONObject("market");

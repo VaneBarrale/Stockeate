@@ -277,7 +277,7 @@ public class Fragment_lista_compras extends Fragment {
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
             Request.Method.GET,
-            URL_GUARDAR,
+            URL_SERVIDOR,
             null,
             new Response.Listener<JSONArray>() {
                 @Override
