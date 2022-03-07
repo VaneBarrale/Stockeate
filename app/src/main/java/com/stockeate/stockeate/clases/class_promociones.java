@@ -2,12 +2,13 @@ package com.stockeate.stockeate.clases;
 
 public class class_promociones {
 
-    private String id, categoria, marca, presentacion, tipo_promocion, local;
+    private String categoria, marca, presentacion, tipo_promocion, local;
+    private int id;
 
     public class_promociones() {
     }
 
-    public class_promociones(String id, String categoria, String marca, String presentacion, String tipo_promocion, String local) {
+    public class_promociones(int id, String categoria, String marca, String presentacion, String tipo_promocion, String local) {
         this.id = id;
         this.categoria = categoria;
         this.marca = marca;
@@ -16,8 +17,12 @@ public class class_promociones {
         this.local = local;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTipo_promocion() {

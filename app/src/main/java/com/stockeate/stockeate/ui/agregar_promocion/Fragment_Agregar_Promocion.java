@@ -27,7 +27,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonObject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.stockeate.stockeate.Adapter.Adapter_mis_listas;
@@ -35,6 +38,7 @@ import com.stockeate.stockeate.Adapter.Adapter_productos;
 import com.stockeate.stockeate.Adapter.Adapter_promociones;
 import com.stockeate.stockeate.R;
 import com.stockeate.stockeate.clases.class_producto;
+import com.stockeate.stockeate.clases.class_promociones;
 import com.stockeate.stockeate.ui.promocion.Fragment_Promocion;
 import com.stockeate.stockeate.utiles.utiles;
 
@@ -46,6 +50,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +65,7 @@ public class Fragment_Agregar_Promocion extends Fragment {
     private RecyclerView RecycleProductos;
     RequestQueue requestQueue;
     String URL_SERVIDOR = "https://stockeateapp.com.ar/api/products";
+    String URL_PROMOCION = "https://stockeateapp.com.ar/api/promotions";
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         AgregarPromocionViewModel = new ViewModelProvider(this).get(ViewModel_agregar_promocion.class);
@@ -288,7 +294,7 @@ public class Fragment_Agregar_Promocion extends Fragment {
 
     private void guardarPromocion(){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
-                Request.Method.GET,
+                Request.Method.POST,
                 URL_SERVIDOR,
                 null,
                 new Response.Listener<JSONArray>() {
@@ -311,12 +317,13 @@ public class Fragment_Agregar_Promocion extends Fragment {
 
                 int product_id = (int)(Math.random()*10+1);
                 int market_id = (int)(Math.random()*10+1);
+                String token = "Bearer " + "11|QMuCyTS9qdS2SgEc3IlGpEQDeTzbgPVkk5E82WBZ";
 
                 params1.put("type", "3X2");
                 params1.put("product_id", String.valueOf(product_id));
                 params1.put("market_id", String.valueOf(market_id));
-                params1.put("quantity", String.valueOf(3));
-                params1.put("Authorization", "Bearer " + "11|QMuCyTS9qdS2SgEc3IlGpEQDeTzbgPVkk5E82WBZ");
+                params1.put("quantity", cantidad.getText().toString());
+                params1.put("Authorization", token);
                 return params1;
             }
         };

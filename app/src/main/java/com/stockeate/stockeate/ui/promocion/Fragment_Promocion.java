@@ -25,16 +25,13 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.stockeate.stockeate.Adapter.Adapter_Top10Marcas;
 import com.stockeate.stockeate.Adapter.Adapter_promociones;
 import com.stockeate.stockeate.R;
-import com.stockeate.stockeate.clases.class_detalle_lista_compras;
-import com.stockeate.stockeate.clases.class_producto;
 import com.stockeate.stockeate.clases.class_promociones;
 import com.stockeate.stockeate.ui.agregar_promocion.Fragment_Agregar_Promocion;
 import com.stockeate.stockeate.ui.home.HomeFragment;
-import com.stockeate.stockeate.utiles.utiles;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -72,6 +69,8 @@ public class Fragment_Promocion extends Fragment {
         RecyclePromociones.setLayoutManager(new LinearLayoutManager(getContext()));
         requestQueue = Volley.newRequestQueue(getContext());
 
+        mPromocionesList = new ArrayList<class_promociones>();
+
         btn_volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,17 +107,32 @@ public class Fragment_Promocion extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        mPromocionesList = new ArrayList<class_promociones>();
                         int size = response.length();
+                        Log.d("Longitud", "Longitud arreglo " + size);
                         for (int i = 0; i < size; i++) {
                             try {
-                                JSONObject jsonObject = new JSONObject(response.get(i).toString());
                                 class_promociones promociones = new class_promociones();
-                                promociones.setTipo_promocion(jsonObject.getString("type_promotion"));
-                                promociones.setCategoria(jsonObject.getString("category"));
-                                promociones.setMarca(jsonObject.getString("brand"));
-                                promociones.setPresentacion(jsonObject.getString("presentation"));
-                                promociones.setLocal(jsonObject.getString("local"));
+
+                                JSONObject jsonObject = new JSONObject(response.get(i).toString());
+                                JSONArray detalle = jsonObject.getJSONArray("details");
+                                JSONObject detalleProducto = detalle.getJSONObject(i);
+
+                                JSONObject productos = detalleProducto.getJSONObject("product");
+                                JSONObject locales = detalleProducto.getJSONObject("market");
+
+                                promociones.setTipo_promocion(jsonObject.getString("type"));
+
+                                for (int k = 0; k < detalleProducto.length(); k++) {
+                                    for (int j = 0; j < productos.length(); j++) {
+                                        promociones.setCategoria(productos.getString("name"));
+                                        promociones.setMarca(productos.getString("brand"));
+                                        promociones.setPresentacion(productos.getString("presentation"));
+                                    }
+
+                                    for (int l = 0; l < locales.length(); l++) {
+                                        promociones.setLocal(locales.getString("name"));
+                                    }
+                                }
                                 mPromocionesList.add(promociones);
                             } catch (JSONException e) {
                                 e.printStackTrace();
