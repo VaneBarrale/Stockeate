@@ -117,24 +117,9 @@ public class Fragment_Promocion extends Fragment{
                                 class_promociones promocion = new class_promociones();
 
                                 JSONObject jsonObject = new JSONObject(response.get(i).toString());
-                                //JSONArray detalle = jsonObject.getJSONArray("details");
-
+                                
                                 promocion.setTipoPromocion(jsonObject.getString("type"));
                                 promocion.setId(Integer.parseInt(jsonObject.getString("id")));
-                                /*for (int dp = 0; dp < detalle.length(); dp ++) {
-                                    JSONObject detalleProducto = detalle.getJSONObject(dp);
-                                    JSONObject producto = detalleProducto.getJSONObject("product");
-                                    JSONObject local = detalleProducto.getJSONObject("market");
-
-                                    class_detalle_promocion detalles = new class_detalle_promocion(promocion.getDetalles());
-                                    detalles.setCategoria(producto.getString("name"));
-                                    detalles.setMarca(producto.getString("brand"));
-                                    detalles.setPresentacion(producto.getString("presentation"));
-                                    detalles.setLocal(local.getString("name"));
-
-                                    detallesPromocion.add(detalles);
-                                }
-                                promocion.setDetalles(detallesPromocion);*/
                                 mPromocionesList.add(promocion);
 
                             } catch (JSONException e) {
@@ -155,10 +140,6 @@ public class Fragment_Promocion extends Fragment{
                                }
                            }
                         });
-                        /*for(int p=0 ; p< mPromocionesList.size() ; p++){
-                            Adapter_detalle_promociones adapter_detalle_promociones = new Adapter_detalle_promociones(mPromocionesList.get(p).getDetalles());
-                            RecycleDetallePromociones.setAdapter(adapter_detalle_promociones);
-                        }*/
                     }
                 },
                 new Response.ErrorListener() {
