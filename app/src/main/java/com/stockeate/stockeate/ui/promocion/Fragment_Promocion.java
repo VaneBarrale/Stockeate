@@ -1,13 +1,11 @@
 package com.stockeate.stockeate.ui.promocion;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,8 +25,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.stockeate.stockeate.Adapter.Adapter_detalle_promociones;
 import com.stockeate.stockeate.Adapter.Adapter_promociones;
 import com.stockeate.stockeate.R;
+import com.stockeate.stockeate.clases.class_detalle_promocion;
 import com.stockeate.stockeate.clases.class_promociones;
 import com.stockeate.stockeate.ui.agregar_promocion.Fragment_Agregar_Promocion;
 import com.stockeate.stockeate.ui.home.HomeFragment;
@@ -39,17 +39,17 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Fragment_Promocion extends Fragment {
+public class Fragment_Promocion extends Fragment{
 
+    private TextView txtTipoPromocion;
     private PromocionViewModel viewModelPromocion;
     private Button btn_volver, btn_agregar;
-    private ArrayAdapter<class_promociones> mArrayAdapterPromociones;
     private ArrayList<class_promociones> mPromocionesList;
-    private RecyclerView RecyclePromociones;
+    private ArrayList<class_detalle_promocion> detallesPromocion;
+    private RecyclerView RecyclePromociones, RecycleDetallePromociones;
     RequestQueue requestQueue;
     String URL_SERVIDOR = "https://stockeateapp.com.ar/api/promotions";
 
@@ -62,11 +62,14 @@ public class Fragment_Promocion extends Fragment {
             }
         });
 
+        this.txtTipoPromocion = root.findViewById(R.id.txtDetallePromocion);
         this.btn_volver = root.findViewById(R.id.btn_Volver);
         this.btn_agregar = root.findViewById(R.id.btn_Agregar);
         this.RecyclePromociones = root.findViewById(R.id.RecyclePromocioes);
+        this.RecycleDetallePromociones = root.findViewById(R.id.RecycleDetallePromocioes);
 
         RecyclePromociones.setLayoutManager(new LinearLayoutManager(getContext()));
+        RecycleDetallePromociones.setLayoutManager(new LinearLayoutManager(getContext()));
         requestQueue = Volley.newRequestQueue(getContext());
 
         btn_volver.setOnClickListener(new View.OnClickListener() {
@@ -108,44 +111,54 @@ public class Fragment_Promocion extends Fragment {
                         mPromocionesList = new ArrayList<class_promociones>();
 
                         int size = response.length();
-                        Log.d("Longitud", "Longitud arreglo " + size);
 
                         for (int i = 0; i < size; i++) {
                             try {
-                                class_promociones promociones = new class_promociones();
+                                class_promociones promocion = new class_promociones();
 
                                 JSONObject jsonObject = new JSONObject(response.get(i).toString());
-                                JSONArray detalle = jsonObject.getJSONArray("details");
+                                //JSONArray detalle = jsonObject.getJSONArray("details");
 
-                                Log.d("1 JSONObject", "1 JSONObject " + jsonObject);
+                                promocion.setTipoPromocion(jsonObject.getString("type"));
+                                promocion.setId(Integer.parseInt(jsonObject.getString("id")));
+                                /*for (int dp = 0; dp < detalle.length(); dp ++) {
+                                    JSONObject detalleProducto = detalle.getJSONObject(dp);
+                                    JSONObject producto = detalleProducto.getJSONObject("product");
+                                    JSONObject local = detalleProducto.getJSONObject("market");
 
-                                JSONObject detalleProducto = detalle.getJSONObject(i);
+                                    class_detalle_promocion detalles = new class_detalle_promocion(promocion.getDetalles());
+                                    detalles.setCategoria(producto.getString("name"));
+                                    detalles.setMarca(producto.getString("brand"));
+                                    detalles.setPresentacion(producto.getString("presentation"));
+                                    detalles.setLocal(local.getString("name"));
 
-                                Log.d("2 JSONObject", "2 JSONObject " + jsonObject);
-
-                                JSONObject productos = detalleProducto.getJSONObject("product");
-                                JSONObject locales = detalleProducto.getJSONObject("market");
-
-                                promociones.setTipo_promocion(jsonObject.getString("type"));
-
-                                for (int k = 0; k < detalleProducto.length(); k++) {
-                                    for (int j = 0; j < productos.length(); j++) {
-                                        promociones.setCategoria(productos.getString("name"));
-                                        promociones.setMarca(productos.getString("brand"));
-                                        promociones.setPresentacion(productos.getString("presentation"));
-                                    }
-
-                                    for (int l = 0; l < locales.length(); l++) {
-                                        promociones.setLocal(locales.getString("name"));
-                                    }
+                                    detallesPromocion.add(detalles);
                                 }
-                                mPromocionesList.add(promociones);
+                                promocion.setDetalles(detallesPromocion);*/
+                                mPromocionesList.add(promocion);
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
                         Adapter_promociones adapter_promociones = new Adapter_promociones(mPromocionesList);
                         RecyclePromociones.setAdapter(adapter_promociones);
+
+                        adapter_promociones.setOnClickListener(new View.OnClickListener() {
+                           @Override
+                           public void onClick(View view) {
+                               int posicion = RecyclePromociones.getChildAdapterPosition(view);
+                               try {
+                                   buscarDetalle(posicion);
+                               } catch (IOException | JSONException e) {
+                                   e.printStackTrace();
+                               }
+                           }
+                        });
+                        /*for(int p=0 ; p< mPromocionesList.size() ; p++){
+                            Adapter_detalle_promociones adapter_detalle_promociones = new Adapter_detalle_promociones(mPromocionesList.get(p).getDetalles());
+                            RecycleDetallePromociones.setAdapter(adapter_detalle_promociones);
+                        }*/
                     }
                 },
                 new Response.ErrorListener() {
@@ -163,5 +176,64 @@ public class Fragment_Promocion extends Fragment {
             }
         };
         requestQueue.add(jsonArrayRequest);
+    }
+
+    public void buscarDetalle(int posicion) throws IOException, JSONException {
+        detallesPromocion = new ArrayList<class_detalle_promocion>();
+
+        int id_promocion = mPromocionesList.get(posicion).getId();
+
+        if(id_promocion!=0){
+            txtTipoPromocion.setText("ID " + id_promocion + " - Tipo " + mPromocionesList.get(posicion).getTipo_promocion());
+            limpiarDatos();
+            String URL_LISTA = URL_SERVIDOR+"/"+id_promocion;
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                URL_LISTA,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        int size = response.length();
+                        for (int i = 0; i < size; i++) {
+                            try {
+                                JSONArray jsonArray = response.getJSONArray("details");
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                                class_detalle_promocion detalles = new class_detalle_promocion();
+                                detalles.setCategoria(jsonObject.getString("category"));
+                                detalles.setMarca(jsonObject.getString("brand"));
+                                detalles.setPresentacion(jsonObject.getString("presentation"));
+                                detalles.setLocal(jsonObject.getString("market"));
+                                detallesPromocion.add(detalles);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Adapter_detalle_promociones adapter_detalle_promociones = new Adapter_detalle_promociones(detallesPromocion);
+                            RecycleDetallePromociones.setAdapter(adapter_detalle_promociones);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(), "ERROR AL CARGAR PRODUCTOS", Toast.LENGTH_LONG).show(); }
+                }) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String>  params = new HashMap<String, String>();
+                        params.put("Authorization", "Bearer " + "11|QMuCyTS9qdS2SgEc3IlGpEQDeTzbgPVkk5E82WBZ");
+                        return params;
+                    }
+                };
+            requestQueue.add(jsonObjectRequest);
+        }
+    }
+
+    private void limpiarDatos() {
+        this.detallesPromocion.clear();
+        Adapter_detalle_promociones adapter_detalle_promociones = new Adapter_detalle_promociones(detallesPromocion);
+        this.RecycleDetallePromociones.setAdapter(adapter_detalle_promociones);
     }
 }

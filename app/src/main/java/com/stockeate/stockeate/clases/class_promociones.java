@@ -1,20 +1,20 @@
 package com.stockeate.stockeate.clases;
 
+import java.util.ArrayList;
+
 public class class_promociones {
 
-    private String categoria, marca, presentacion, tipo_promocion, local;
+    private String tipo_promocion;
     private int id;
+    private ArrayList<class_detalle_promocion> detalles;
 
     public class_promociones() {
     }
 
-    public class_promociones(int id, String categoria, String marca, String presentacion, String tipo_promocion, String local) {
+    public class_promociones(int id, String tipo_promocion, ArrayList<class_detalle_promocion> detalles) {
         this.id = id;
-        this.categoria = categoria;
-        this.marca = marca;
-        this.presentacion = presentacion;
         this.tipo_promocion = tipo_promocion;
-        this.local = local;
+        this.detalles = detalles;
     }
 
     public int getId() {
@@ -25,47 +25,23 @@ public class class_promociones {
         this.id = id;
     }
 
+    public ArrayList<class_detalle_promocion> getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(ArrayList<class_detalle_promocion> detalles) {
+        this.detalles = detalles;
+    }
+
     public String getTipo_promocion() {
         return tipo_promocion;
     }
 
-    public void setTipo_promocion(String tipo_promocion) {
+    public void setTipoPromocion(String tipo_promocion) {
         this.tipo_promocion = tipo_promocion;
-    }
-
-    public String getLocal() {
-        return local;
-    }
-
-    public void setLocal(String local) {
-        this.local = local;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
-    public String getPresentacion() {
-        return presentacion;
-    }
-
-    public void setPresentacion(String presentacion) {
-        this.presentacion = presentacion;
     }
 
     @Override
     public String toString() {
-        return tipo_promocion + ' ' + categoria + ' ' + marca + ' ' + presentacion + ' ' + local; }
+        return tipo_promocion + ' ' + detalles;}
 }

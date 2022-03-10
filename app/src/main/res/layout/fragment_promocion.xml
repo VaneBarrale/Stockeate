@@ -44,30 +44,58 @@
 
             </LinearLayout>
 
-            <ScrollView
+            <LinearLayout
+                android:id="@+id/llverticallc1"
                 android:layout_width="match_parent"
-                android:layout_height="425dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical"
                 tools:ignore="MissingConstraints">
-
-                <LinearLayout
-                    android:id="@+id/llverticallc1"
-                    android:layout_width="match_parent"
-                    android:layout_height="500dp"
-                    android:layout_marginTop="20dp"
-                      android:orientation="vertical"
-                    app:layout_editor_absoluteY="50dp"
-                    tools:ignore="MissingConstraints">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/RecyclePromocioes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         tools:ignore="MissingConstraints"/>
 
+            </LinearLayout>
 
-                </LinearLayout>
+            <LinearLayout
+                android:id="@+id/llverticallc4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints">
 
-            </ScrollView>
+                    <TextView
+                        android:id="@+id/txtDetallePromocion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:textSize="17dp"
+                        android:gravity="center_horizontal"
+                        android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llverticallc2"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints">
+
+                <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RecycleDetallePromocioes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="MissingConstraints"/>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/llverticalpr1"
