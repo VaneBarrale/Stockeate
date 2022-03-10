@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class Adapter_promociones extends RecyclerView.Adapter<Adapter_promociones.ViewHolderPromociones> implements View.OnClickListener {
 
+    private RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
     ArrayList<class_promociones> listaPromociones;
     private View.OnClickListener listener;
 
@@ -33,10 +34,6 @@ public class Adapter_promociones extends RecyclerView.Adapter<Adapter_promocione
     @Override
     public void onBindViewHolder(@NonNull ViewHolderPromociones holder, int position) {
         holder.tipo_promocion.setText(listaPromociones.get(position).getTipo_promocion());
-        holder.categoria.setText(listaPromociones.get(position).getCategoria());
-        holder.marca.setText(listaPromociones.get(position).getMarca());
-        holder.presentacion.setText(listaPromociones.get(position).getPresentacion());
-        holder.local.setText(listaPromociones.get(position).getLocal());
     }
 
     @Override
@@ -57,15 +54,11 @@ public class Adapter_promociones extends RecyclerView.Adapter<Adapter_promocione
 
     public class ViewHolderPromociones extends RecyclerView.ViewHolder {
 
-        TextView tipo_promocion, categoria, marca, presentacion,local;
+        TextView tipo_promocion;
 
         public ViewHolderPromociones(@NonNull View itemView) {
             super(itemView);
             tipo_promocion=itemView.findViewById(R.id.TipoPromocion);
-            categoria=itemView.findViewById(R.id.categoria);
-            marca=itemView.findViewById(R.id.marca);
-            presentacion=itemView.findViewById(R.id.presentacion);
-            local=itemView.findViewById(R.id.Local);
         }
     }
 }

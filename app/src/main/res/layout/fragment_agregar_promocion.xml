@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_agregar_promocion"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo_framework"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.comparar_precios.Fragment_Comparar_Precios">
+    tools:context=".ui.agregar_promocion.Fragment_Agregar_Promocion">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:id="@+id/llverticallc"
@@ -120,15 +121,13 @@
                     android:id="@+id/RecycleProductos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginStart="20dp"
                     tools:ignore="MissingConstraints"/>
 
                 <EditText
                     android:id="@+id/etxtCantidad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="20dp"
                     android:background="#053F51B5"
                     android:hint="Cantidad" />
 
@@ -146,32 +145,32 @@
                     android:layout_marginTop="25dp"
                     android:entries="@array/Tipo_promocion"/>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llhorizontallc2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                tools:ignore="MissingConstraints">
-
-                <Button
-                    android:id="@+id/btn_Volver"
-                    android:layout_width="150dp"
+                <LinearLayout
+                    android:id="@+id/llhorizontallc2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Volver"
-                    app:backgroundTint="#2196F3" />
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    tools:ignore="MissingConstraints">
 
-                <Button
-                    android:id="@+id/btn_agregar_promocion"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="Agregar"
-                    android:enabled="true"
-                    app:backgroundTint="#2196F3" />
+                    <Button
+                        android:id="@+id/btn_Volver"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="Volver"
+                        app:backgroundTint="#2196F3" />
+
+                    <Button
+                        android:id="@+id/btn_agregar_promocion"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="Agregar"
+                        android:enabled="true"
+                        app:backgroundTint="#2196F3" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -179,4 +178,4 @@
 
     </ScrollView>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
